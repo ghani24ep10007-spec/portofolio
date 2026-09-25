@@ -1,259 +1,388 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portofolio | Ahmad Faqih</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <style>
-      :root {
-        --primary-color: #64ffda;
-        --secondary-color: #61dafb;
-        --bg-dark: #0a192f;
-        --bg-light: #112240;
-        --text-color: #ccd6f6;
-        --text-muted: #8892b0;
-        --font-main: "Segoe UI", sans-serif;
-      }
-    
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-    
-      html {
-        scroll-behavior: smooth;
-      }
-    
-      body {
-        font-family: var(--font-main);
-        background-color: var(--bg-dark);
-        color: var(--text-color);
-        line-height: 1.7;
-        font-size: 16px;
-      }
-    
-      header {
-        background-color: var(--bg-light);
-        padding: 16px 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
-    
-      .logo-container {
-        display: flex;
-        align-items: center;
-      }
-    
-      .logo-container img {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        margin-right: 12px;
-        border: 2px solid var(--secondary-color);
-      }
-    
-      .logo-container h1 {
-        color: var(--secondary-color);
-        font-size: 20px;
-      }
-    
-      nav a {
-        color: var(--text-muted);
-        text-decoration: none;
-        margin: 0 10px;
-        font-weight: 600;
-        position: relative;
-        font-size: 15px;
-      }
-    
-      nav a::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 2px;
-        left: 0;
-        bottom: -4px;
-        background-color: var(--primary-color);
-        transition: width 0.3s ease;
-      }
-    
-      nav a:hover {
-        color: var(--primary-color);
-      }
-    
-      nav a:hover::after {
-        width: 100%;
-      }
-    
-      section {
-        padding: 60px 20px;
-        max-width: 1000px;
-        margin: auto;
-      }
-    
-      .intro {
-        display: flex;
-        gap: 30px;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-    
-      .intro img {
-        width: 180px;
-        height: 180px;
-        border-radius: 12px;
-        object-fit: cover;
-        border: 3px solid var(--primary-color);
-        transition: transform 0.3s ease;
-      }
-    
-      .intro img:hover {
-        transform: scale(1.05);
-      }
-    
-      .bio {
-        max-width: 550px;
-      }
-    
-      .bio h2 {
-        color: var(--primary-color);
-        font-size: 28px;
-        margin-bottom: 10px;
-      }
-    
-      .bio p {
-        color: var(--text-muted);
-        font-size: 17px;
-        margin-bottom: 6px;
-      }
-    
-      .about {
-        margin-top: 20px;
-      }
-    
-      .about h2,
-      .skills h2,
-      .projects h2,
-      .contact h2 {
-        color: var(--primary-color);
-        font-size: 24px;
-        margin-bottom: 12px;
-      }
-    
-      .about p {
-        color: var(--text-color);
-      }
-    
-      .skills ul {
-        display: flex;
-        flex-wrap: wrap;
-        list-style: none;
-        gap: 10px;
-        padding-top: 10px;
-      }
-    
-      .skills li {
-        background: var(--bg-light);
-        color: var(--primary-color);
-        padding: 8px 14px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 14px;
-        transition: all 0.3s ease;
-      }
-    
-      .skills li:hover {
-        background-color: #1c2e4a;
-        transform: scale(1.05);
-      }
-    
-      .project {
-        background: var(--bg-light);
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-      }
-    
-      .project:hover {
-        transform: translateY(-5px);
-      }
-    
-      .project h3 {
-        color: var(--secondary-color);
-        margin-bottom: 8px;
-      }
-    
-      .project p {
-        color: var(--text-muted);
-        font-size: 15px;
-      }
-    
-      .contact p {
-        font-size: 17px;
-        color: var(--text-muted);
-      }
-    
-      .contact a {
-        display: inline-block;
-        margin-top: 10px;
-        color: #25d366;
-        font-size: 18px;
-        font-weight: bold;
-        text-decoration: none;
-        transition: all 0.3s;
-      }
-    
-      .contact a:hover {
-        text-decoration: underline;
-        color: #1ebe57;
-      }
-    
-      footer {
-        text-align: center;
-        padding: 20px;
-        background: var(--bg-light);
-        color: var(--text-muted);
-        font-size: 14px;
-      }
-    
-      @media (max-width: 768px) {
-        .intro {
-          flex-direction: column;
-          text-align: center;
-        }
-    
-        .bio {
-          text-align: center;
-        }
-    
-        nav {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-    
-        nav a {
-          margin: 6px 8px;
+<html lang="id" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rizqi Ghani Adinata | Cyber Security Specialist & Offensive Security</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts: JetBrains Mono & Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+          colors: {
+            cyber: {
+              black: '#030712',
+              card: '#0b1329',
+              border: '#1e293b',
+              green: '#10b981',
+              red: '#ef4444',
+              cyan: '#06b6d4'
+            }
+          },
+          animation: {
+            'radar-spin': 'spin 10s linear infinite',
+            'pulse-fast': 'pulse 1s infinite'
+          }
         }
       }
-    </style>
+    }
+  </script>
+
+  <style>
+    /* Direct CSS Fallback & Styling */
+    body {
+      background-color: #030712;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    #matrixCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .cyber-glass {
+      background: rgba(11, 19, 41, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      transition: all 0.3s ease-in-out;
+    }
+    .cyber-glass:hover {
+      border-color: rgba(16, 185, 129, 0.65);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+  </style>
+</head>
+<body class="bg-cyber-black text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-emerald-500 selection:text-black">
+
+  <!-- ANIMASI CANVAS BACKGROUND MATRIX DIGITAL RAIN -->
+  <canvas id="matrixCanvas"></canvas>
+
+  <!-- NAVBAR INTERAKTIF -->
+  <header class="sticky top-0 z-50 bg-[#030712]/90 border-b border-cyber-border backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/30">
+          <i class="fa-solid fa-terminal text-lg"></i>
+        </div>
+        <div>
+          <span class="font-mono font-bold text-sm tracking-widest text-white">RIZQI_GHANI<span class="text-emerald-400">.SEC</span></span>
+          <p class="text-[10px] font-mono text-emerald-400/80">SYSTEM: [ONLINE - ENCRYPTED]</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-xs font-mono">
+        <a href="#about" class="text-slate-300 hover:text-emerald-400 transition-colors">./profil</a>
+        <a href="#skills" class="text-slate-300 hover:text-emerald-400 transition-colors">./keahlian</a>
+        <a href="#attack-sim" class="text-slate-300 hover:text-emerald-400 transition-colors">./simulasi_serangan</a>
+        <a href="#projects" class="text-slate-300 hover:text-emerald-400 transition-colors">./proyek</a>
+      </nav>
+
+      <a href="https://wa.me/6281234567890" target="_blank" class="px-3 py-1.5 font-mono text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/40 rounded-lg hover:bg-emerald-500 hover:text-black transition-all">
+        <i class="fa-solid fa-shield-halved mr-1"></i> Kontak_Keamanan
+      </a>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+    <!-- HERO / TENTANG SAYA -->
+    <section id="about" class="pt-4">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full font-mono text-xs text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            CYBER SECURITY RESEARCHER & PENETRATION TESTER
+          </div>
+          
+          <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            Rizqi Ghani Adinata
+          </h1>
+          
+          <div class="p-4 bg-cyber-card border border-cyber-border rounded-xl font-mono text-xs text-slate-300 space-y-1 shadow-xl">
+            <p><span class="text-emerald-400">root@rizqighani:~#</span> cat identity.json</p>
+            <p class="text-slate-500">{</p>
+            <p class="pl-4 text-slate-300">"Nama": <span class="text-amber-300">"Rizqi Ghani Adinata"</span>,</p>
+            <p class="pl-4 text-slate-300">"Spesialisasi": <span class="text-cyan-300">"Penetration Testing, Web Security Audit, SOC Analyst"</span>,</p>
+            <p class="pl-4 text-slate-300">"Status_Keamanan": <span class="text-emerald-400">"Aman / Siap Melakukan Assessment"</span></p>
+            <p class="text-slate-500">}</p>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+            Saya adalah spesialis Keamanan Siber yang berfokus pada analisis celah keamanan aplikasi web, pengujian penetrasi (Red Teaming), pertahanan infrastruktur server (Blue Teaming), serta analisis lalu lintas jaringan berbahaya.
+          </p>
+        </div>
+
+        <!-- RADAR ANCAMAN SIBER -->
+        <div class="lg:col-span-5 flex flex-col items-center justify-center">
+          <div class="cyber-glass p-6 rounded-2xl w-full max-w-sm text-center relative overflow-hidden">
+            <div class="text-xs font-mono text-slate-400 mb-2 tracking-wider">RADAR ANCAMAN REAL-TIME</div>
+            
+            <div class="relative w-44 h-44 mx-auto my-4 rounded-full border border-emerald-500/40 flex items-center justify-center overflow-hidden bg-black/40">
+              <div class="absolute inset-0 border border-emerald-500/20 rounded-full scale-75"></div>
+              <div class="absolute inset-0 border border-emerald-500/20 rounded-full scale-50"></div>
+              <div class="absolute w-full h-[1px] bg-emerald-500/30"></div>
+              <div class="absolute h-full w-[1px] bg-emerald-500/30"></div>
+              <!-- Radar Sweep Line -->
+              <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-emerald-500/50 to-transparent origin-center animate-radar-spin"></div>
+              <!-- Indikator Target Serangan -->
+              <div class="absolute top-10 right-12 w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping"></div>
+              <div class="absolute bottom-12 left-10 w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-left font-mono text-[11px] pt-3 border-t border-cyber-border">
+              <div>
+                <span class="text-slate-400">FIREWALL:</span>
+                <span class="text-emerald-400 font-bold block">AKTIF & STABIL</span>
+              </div>
+              <div>
+                <span class="text-slate-400">TINGKAT ANCAMAN:</span>
+                <span class="text-amber-400 font-bold block">TERKENDALI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- KEAHLIAN / SKILLS -->
+    <section id="skills" class="space-y-6 border-t border-cyber-border/60 pt-10">
+      <div>
+        <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-shield-cat text-emerald-400"></i> Toolset & Keahlan Keamanan
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Perangkat lunak audit dan pengujian penetrasi keamanan siber yang dikuasai.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 font-mono text-xs">
+        <div class="cyber-glass p-3 rounded-xl text-center space-y-1">
+          <i class="fa-brands fa-python text-amber-400 text-2xl"></i>
+          <h3 class="font-bold text-white text-xs">Python</h3>
+          <p class="text-[10px] text-slate-400">Exploit Scripts</p>
+        </div>
+        <div class="cyber-glass p-3 rounded-xl text-center space-y-1">
+          <i class="fa-brands fa-linux text-emerald-400 text-2xl"></i>
+          <h3 class="font-bold text-white text-xs">Kali Linux</h3>
+          <p class="text-[10px] text-slate-400">Pentest Platform</p>
+        </div>
+        <div class="cyber-glass p-3 rounded-xl text-center space-y-1">
+          <i class="fa-solid fa-network-wired text-cyan-400 text-2xl"></i>
+          <h3 class="font-bold text-white text-xs">Wireshark</h3>
+          <p class="text-[10px] text-slate-400">Packet Analysis</p>
+        </div>
+        <div class="cyber-glass p-3 rounded-xl text-center space-y-1">
+          <i class="fa-solid fa-bug text-rose-400 text-2xl"></i>
+          <h3 class="font-bold text-white text-xs">Burp Suite</h3>
+          <p class="text-[10px] text-slate-400">Web Pentesting</p>
+        </div>
+        <div class="cyber-glass p-3 rounded-xl text-center space-y-1">
+          <i class="fa-solid fa-terminal text-purple-400 text-2xl"></i>
+          <h3 class="font-bold text-white text-xs">Nmap</h3>
+          <p class="text-[10px] text-slate-400">Port Recon</p>
+        </div>
+        <div class="cyber-glass p-3 rounded-xl text-center space-y-1">
+          <i class="fa-solid fa-database text-blue-400 text-2xl"></i>
+          <h3 class="font-bold text-white text-xs">SQLMap</h3>
+          <p class="text-[10px] text-slate-400">SQLi Automation</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMULASI SERANGAN SIBER (INTERAKSI TERMINAL) -->
+    <section id="attack-sim" class="cyber-glass p-6 sm:p-8 rounded-2xl relative overflow-hidden border-rose-500/30">
+      <div class="flex flex-col lg:flex-row gap-8 items-start justify-between">
+        
+        <div class="space-y-4 max-w-lg">
+          <span class="px-2.5 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-md font-mono text-[10px]">
+            CYBER ATTACK LAB SIMULATOR
+          </span>
+          <h2 class="text-2xl font-extrabold text-white">Simulasi Serangan Siber Interaktif</h2>
+          <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Klik tombol simulasi di bawah untuk menjalankan serangan siber buatan. Sistem pertahanan akan mencatat *log* serangan dan memicu *firewall* secara otomatis pada terminal di sebelah kanan.
+          </p>
+
+          <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
+            <button onclick="runAttackSimulation('ddos')" class="px-4 py-2.5 bg-rose-500/20 text-rose-400 border border-rose-500/40 rounded-xl hover:bg-rose-500 hover:text-black transition-all">
+              <i class="fa-solid fa-bolt mr-1"></i> Simulasikan DDoS Attack
+            </button>
+            <button onclick="runAttackSimulation('bruteforce')" class="px-4 py-2.5 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded-xl hover:bg-amber-500 hover:text-black transition-all">
+              <i class="fa-solid fa-key mr-1"></i> Simulasikan Brute Force
+            </button>
+            <button onclick="clearTerminal()" class="px-3 py-2.5 bg-slate-800 text-slate-300 border border-slate-700 rounded-xl hover:bg-slate-700 transition-all">
+              Reset Konsol
+            </button>
+          </div>
+        </div>
+
+        <!-- TERMINAL SERANGAN -->
+        <div class="w-full lg:w-1/2 bg-black/95 border border-cyber-border rounded-xl p-4 font-mono text-xs h-64 overflow-y-auto flex flex-col justify-between shadow-2xl">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800 mb-2">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+              <span class="text-[10px] text-slate-400 ml-2">cyber_defense_monitor.sh</span>
+            </div>
+            <span class="text-[10px] text-slate-500">LIVE SECURITY LOGS</span>
+          </div>
+          <div id="terminalOutput" class="space-y-1.5 text-slate-300 flex-1 overflow-y-auto">
+            <p class="text-emerald-400">[SYSTEM READY] Menunggu perintah simulasi serangan siber...</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROYEK & PORTFOLIO -->
+    <section id="projects" class="space-y-6 border-t border-cyber-border/60 pt-10">
+      <div>
+        <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-folder-open text-emerald-400"></i> Hasil Repositori & Proyek Audit
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Daftar skrip pengujian dan laporan keamanan siber yang telah dipublikasikan.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- PROYEK 1 -->
+        <div class="cyber-glass p-5 rounded-2xl space-y-3">
+          <div class="flex justify-between items-start">
+            <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-md border border-cyan-500/20">PYTHON AUTOMATION</span>
+            <i class="fa-solid fa-shield-virus text-cyan-400 text-xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">Web Public Admin Security Scanner</h3>
+          <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Skrip otomatisasi berbasis Python untuk mendeteksi kerentanan halaman administrator publik, pemindaian direktori tersembunyi, dan miskonfigurasi server.
+          </p>
+          <div class="pt-2 flex items-center justify-between font-mono text-[11px] text-slate-400 border-t border-cyber-border">
+            <span>File: <code class="text-emerald-400">13.web_public_admin.py</code></span>
+            <span class="text-emerald-400"><i class="fa-solid fa-check"></i> Verified</span>
+          </div>
+        </div>
+
+        <!-- PROYEK 2 -->
+        <div class="cyber-glass p-5 rounded-2xl space-y-3">
+          <div class="flex justify-between items-start">
+            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">SECURITY AUDIT</span>
+            <i class="fa-solid fa-user-shield text-emerald-400 text-xl"></i>
+          </div>
+          <h3 class="text-base font-bold text-white">OWASP Top 10 Vulnerability Assessment</h3>
+          <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Pengujian celah keamanan web terkomprehensif mencakup serangan SQL Injection, Cross-Site Scripting (XSS), dan Broken Access Control.
+          </p>
+          <div class="pt-2 flex items-center justify-between font-mono text-[11px] text-slate-400 border-t border-cyber-border">
+            <span>Kategori: <code class="text-emerald-400">Red Team Assessment</code></span>
+            <span class="text-emerald-400"><i class="fa-solid fa-check"></i> Verified</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-cyber-border py-8 bg-[#030712] text-center text-xs font-mono text-slate-500 relative z-10">
+    <p>© 2026 Rizqi Ghani Adinata. Cyber Security Portfolio.</p>
+  </footer>
+
+  <!-- LOGIK MATRIX & SIMULATOR JAVASCRIPT -->
+  <script>
+    // 1. LOGIK ANIMASI MATRIX DIGITAL RAIN
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*<>[]{}';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#10b981';
+      ctx.font = fontSize + 'px "JetBrains Mono"';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 33);
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    });
+
+    // 2. LOGIK SIMULASI SERANGAN SIBER
+    const terminalOutput = document.getElementById('terminalOutput');
+
+    function appendLog(text, colorClass = "text-slate-300") {
+      const p = document.createElement('p');
+      p.className = colorClass;
+      p.innerText = text;
+      terminalOutput.appendChild(p);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+
+    function clearTerminal() {
+      terminalOutput.innerHTML = '<p class="text-emerald-400">[SYSTEM READY] Menunggu perintah simulasi serangan siber...</p>';
+    }
+
+    function runAttackSimulation(type) {
+      if (type === 'ddos') {
+        appendLog('[ANOMALI] Lonjakan paket data terdeteksi dari 2,048 Botnet IP Node...', 'text-amber-400');
+        setTimeout(() => appendLog('[SERANGAN] SYN Flood DDoS Attack menyerang Port 443!', 'text-rose-500 font-bold'), 500);
+        setTimeout(() => appendLog('[MITIGASI] Mengaktifkan Rate-Limiting & Cloudflare Scrubbing Center...', 'text-cyan-400'), 1100);
+        setTimeout(() => appendLog('[BERHASIL] Serangan terisolasi! 99.9% paket berbahaya diblokir oleh Firewall.', 'text-emerald-400 font-bold'), 1700);
+      } else if (type === 'bruteforce') {
+        appendLog('[LOG] Percobaan autentikasi gagal berturut-turut dari IP: 192.168.1.105', 'text-amber-400');
+        setTimeout(() => appendLog('[ALERT] Pola Kamus Wordlist Brute Force Terdeteksi!', 'text-rose-500 font-bold'), 500);
+        setTimeout(() => appendLog('[PERTAHANAN] Memblokir alamat IP via Fail2Ban IPTables...', 'text-cyan-400'), 1100);
+        setTimeout(() => appendLog('[BERHASIL] IP 192.168.1.105 dimasukkan ke dalam Blacklist.', 'text-emerald-400 font-bold'), 1700);
+      }
+    }
+  </script>
+</body>
 </html>
