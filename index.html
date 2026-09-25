@@ -1,605 +1,259 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEXUS - Cyber Security Career & Learning System 2026</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { 
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          },
-          colors: {
-            cyber: {
-              black: '#060911',
-              dark: '#0d1322',
-              card: '#131b2e',
-              border: '#1e293b',
-              accent: '#10b981',
-              blue: '#3b82f6',
-              red: '#ef4444',
-              purple: '#a855f7'
-            }
-          },
-          animation: {
-            'glow-pulse': 'glowPulse 2s infinite',
-            'float': 'float 4s ease-in-out infinite',
-            'radar-spin': 'radarSpin 10s linear infinite'
-          },
-          keyframes: {
-            glowPulse: {
-              '0%, 100%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)' },
-              '50%': { boxShadow: '0 0 30px rgba(16, 185, 129, 0.6)' }
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-8px)' }
-            },
-            radarSpin: {
-              '0%': { transform: 'rotate(0deg)' },
-              '100%': { transform: 'rotate(360deg)' }
-            }
-          }
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portofolio | Ahmad Faqih</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #64ffda;
+        --secondary-color: #61dafb;
+        --bg-dark: #0a192f;
+        --bg-light: #112240;
+        --text-color: #ccd6f6;
+        --text-muted: #8892b0;
+        --font-main: "Segoe UI", sans-serif;
+      }
+    
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    
+      html {
+        scroll-behavior: smooth;
+      }
+    
+      body {
+        font-family: var(--font-main);
+        background-color: var(--bg-dark);
+        color: var(--text-color);
+        line-height: 1.7;
+        font-size: 16px;
+      }
+    
+      header {
+        background-color: var(--bg-light);
+        padding: 16px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+    
+      .logo-container {
+        display: flex;
+        align-items: center;
+      }
+    
+      .logo-container img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin-right: 12px;
+        border: 2px solid var(--secondary-color);
+      }
+    
+      .logo-container h1 {
+        color: var(--secondary-color);
+        font-size: 20px;
+      }
+    
+      nav a {
+        color: var(--text-muted);
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: 600;
+        position: relative;
+        font-size: 15px;
+      }
+    
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        left: 0;
+        bottom: -4px;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+    
+      nav a:hover {
+        color: var(--primary-color);
+      }
+    
+      nav a:hover::after {
+        width: 100%;
+      }
+    
+      section {
+        padding: 60px 20px;
+        max-width: 1000px;
+        margin: auto;
+      }
+    
+      .intro {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    
+      .intro img {
+        width: 180px;
+        height: 180px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+        transition: transform 0.3s ease;
+      }
+    
+      .intro img:hover {
+        transform: scale(1.05);
+      }
+    
+      .bio {
+        max-width: 550px;
+      }
+    
+      .bio h2 {
+        color: var(--primary-color);
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+    
+      .bio p {
+        color: var(--text-muted);
+        font-size: 17px;
+        margin-bottom: 6px;
+      }
+    
+      .about {
+        margin-top: 20px;
+      }
+    
+      .about h2,
+      .skills h2,
+      .projects h2,
+      .contact h2 {
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+    
+      .about p {
+        color: var(--text-color);
+      }
+    
+      .skills ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        gap: 10px;
+        padding-top: 10px;
+      }
+    
+      .skills li {
+        background: var(--bg-light);
+        color: var(--primary-color);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+    
+      .skills li:hover {
+        background-color: #1c2e4a;
+        transform: scale(1.05);
+      }
+    
+      .project {
+        background: var(--bg-light);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+    
+      .project:hover {
+        transform: translateY(-5px);
+      }
+    
+      .project h3 {
+        color: var(--secondary-color);
+        margin-bottom: 8px;
+      }
+    
+      .project p {
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+    
+      .contact p {
+        font-size: 17px;
+        color: var(--text-muted);
+      }
+    
+      .contact a {
+        display: inline-block;
+        margin-top: 10px;
+        color: #25d366;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+    
+      .contact a:hover {
+        text-decoration: underline;
+        color: #1ebe57;
+      }
+    
+      footer {
+        text-align: center;
+        padding: 20px;
+        background: var(--bg-light);
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+    
+      @media (max-width: 768px) {
+        .intro {
+          flex-direction: column;
+          text-align: center;
+        }
+    
+        .bio {
+          text-align: center;
+        }
+    
+        nav {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+    
+        nav a {
+          margin: 6px 8px;
         }
       }
-    }
-  </script>
-
-  <style>
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #060911; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
-
-    .glass-box {
-      background: rgba(19, 27, 46, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .glass-box:hover {
-      border-color: rgba(16, 185, 129, 0.4);
-      transform: translateY(-3px);
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #34d399 0%, #3b82f6 50%, #a855f7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  </style>
-</head>
-<body class="bg-cyber-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
-
-  <!-- NAVBAR INTERAKTIF -->
-  <header class="bg-cyber-dark/90 border-b border-cyber-border sticky top-0 z-50 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/30 animate-glow-pulse">
-          <i class="fa-solid fa-shield-halved text-xl animate-float"></i>
-        </div>
-        <div>
-          <h1 class="font-extrabold text-lg text-white tracking-wide">NEXUS <span class="text-emerald-400">CYBER 2026</span></h1>
-          <p class="text-[10px] text-slate-400 font-mono">Peta Jalan Karier & Interactive Learning Platform</p>
-        </div>
-      </div>
-      
-      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold">
-        <a href="#roadmap" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-route text-emerald-400"></i> Peta Jalan
-        </a>
-        <a href="#audit-sim" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-bug text-emerald-400"></i> Audit Simulator
-        </a>
-        <a href="#certifications" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-certificate text-emerald-400"></i> Sertifikasi
-        </a>
-        <a href="#radar" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-chart-pie text-emerald-400"></i> Radar Keahlian
-        </a>
-      </nav>
-
-      <div class="flex items-center gap-3">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> 2026 ROADMAP READY
-        </span>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO SECTION -->
-  <section class="relative overflow-hidden py-16 border-b border-cyber-border/60 bg-gradient-to-b from-cyber-dark to-cyber-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-      <span class="px-3 py-1 text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/30 inline-block mb-4">
-        PEMETAAN KARIER SIBER LENGKAP
-      </span>
-      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight max-w-4xl mx-auto">
-        Peta Jalan Karier Cyber Security 2026: <br><span class="gradient-text">Dari Nol Hingga Ahli</span>
-      </h1>
-      <p class="mt-4 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto font-normal">
-        Platform simulasi dan panduan praktis berdasarkan standar keamanan industri terkini. Menguasai fondasi infrastruktur, analisis keamanan, hingga spesifikasi peran Red, Blue, & GRC Team.
-      </p>
-
-      <!-- KPI METRICS -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-10">
-        <div class="glass-box p-4 rounded-xl text-center">
-          <p class="text-[10px] text-slate-400 uppercase font-mono">Total Tahapan</p>
-          <h4 class="text-2xl font-extrabold text-emerald-400 mt-1">4 TAHAP</h4>
-        </div>
-        <div class="glass-box p-4 rounded-xl text-center">
-          <p class="text-[10px] text-slate-400 uppercase font-mono">Fokus Spesialisasi</p>
-          <h4 class="text-2xl font-extrabold text-blue-400 mt-1">4 JALUR</h4>
-        </div>
-        <div class="glass-box p-4 rounded-xl text-center">
-          <p class="text-[10px] text-slate-400 uppercase font-mono">Tingkat Sertifikasi</p>
-          <h4 class="text-2xl font-extrabold text-purple-400 mt-1">3 LEVEL</h4>
-        </div>
-        <div class="glass-box p-4 rounded-xl text-center">
-          <p class="text-[10px] text-slate-400 uppercase font-mono">Framework Utama</p>
-          <h4 class="text-2xl font-extrabold text-amber-400 mt-1">OWASP & GRC</h4>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-
-    <!-- SECTION 1: INTERACTIVE TIMELINE ROADMAP -->
-    <section id="roadmap" class="space-y-6">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
-            <i class="fa-solid fa-map-location-dot text-emerald-400"></i> Tahapan Peta Jalan Karier
-          </h2>
-          <p class="text-xs text-slate-400 mt-1">Klik pada tahapan untuk mengeksplorasi modul pembelajaran interaktif.</p>
-        </div>
-        <div class="flex gap-2 font-mono text-xs">
-          <button onclick="filterRoadmap('all')" class="px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-emerald-400 hover:border-emerald-500 active">Semua Tahap</button>
-          <button onclick="filterRoadmap('fondasi')" class="px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-slate-300 hover:border-emerald-500">Tahap 1 & 2</button>
-          <button onclick="filterRoadmap('spesialisasi')" class="px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-slate-300 hover:border-emerald-500">Tahap 3 & 4</button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="roadmapGrid">
-        
-        <!-- TAHAP 1 -->
-        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-emerald-500" data-cat="fondasi">
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">TAHAP 1</span>
-              <h3 class="text-lg font-bold text-white mt-2">Kuasai Infrastruktur & Pondasi Dasar</h3>
-            </div>
-            <i class="fa-solid fa-network-wired text-2xl text-emerald-400/80"></i>
-          </div>
-          <ul class="text-xs text-slate-300 space-y-2.5">
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
-              <span><strong>Jaringan Komputer:</strong> Memahami protokol TCP/IP, OSI Model, Subnetting, dan Routing.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
-              <span><strong>Administrasi Sistem:</strong> Penguasaan CLI Linux (Ubuntu/Debian/Kali) & Windows Server Administration.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
-              <span><strong>Kriptografi & CIA Triad:</strong> Konsep Kerahasiaan (Confidentiality), Integritas (Integrity), Ketersediaan (Availability), Simetris & Asimetris Enkripsi.</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- TAHAP 2 -->
-        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-blue-500" data-cat="fondasi">
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <span class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20">TAHAP 2</span>
-              <h3 class="text-lg font-bold text-white mt-2">Keamanan Operasional & Analisis Kerentanan</h3>
-            </div>
-            <i class="fa-solid fa-shield-virus text-2xl text-blue-400/80"></i>
-          </div>
-          <ul class="text-xs text-slate-300 space-y-2.5">
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-blue-400 mt-0.5"></i>
-              <span><strong>Keamanan Web (OWASP Top 10):</strong> Proteksi SQL Injection, XSS, CSRF, dan Broken Access Control.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-blue-400 mt-0.5"></i>
-              <span><strong>Audit & Reconnaissance:</strong> Pemindaian port dan jaringan menggunakan Nmap & Wireshark.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-blue-400 mt-0.5"></i>
-              <span><strong>Penilaian Celah Keamanan:</strong> Penetration testing dasar menggunakan Metasploit Framework.</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- TAHAP 3 -->
-        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-purple-500" data-cat="spesialisasi">
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <span class="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">TAHAP 3</span>
-              <h3 class="text-lg font-bold text-white mt-2">Pilih Jalur Spesialisasi Utama</h3>
-            </div>
-            <i class="fa-solid fa-user-ninja text-2xl text-purple-400/80"></i>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
-              <h4 class="font-bold text-red-400 flex items-center gap-1.5"><i class="fa-solid fa-skull"></i> Red Team</h4>
-              <p class="text-[10px] text-slate-400 mt-1">Ofensif: Penetration Testing, Exploit Dev, Ethical Hacking.</p>
-            </div>
-            <div class="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-              <h4 class="font-bold text-blue-400 flex items-center gap-1.5"><i class="fa-solid fa-shield"></i> Blue Team</h4>
-              <p class="text-[10px] text-slate-400 mt-1">Defensif: SOC Analyst, Threat Hunting, Incident Response.</p>
-            </div>
-            <div class="p-3 bg-purple-500/10 border border-purple-500/20 rounded-xl">
-              <h4 class="font-bold text-purple-400 flex items-center gap-1.5"><i class="fa-solid fa-cloud"></i> Cloud / DevSecOps</h4>
-              <p class="text-[10px] text-slate-400 mt-1">Keamanan Pipeline CI/CD, AWS/Azure Security, Kubernetes.</p>
-            </div>
-            <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-              <h4 class="font-bold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced"></i> GRC & Hukum</h4>
-              <p class="text-[10px] text-slate-400 mt-1">Governance, Risk Management, & Compliance Audit.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAHAP 4 -->
-        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-amber-500" data-cat="spesialisasi">
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">TAHAP 4</span>
-              <h3 class="text-lg font-bold text-white mt-2">GRC, Kepatuhan & Regulasi Siber</h3>
-            </div>
-            <i class="fa-solid fa-file-contract text-2xl text-amber-400/80"></i>
-          </div>
-          <ul class="text-xs text-slate-300 space-y-2.5">
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
-              <span><strong>Standar Manajemen Risiko:</strong> Implementasi kerangka kerja keamanan ISO/IEC 27001 & NIST.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
-              <span><strong>Regulasi Data Siber:</strong> Regulasi UU Perlindungan Data Pribadi (UU PDP) & GDPR.</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
-              <span><strong>Audit Keamanan:</strong> Evaluasi Kepatuhan, Manajemen Bencana (BCP/DRP), dan Audit Internal.</span>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECTION 2: INTERACTIVE SIMULATOR OWASP AUDIT -->
-    <section id="audit-sim" class="glass-box p-6 sm:p-8 rounded-3xl relative overflow-hidden">
-      <div class="flex flex-col lg:flex-row gap-8 items-center justify-between">
-        <div class="space-y-4 max-w-xl">
-          <span class="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">INTERACTIVE TOOL</span>
-          <h2 class="text-2xl font-extrabold text-white">Simulator Penilaian Celah Keamanan (Vulnerability Audit)</h2>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Pilih parameter audit aplikasi web di bawah untuk mengalkulasi tingkat risiko keamanan berdasarkan kerangka kerja OWASP Top 10 dan Nmap Scan Risk Score.
-          </p>
-
-          <!-- SIMULATOR FORM -->
-          <div class="space-y-3 pt-2">
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Celah Terdeteksi (OWASP)</label>
-              <select id="simVulnerability" onchange="calculateRisk()" class="w-full bg-cyber-black border border-cyber-border rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none">
-                <option value="10">SQL Injection (Critical Risk)</option>
-                <option value="8">Cross-Site Scripting / XSS (High Risk)</option>
-                <option value="7">Broken Access Control (High Risk)</option>
-                <option value="5">Security Misconfiguration (Medium Risk)</option>
-                <option value="3">Outdated Components (Low Risk)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Akses Port Terbuka (Nmap Reconnaissance)</label>
-              <select id="simPort" onchange="calculateRisk()" class="w-full bg-cyber-black border border-cyber-border rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none">
-                <option value="9">Port 21 (FTP Default) & Port 23 (Telnet Unencrypted)</option>
-                <option value="7">Port 22 (SSH Open w/ Password Auth)</option>
-                <option value="5">Port 80 (HTTP Non-SSL Open)</option>
-                <option value="2">Port 443 (HTTPS Secure w/ TLS 1.3)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- RISK METER DISPLAY -->
-        <div class="w-full lg:w-80 bg-cyber-black/80 border border-cyber-border rounded-2xl p-6 text-center space-y-4">
-          <p class="text-xs font-mono text-slate-400">SKOR RISIKO KERENTANAN</p>
-          <div class="relative flex items-center justify-center">
-            <div id="riskScoreCircle" class="w-32 h-32 rounded-full border-8 border-rose-500 flex items-center justify-center text-3xl font-black text-rose-500 shadow-lg shadow-rose-950/50">
-              9.5
-            </div>
-          </div>
-          <div>
-            <h4 id="riskStatus" class="font-bold text-rose-400 text-sm">CRITICAL VULNERABILITY</h4>
-            <p id="riskRecommendation" class="text-[11px] text-slate-400 mt-1">Lakukan Patching SQL Injection segera dan gunakan Prepared Statements!</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: JALUR SERTIFIKASI & TINGKAT KEMAHIRAN -->
-    <section id="certifications" class="space-y-6">
-      <div>
-        <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
-          <i class="fa-solid fa-award text-amber-400"></i> Matriks Sertifikasi Industri Keamanan Siber
-        </h2>
-        <p class="text-xs text-slate-400 mt-1">Jalur sertifikasi resmi yang diakui industri global berdasarkan tingkat kemahiran.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- ENTRY LEVEL -->
-        <div class="glass-box p-6 rounded-2xl space-y-4 border-t-4 border-t-emerald-500">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">ENTRY LEVEL</span>
-            <i class="fa-solid fa-seedling text-emerald-400"></i>
-          </div>
-          <h3 class="font-bold text-white text-base">Pemula / Basic</h3>
-          <p class="text-xs text-slate-400">Validasi pemahaman fondasi jaringan, analisis siber dasar, dan operasional awal.</p>
-          <div class="space-y-2 pt-2">
-            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-white">CompTIA Security+</h4>
-                <p class="text-[10px] text-slate-400">CompTIA Global</p>
-              </div>
-              <span class="text-[10px] font-mono text-emerald-400">Sec+</span>
-            </div>
-            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-white">Google Cybersecurity</h4>
-                <p class="text-[10px] text-slate-400">Google Professional</p>
-              </div>
-              <span class="text-[10px] font-mono text-emerald-400">GCC</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- INTERMEDIATE LEVEL -->
-        <div class="glass-box p-6 rounded-2xl space-y-4 border-t-4 border-t-blue-500">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20">INTERMEDIATE</span>
-            <i class="fa-solid fa-shield-halved text-blue-400"></i>
-          </div>
-          <h3 class="font-bold text-white text-base">Menengah / Practitioner</h3>
-          <p class="text-xs text-slate-400">Sertifikasi praktis untuk pengujian penetrasi (Red Team) dan analisis defensif (Blue Team).</p>
-          <div class="space-y-2 pt-2">
-            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-white">Certified Ethical Hacker</h4>
-                <p class="text-[10px] text-slate-400">EC-Council</p>
-              </div>
-              <span class="text-[10px] font-mono text-blue-400">CEH</span>
-            </div>
-            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-white">CompTIA CySA+</h4>
-                <p class="text-[10px] text-slate-400">Cybersecurity Analyst</p>
-              </div>
-              <span class="text-[10px] font-mono text-blue-400">CySA+</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- ADVANCED LEVEL -->
-        <div class="glass-box p-6 rounded-2xl space-y-4 border-t-4 border-t-purple-500">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">ADVANCED</span>
-            <i class="fa-solid fa-crown text-purple-400"></i>
-          </div>
-          <h3 class="font-bold text-white text-base">Tingkat Lanjut / Expert</h3>
-          <p class="text-xs text-slate-400">Pengakuan tertinggi untuk kepemimpinan Arsitektur Keamanan dan Tata Kelola GRC.</p>
-          <div class="space-y-2 pt-2">
-            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-white">CISSP</h4>
-                <p class="text-[10px] text-slate-400">(ISC)² Information Security</p>
-              </div>
-              <span class="text-[10px] font-mono text-purple-400">CISSP</span>
-            </div>
-            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-white">CISM / RCCP / CTBM</h4>
-                <p class="text-[10px] text-slate-400">ISACA & Global Standard</p>
-              </div>
-              <span class="text-[10px] font-mono text-purple-400">EXPERT</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECTION 4: RADAR CHART SPESIALISASI KEAHLIAN -->
-    <section id="radar" class="glass-box p-6 sm:p-8 rounded-3xl">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div>
-          <span class="text-[10px] font-mono font-bold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">VISUAL ANALYTICS</span>
-          <h2 class="text-2xl font-extrabold text-white mt-2">Komparasi Spektrum Keahlian (Domain Matrix)</h2>
-          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-            Setiap jalur karier cyber security menuntut keseimbangan atribut teknis dan tata kelola yang berbeda. Gunakan grafik radar di samping untuk memetakan fokus keahlian Anda.
-          </p>
-
-          <div class="mt-6 space-y-3">
-            <button onclick="updateRadar('red')" class="w-full text-left p-3 rounded-xl bg-cyber-black border border-cyber-border hover:border-red-500 transition flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                <span class="text-xs font-bold text-white">Red Team (Penetration Tester)</span>
-              </div>
-              <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
-            </button>
-
-            <button onclick="updateRadar('blue')" class="w-full text-left p-3 rounded-xl bg-cyber-black border border-cyber-border hover:border-blue-500 transition flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-                <span class="text-xs font-bold text-white">Blue Team (SOC Analyst & Incident Response)</span>
-              </div>
-              <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
-            </button>
-
-            <button onclick="updateRadar('grc')" class="w-full text-left p-3 rounded-xl bg-cyber-black border border-cyber-border hover:border-amber-500 transition flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                <span class="text-xs font-bold text-white">GRC & Hukum Siber (ISO 27001 & UU PDP)</span>
-              </div>
-              <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="h-80 flex items-center justify-center p-4 bg-cyber-black/60 rounded-2xl border border-cyber-border">
-          <canvas id="skillRadarChart"></canvas>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="bg-cyber-dark border-t border-cyber-border py-8 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4">
-      <p>© 2026 NEXUS Enterprise - Cyber Security Career & Learning System.</p>
-      <p class="mt-1 text-[11px] text-slate-600">Dikembangkan berdasarkan Peta Jalan Karier Cyber Security 2026 (ISO/IEC 27001 & OWASP Standard).</p>
-    </div>
-  </footer>
-
-  <!-- JAVASCRIPT LOGIC & ANIMATED CHART.JS -->
-  <script>
-    // ROADMAP FILTER LOGIC
-    function filterRoadmap(cat) {
-      const cards = document.querySelectorAll('.roadmap-card');
-      cards.forEach(card => {
-        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-          card.style.display = 'block';
-          card.classList.add('animate__animated', 'animate__fadeIn');
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    // AUDIT RISK SIMULATOR LOGIC
-    function calculateRisk() {
-      const vulnScore = parseFloat(document.getElementById('simVulnerability').value);
-      const portScore = parseFloat(document.getElementById('simPort').value);
-      
-      const totalRisk = ((vulnScore * 0.6) + (portScore * 0.4)).toFixed(1);
-      
-      const scoreCircle = document.getElementById('riskScoreCircle');
-      const statusText = document.getElementById('riskStatus');
-      const recText = document.getElementById('riskRecommendation');
-
-      scoreCircle.innerText = totalRisk;
-
-      if (totalRisk >= 8.0) {
-        scoreCircle.className = "w-32 h-32 rounded-full border-8 border-rose-500 flex items-center justify-center text-3xl font-black text-rose-500 shadow-lg shadow-rose-950/50 animate-pulse";
-        statusText.innerText = "CRITICAL RISK VULNERABILITY";
-        statusText.className = "font-bold text-rose-400 text-sm";
-        recText.innerText = "Segera lakukan penutupan port sensitif dan implementasikan OWASP Security Patching!";
-      } else if (totalRisk >= 5.0) {
-        scoreCircle.className = "w-32 h-32 rounded-full border-8 border-amber-500 flex items-center justify-center text-3xl font-black text-amber-500 shadow-lg shadow-amber-950/50";
-        statusText.innerText = "MEDIUM WARNING RISK";
-        statusText.className = "font-bold text-amber-400 text-sm";
-        recText.innerText = "Evaluasi konfigurasi enkripsi dan perbarui komponen pustaka yang usang.";
-      } else {
-        scoreCircle.className = "w-32 h-32 rounded-full border-8 border-emerald-500 flex items-center justify-center text-3xl font-black text-emerald-500 shadow-lg shadow-emerald-950/50";
-        statusText.innerText = "LOW RISK - SECURE POSTURE";
-        statusText.className = "font-bold text-emerald-400 text-sm";
-        recText.innerText = "Sistem dalam kondisi relatif aman. Lanjutkan pemantauan rutin Nmap & Wireshark.";
-      }
-    }
-
-    // RADAR CHART INSTANCE
-    let radarChartInstance = null;
-
-    const radarDataPresets = {
-      red: [95, 85, 90, 40, 30, 80],
-      blue: [60, 95, 75, 85, 50, 90],
-      grc: [20, 30, 40, 95, 100, 40]
-    };
-
-    function initRadarChart() {
-      const ctx = document.getElementById('skillRadarChart').getContext('2d');
-      radarChartInstance = new Chart(ctx, {
-        type: 'radar',
-        data: {
-          labels: ['Network Security', 'SOC / Defensif', 'Pentesting / Ofensif', 'ISO 27001 / GRC', 'Hukum & UU PDP', 'Linux / System Admin'],
-          datasets: [{
-            label: 'Tingkat Kemahiran (%)',
-            data: radarDataPresets.red,
-            backgroundColor: 'rgba(239, 68, 68, 0.2)',
-            borderColor: '#ef4444',
-            pointBackgroundColor: '#ef4444',
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: { duration: 1000, easing: 'easeOutQuart' },
-          scales: {
-            r: {
-              angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-              grid: { color: 'rgba(255, 255, 255, 0.1)' },
-              pointLabels: { color: '#94a3b8', font: { size: 10, family: 'Plus Jakarta Sans' } },
-              ticks: { display: false, max: 100 }
-            }
-          },
-          plugins: {
-            legend: { labels: { color: '#f8fafc', font: { family: 'Plus Jakarta Sans', size: 11 } } }
-          }
-        }
-      });
-    }
-
-    function updateRadar(type) {
-      if (!radarChartInstance) return;
-      
-      let newColor = '#ef4444';
-      let newBg = 'rgba(239, 68, 68, 0.2)';
-      let labelName = 'Red Team Spectrum';
-
-      if (type === 'blue') {
-        newColor = '#3b82f6';
-        newBg = 'rgba(59, 130, 246, 0.2)';
-        labelName = 'Blue Team Spectrum';
-      } else if (type === 'grc') {
-        newColor = '#f59e0b';
-        newBg = 'rgba(245, 158, 11, 0.2)';
-        labelName = 'GRC & Hukum Spectrum';
-      }
-
-      radarChartInstance.data.datasets[0].data = radarDataPresets[type];
-      radarChartInstance.data.datasets[0].borderColor = newColor;
-      radarChartInstance.data.datasets[0].backgroundColor = newBg;
-      radarChartInstance.data.datasets[0].pointBackgroundColor = newColor;
-      radarChartInstance.data.datasets[0].label = labelName;
-      radarChartInstance.update();
-    }
-
-    // Inisialisasi Pertama
-    window.onload = function() {
-      calculateRisk();
-      initRadarChart();
-    };
-  </script>
-</body>
+    </style>
+    
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
