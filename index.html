@@ -1,238 +1,326 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Enterprise Inventory Management System</title>
+  <title>NEXUS Enterprise - Realtime Animated Inventory System</title>
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
           colors: {
             brand: {
-              50: '#f0fdf4',
-              500: '#10b981',
-              600: '#059669',
-              900: '#064e3b',
-              dark: '#0f172a'
+              50: '#e6fcf5',
+              400: '#20c997',
+              500: '#12b886',
+              600: '#0ca678',
+              900: '#092c22',
+              dark: '#0a0e17'
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'pulse-glow': 'pulseGlow 2s infinite',
+            'float': 'float 3s ease-in-out infinite'
+          },
+          keyframes: {
+            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.3)' },
+              '50%': { boxShadow: '0 0 25px rgba(16, 185, 129, 0.7)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' }
             }
           }
         }
       }
     }
   </script>
-</head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
 
-  <!-- NAVBAR TOP -->
-  <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+  <style>
+    /* Custom Scrollbar & Glassmorphism Styling */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-[#0a0e17] text-slate-100 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
+
+  <!-- NAVBAR TOP ANIMATED -->
+  <header class="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
-          <i class="fa-solid fa-boxes-stacked text-xl"></i>
+      <div class="flex items-center gap-3 animate-fade-in">
+        <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30 animate-pulse-glow">
+          <i class="fa-solid fa-boxes-stacked text-xl animate-float"></i>
         </div>
         <div>
-          <h1 class="font-bold text-lg text-white leading-none">NEXUS <span class="text-emerald-400">INVENTORY</span></h1>
-          <p class="text-xs text-slate-400">Enterprise Logistics & Stock Management</p>
+          <h1 class="font-extrabold text-lg text-white tracking-wide">NEXUS <span class="text-emerald-400">INVENTORY</span></h1>
+          <p class="text-[11px] text-slate-400 font-medium">Enterprise Enterprise Hardware & Security Assets</p>
         </div>
       </div>
-      <div class="flex items-center gap-4">
-        <button onclick="exportToCSV()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg flex items-center gap-2 border border-slate-600 transition">
-          <i class="fa-solid fa-file-csv text-emerald-400"></i> Export Data
+      <div class="flex items-center gap-3 animate-fade-in">
+        <button onclick="resetToRealData()" title="Reset ke Data Riil" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 active:scale-95 flex items-center gap-2">
+          <i class="fa-solid fa-rotate text-emerald-400"></i> <span class="hidden sm:inline">Reset Data</span>
         </button>
-        <button onclick="openModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold rounded-lg flex items-center gap-2 transition shadow-lg shadow-emerald-900/40">
-          <i class="fa-solid fa-plus"></i> Tambah Barang
+        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 hover:shadow-lg hover:border-emerald-500/50 active:scale-95 flex items-center gap-2">
+          <i class="fa-solid fa-file-csv text-emerald-400"></i> Export CSV
+        </button>
+        <button onclick="openModal()" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-xs font-bold text-slate-950 rounded-xl flex items-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-900/30 hover:scale-105 active:scale-95">
+          <i class="fa-solid fa-plus text-slate-950"></i> Tambah Barang
         </button>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- METRICS CARDS -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+    <!-- METRICS CARDS WITH ANIMATED COUNTER -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      
+      <!-- CARD 1 -->
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.1s;">
         <div>
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Item</p>
-          <h3 id="statTotalItems" class="text-2xl font-bold text-white mt-1">0</h3>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Item Registered</p>
+          <h3 id="statTotalItems" class="text-3xl font-extrabold text-white mt-1">0</h3>
         </div>
-        <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl">
-          <i class="fa-solid fa-box text-2xl"></i>
+        <div class="p-3.5 bg-blue-500/10 text-blue-400 rounded-2xl border border-blue-500/20">
+          <i class="fa-solid fa-server text-2xl"></i>
         </div>
       </div>
 
-      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+      <!-- CARD 2 -->
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.2s;">
         <div>
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Nilai Aset</p>
-          <h3 id="statTotalValue" class="text-2xl font-bold text-emerald-400 mt-1">Rp 0</h3>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Nilai Aset</p>
+          <h3 id="statTotalValue" class="text-2xl font-extrabold text-emerald-400 mt-1">Rp 0</h3>
         </div>
-        <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl">
-          <i class="fa-solid fa-wallet text-2xl"></i>
+        <div class="p-3.5 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20">
+          <i class="fa-solid fa-vault text-2xl"></i>
         </div>
       </div>
 
-      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+      <!-- CARD 3 -->
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.3s;">
         <div>
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Stok Menipis (&lt;10)</p>
-          <h3 id="statLowStock" class="text-2xl font-bold text-amber-400 mt-1">0</h3>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Stok Menipis (&lt;5 Unit)</p>
+          <h3 id="statLowStock" class="text-3xl font-extrabold text-amber-400 mt-1">0</h3>
         </div>
-        <div class="p-3 bg-amber-500/10 text-amber-400 rounded-xl">
-          <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+        <div class="p-3.5 bg-amber-500/10 text-amber-400 rounded-2xl border border-amber-500/20">
+          <i class="fa-solid fa-triangle-exclamation text-2xl animate-bounce"></i>
         </div>
       </div>
 
-      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+      <!-- CARD 4 -->
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.4s;">
         <div>
-          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Kategori</p>
-          <h3 id="statCategories" class="text-2xl font-bold text-purple-400 mt-1">0</h3>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Kategori</p>
+          <h3 id="statCategories" class="text-3xl font-extrabold text-purple-400 mt-1">0</h3>
         </div>
-        <div class="p-3 bg-purple-500/10 text-purple-400 rounded-xl">
+        <div class="p-3.5 bg-purple-500/10 text-purple-400 rounded-2xl border border-purple-500/20">
           <i class="fa-solid fa-layer-group text-2xl"></i>
         </div>
       </div>
     </div>
 
-    <!-- CHARTS SECTION -->
+    <!-- CHARTS SECTION WITH ENHANCED ANIMATION -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 bg-slate-800 border border-slate-700 p-5 rounded-xl">
-        <h2 class="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-chart-column text-emerald-400"></i> Distribusi Stok per Kategori
-        </h2>
+      <div class="lg:col-span-2 glass-card p-6 rounded-2xl shadow-xl animate-slide-up" style="animation-delay: 0.5s;">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="text-sm font-bold text-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-chart-column text-emerald-400"></i> Distribusi Unit Stok per Kategori
+          </h2>
+          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-mono">LIVE ANALYTICS</span>
+        </div>
         <div class="h-64">
           <canvas id="categoryChart"></canvas>
         </div>
       </div>
-      <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
-        <h2 class="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-pie-chart text-emerald-400"></i> Status Ketersediaan Stok
-        </h2>
+
+      <div class="glass-card p-6 rounded-2xl shadow-xl animate-slide-up" style="animation-delay: 0.6s;">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="text-sm font-bold text-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-emerald-400"></i> Status Health Inventory
+          </h2>
+        </div>
         <div class="h-64 flex items-center justify-center">
           <canvas id="statusChart"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- TABLE SECTION -->
-    <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-xl">
-      <!-- TABLE CONTROLS -->
-      <div class="p-4 border-b border-slate-700 flex flex-col md:flex-row gap-4 items-center justify-between">
+    <!-- TABLE SECTION WITH HOVER EFFECTS -->
+    <div class="glass-card rounded-2xl overflow-hidden shadow-2xl border border-slate-800 animate-slide-up" style="animation-delay: 0.7s;">
+      
+      <!-- CONTROLS HEADER -->
+      <div class="p-5 border-b border-slate-800/80 bg-slate-900/60 flex flex-col md:flex-row gap-4 items-center justify-between">
         <div class="relative w-full md:w-80">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-          <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari SKU atau nama barang..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition" />
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari SKU, merk, atau spesifikasi..." class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all duration-200" />
         </div>
         <div class="flex items-center gap-3 w-full md:w-auto">
-          <select id="filterCategory" onchange="renderTable()" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+          <label class="text-xs text-slate-400 hidden sm:inline">Filter Kategori:</label>
+          <select id="filterCategory" onchange="renderTable()" class="bg-slate-950/80 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
             <option value="ALL">Semua Kategori</option>
           </select>
         </div>
       </div>
 
-      <!-- TABLE BODY -->
+      <!-- TABLE CONTENT -->
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-300">
-          <thead class="bg-slate-900/60 text-slate-400 uppercase tracking-wider text-[10px]">
+          <thead class="bg-slate-950/90 text-slate-400 uppercase tracking-wider text-[10px] border-b border-slate-800">
             <tr>
-              <th class="py-3.5 px-4">SKU / Kode</th>
-              <th class="py-3.5 px-4">Nama Barang</th>
-              <th class="py-3.5 px-4">Kategori</th>
-              <th class="py-3.5 px-4 text-center">Jumlah Stok</th>
-              <th class="py-3.5 px-4">Harga Satuan</th>
-              <th class="py-3.5 px-4">Total Aset</th>
-              <th class="py-3.5 px-4 text-center">Status</th>
-              <th class="py-3.5 px-4 text-center">Aksi</th>
+              <th class="py-4 px-5">SKU / Kode Asset</th>
+              <th class="py-4 px-5">Nama Hardware Enterprise</th>
+              <th class="py-4 px-5">Kategori</th>
+              <th class="py-4 px-5 text-center">Jumlah Stok</th>
+              <th class="py-4 px-5">Harga Satuan (IDR)</th>
+              <th class="py-4 px-5">Total Aset</th>
+              <th class="py-4 px-5 text-center">Status</th>
+              <th class="py-4 px-5 text-center">Aksi</th>
             </tr>
           </thead>
-          <tbody id="inventoryTableBody" class="divide-y divide-slate-700/50 font-medium">
-            <!-- Dynamic rows inserted by JS -->
+          <tbody id="inventoryTableBody" class="divide-y divide-slate-800/60 font-medium">
+            <!-- Dynamic rows inserted by JavaScript -->
           </tbody>
         </table>
       </div>
     </div>
   </main>
 
-  <!-- MODAL FORM (ADD / EDIT) -->
-  <div id="itemModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-slate-800 border border-slate-700 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative">
-      <div class="flex justify-between items-center pb-4 border-b border-slate-700 mb-4">
-        <h3 id="modalTitle" class="text-base font-bold text-white">Tambah Barang Baru</h3>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+  <!-- MODAL FORM (ADD / EDIT ITEM) -->
+  <div id="itemModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 transition-all duration-300">
+    <div class="bg-slate-900 border border-slate-700/80 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative transform scale-95 transition-transform duration-300">
+      <div class="flex justify-between items-center pb-4 border-b border-slate-800 mb-5">
+        <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-box text-emerald-400"></i> Tambah Hardware Baru
+        </h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <form id="inventoryForm" onsubmit="saveItem(event)" class="space-y-4">
         <input type="hidden" id="editIndex" value="-1" />
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Kode SKU</label>
-            <input type="text" id="itemSku" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="SKU-1001" />
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kode SKU</label>
+            <input type="text" id="itemSku" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="SKU-DL-R750" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Kategori</label>
-            <input type="text" id="itemCategory" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="Elektronik / Baut / Cairan" />
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kategori Hardware</label>
+            <input type="text" id="itemCategory" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="Server Hardware" />
           </div>
         </div>
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1">Nama Barang</label>
-          <input type="text" id="itemName" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="Laptop Dell Latitude 5420" />
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Perangkat & Spesifikasi</label>
+          <input type="text" id="itemName" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="Dell PowerEdge R750 (2x Intel Xeon Gold)" />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Jumlah Stok</label>
-            <input type="number" id="itemQuantity" required min="0" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="0" />
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Jumlah Stok Unit</label>
+            <input type="number" id="itemQuantity" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="5" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Harga Satuan (Rp)</label>
-            <input type="number" id="itemPrice" required min="0" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="500000" />
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Harga Satuan (Rp)</label>
+            <input type="number" id="itemPrice" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="125000000" />
           </div>
         </div>
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
-          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-200">Batal</button>
-          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg text-xs font-semibold text-white shadow-lg shadow-emerald-900/50">Simpan Data</button>
+        <div class="flex justify-end gap-3 pt-5 border-t border-slate-800">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-300 transition">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 rounded-xl text-xs font-bold text-slate-950 shadow-lg shadow-emerald-900/40 transition">Simpan Hardware</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- JAVASCRIPT LOGIC WITH ANIMATION & REAL ENTERPRISE DATA -->
   <script>
-    // Initial Dummy Data if LocalStorage empty
-    const initialData = [
-      { sku: "SKU-8801", name: "Server Rack Dell PowerEdge R740", category: "Hardware", qty: 4, price: 45000000 },
-      { sku: "SKU-8802", name: "Cisco Switch 2960-X 24 Port", category: "Networking", qty: 15, price: 8500000 },
-      { sku: "SKU-8803", name: "Kabel UTP Cat6 Belden (305m)", category: "Kabel", qty: 28, price: 1850000 },
-      { sku: "SKU-8804", name: "UPS APC Smart-UPS 2200VA", category: "Hardware", qty: 3, price: 12000000 },
-      { sku: "SKU-8805", name: "Access Point Ubiquiti UniFi AP 6", category: "Networking", qty: 42, price: 2300000 }
+    // DATA RIIL PERANGKAT ENTERPRISE IT & CYBER SECURITY 2026
+    const realEnterpriseData = [
+      { sku: "SKU-DL-R750", name: "Dell PowerEdge R750 Server (2x Intel Xeon Gold 6330, 128GB RAM)", category: "Server Hardware", qty: 6, price: 125000000 },
+      { sku: "SKU-CS-C9300", name: "Cisco Catalyst C9300-48P Switch 48-Port PoE+", category: "Networking", qty: 12, price: 78500000 },
+      { sku: "SKU-FG-100F", name: "Fortinet FortiGate 100F Next-Gen Firewall", category: "Cyber Security", qty: 4, price: 62000000 },
+      { sku: "SKU-PA-440", name: "Palo Alto PA-440 Enterprise ML-Powered Firewall", category: "Cyber Security", qty: 3, price: 48000000 },
+      { sku: "SKU-APC-SRT3K", name: "APC Smart-UPS RT 3000VA On-Line 230V", category: "Power System", qty: 8, price: 28500000 },
+      { sku: "SKU-UB-U6PRO", name: "Ubiquiti UniFi U6 Pro Enterprise Access Point WiFi 6", category: "Networking", qty: 35, price: 3200000 },
+      { sku: "SKU-BL-CAT6A", name: "Belden Cat6A SFTP Shielded Industrial Cable 305m", category: "Cabling Infrastructure", qty: 18, price: 3850000 },
+      { sku: "SKU-SN-DS923", name: "Synology NAS DiskStation DS923+ 4-Bay Enterprise", category: "Storage System", qty: 5, price: 11200000 },
+      { sku: "SKU-SE-ST16TB", name: "Seagate Exos X18 16TB Enterprise SAS Hard Drive", category: "Storage System", qty: 24, price: 6750000 },
+      { sku: "SKU-LOG-MX3", name: "Logitech MX Master 3S Performance Wireless Mouse", category: "Peripherals", qty: 2, price: 1650000 }
     ];
 
-    let inventory = JSON.parse(localStorage.getItem('NEXUS_INVENTORY_DATA')) || initialData;
+    let inventory = JSON.parse(localStorage.getItem('NEXUS_ENTERPRISE_REAL_DATA')) || realEnterpriseData;
     let categoryChartInstance = null;
     let statusChartInstance = null;
 
     function saveToLocalStorage() {
-      localStorage.setItem('NEXUS_INVENTORY_DATA', JSON.stringify(inventory));
+      localStorage.setItem('NEXUS_ENTERPRISE_REAL_DATA', JSON.stringify(inventory));
+    }
+
+    function resetToRealData() {
+      if (confirm('Atur ulang seluruh inventaris ke Data Riil Enterprise standar?')) {
+        inventory = [...realEnterpriseData];
+        saveToLocalStorage();
+        renderTable();
+      }
     }
 
     function formatRupiah(number) {
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
     }
 
+    // ANIMATED COUNTER FUNCTION FOR KPIS
+    function animateValue(id, start, end, duration, isCurrency = false) {
+      const obj = document.getElementById(id);
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const currentValue = Math.floor(progress * (end - start) + start);
+        obj.innerText = isCurrency ? formatRupiah(currentValue) : currentValue.toLocaleString('id-ID');
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
     function updateMetrics() {
       const totalItems = inventory.length;
       const totalValue = inventory.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
-      const lowStock = inventory.filter(i => i.qty < 10).length;
+      const lowStock = inventory.filter(i => i.qty < 5).length;
       const categories = [...new Set(inventory.map(i => i.category))];
 
-      document.getElementById('statTotalItems').innerText = totalItems;
-      document.getElementById('statTotalValue').innerText = formatRupiah(totalValue);
-      document.getElementById('statLowStock').innerText = lowStock;
-      document.getElementById('statCategories').innerText = categories.length;
+      animateValue('statTotalItems', 0, totalItems, 800);
+      animateValue('statTotalValue', 0, totalValue, 1000, true);
+      animateValue('statLowStock', 0, lowStock, 800);
+      animateValue('statCategories', 0, categories.length, 800);
 
-      // Update Filter Options
+      // Dynamic Category Options Update
       const filterSelect = document.getElementById('filterCategory');
       const currentVal = filterSelect.value;
       filterSelect.innerHTML = '<option value="ALL">Semua Kategori</option>';
@@ -250,40 +338,40 @@
       tbody.innerHTML = '';
 
       const filtered = inventory.filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(search) || item.sku.toLowerCase().includes(search);
+        const matchesSearch = item.name.toLowerCase().includes(search) || item.sku.toLowerCase().includes(search) || item.category.toLowerCase().includes(search);
         const matchesCategory = filterCat === 'ALL' || item.category === filterCat;
         return matchesSearch && matchesCategory;
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-500">Tidak ada data barang ditemukan.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-500 font-medium">Tidak ada hardware ditemukan dalam inventaris.</td></tr>`;
         return;
       }
 
       filtered.forEach((item, index) => {
         const actualIndex = inventory.indexOf(item);
         const totalAsset = item.qty * item.price;
-        let statusBadge = item.qty < 10 
-          ? `<span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/30">Menipis</span>`
-          : `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Aman</span>`;
+        let statusBadge = item.qty < 5 
+          ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse">Menipis</span>`
+          : `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Stok Aman</span>`;
 
         if (item.qty === 0) {
-          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30">Habis</span>`;
+          statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30">Habis</span>`;
         }
 
         tbody.innerHTML += `
-          <tr class="hover:bg-slate-700/30 transition">
-            <td class="py-3 px-4 font-mono text-emerald-400">${item.sku}</td>
-            <td class="py-3 px-4 font-semibold text-white">${item.name}</td>
-            <td class="py-3 px-4"><span class="bg-slate-700 text-slate-300 px-2 py-0.5 rounded text-[10px]">${item.category}</span></td>
-            <td class="py-3 px-4 text-center font-bold ${item.qty < 10 ? 'text-amber-400' : 'text-slate-100'}">${item.qty}</td>
-            <td class="py-3 px-4">${formatRupiah(item.price)}</td>
-            <td class="py-3 px-4 text-emerald-400 font-semibold">${formatRupiah(totalAsset)}</td>
-            <td class="py-3 px-4 text-center">${statusBadge}</td>
-            <td class="py-3 px-4 text-center">
+          <tr class="hover:bg-slate-800/50 transition-all duration-200 group border-b border-slate-800/40">
+            <td class="py-3.5 px-5 font-mono text-emerald-400 font-bold group-hover:translate-x-1 transition-transform">${item.sku}</td>
+            <td class="py-3.5 px-5 font-semibold text-slate-100">${item.name}</td>
+            <td class="py-3.5 px-5"><span class="bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg text-[10px] border border-slate-700">${item.category}</span></td>
+            <td class="py-3.5 px-5 text-center font-bold text-base ${item.qty < 5 ? 'text-amber-400' : 'text-slate-100'}">${item.qty}</td>
+            <td class="py-3.5 px-5">${formatRupiah(item.price)}</td>
+            <td class="py-3.5 px-5 text-emerald-400 font-bold">${formatRupiah(totalAsset)}</td>
+            <td class="py-3.5 px-5 text-center">${statusBadge}</td>
+            <td class="py-3.5 px-5 text-center">
               <div class="flex items-center justify-center gap-2">
-                <button onclick="editItem(${actualIndex})" class="p-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white rounded transition"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button onclick="deleteItem(${actualIndex})" class="p-1.5 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded transition"><i class="fa-solid fa-trash"></i></button>
+                <button onclick="editItem(${actualIndex})" class="p-2 bg-blue-500/10 text-blue-400 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button onclick="deleteItem(${actualIndex})" class="p-2 bg-rose-500/10 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg transition-all duration-200"><i class="fa-solid fa-trash"></i></button>
               </div>
             </td>
           </tr>
@@ -294,8 +382,9 @@
       renderCharts();
     }
 
+    // ANIMATED CHART RENDERING
     function renderCharts() {
-      // Category Chart
+      // Category Bar Chart
       const categoryCounts = {};
       inventory.forEach(i => categoryCounts[i.category] = (categoryCounts[i.category] || 0) + i.qty);
 
@@ -306,26 +395,29 @@
         data: {
           labels: Object.keys(categoryCounts),
           datasets: [{
-            label: 'Total Unit Stok',
+            label: 'Total Unit Stok Hardware',
             data: Object.values(categoryCounts),
             backgroundColor: '#10b981',
-            borderRadius: 6
+            hoverBackgroundColor: '#34d399',
+            borderRadius: 8,
+            borderSkipped: false
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: { duration: 1500, easing: 'easeOutQuart' },
           plugins: { legend: { display: false } },
           scales: {
-            x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
-            y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+            x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } },
+            y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(51, 65, 85, 0.4)' } }
           }
         }
       });
 
-      // Status Chart
-      const safeCount = inventory.filter(i => i.qty >= 10).length;
-      const lowCount = inventory.filter(i => i.qty < 10 && i.qty > 0).length;
+      // Status Doughnut Chart
+      const safeCount = inventory.filter(i => i.qty >= 5).length;
+      const lowCount = inventory.filter(i => i.qty < 5 && i.qty > 0).length;
       const emptyCount = inventory.filter(i => i.qty === 0).length;
 
       const statusCtx = document.getElementById('statusChart').getContext('2d');
@@ -333,17 +425,19 @@
       statusChartInstance = new Chart(statusCtx, {
         type: 'doughnut',
         data: {
-          labels: ['Aman', 'Menipis', 'Habis'],
+          labels: ['Stok Aman', 'Menipis (<5)', 'Stok Habis'],
           datasets: [{
             data: [safeCount, lowCount, emptyCount],
             backgroundColor: ['#10b981', '#f59e0b', '#f43f5e'],
-            borderWidth: 0
+            borderWidth: 0,
+            hoverOffset: 8
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', boxWidth: 12 } } }
+          animation: { animateScale: true, animateRotate: true, duration: 1200 },
+          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', boxWidth: 12, font: { size: 11 } } } }
         }
       });
     }
@@ -351,14 +445,16 @@
     function openModal() {
       document.getElementById('editIndex').value = "-1";
       document.getElementById('inventoryForm').reset();
-      document.getElementById('modalTitle').innerText = "Tambah Barang Baru";
-      document.getElementById('itemModal').classList.remove('hidden');
-      document.getElementById('itemModal').classList.add('flex');
+      document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-box text-emerald-400"></i> Tambah Hardware Baru';
+      const modal = document.getElementById('itemModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     }
 
     function closeModal() {
-      document.getElementById('itemModal').classList.add('hidden');
-      document.getElementById('itemModal').classList.remove('flex');
+      const modal = document.getElementById('itemModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     }
 
     function saveItem(e) {
@@ -392,13 +488,14 @@
       document.getElementById('itemQuantity').value = item.qty;
       document.getElementById('itemPrice').value = item.price;
 
-      document.getElementById('modalTitle').innerText = "Edit Data Barang";
-      document.getElementById('itemModal').classList.remove('hidden');
-      document.getElementById('itemModal').classList.add('flex');
+      document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-emerald-400"></i> Edit Hardware Data';
+      const modal = document.getElementById('itemModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     }
 
     function deleteItem(index) {
-      if (confirm('Apakah Anda yakin ingin menghapus barang ini dari sistem?')) {
+      if (confirm('Apakah Anda yakin ingin menghapus perangkat ini dari inventaris perusahaan?')) {
         inventory.splice(index, 1);
         saveToLocalStorage();
         renderTable();
@@ -406,7 +503,7 @@
     }
 
     function exportToCSV() {
-      let csv = 'SKU,Nama Barang,Kategori,Stok,Harga Satuan,Total Aset\n';
+      let csv = 'SKU,Nama Hardware,Kategori,Stok Unit,Harga Satuan (IDR),Total Aset (IDR)\n';
       inventory.forEach(i => {
         csv += `"${i.sku}","${i.name}","${i.category}",${i.qty},${i.price},${i.qty * i.price}\n`;
       });
@@ -415,11 +512,11 @@
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.setAttribute('href', url);
-      a.setAttribute('download', `Inventory_Report_${new Date().toISOString().slice(0,10)}.csv`);
+      a.setAttribute('download', `Enterprise_Inventory_Report_${new Date().toISOString().slice(0,10)}.csv`);
       a.click();
     }
 
-    // Init App
+    // Inisialisasi Aplikasi Pertama Kali
     renderTable();
   </script>
 </body>
