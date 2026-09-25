@@ -31,21 +31,26 @@
             }
           },
           animation: {
-            'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'pulse-glow': 'pulseGlow 2s infinite',
-            'float': 'float 3s ease-in-out infinite'
+            'fade-in': 'fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'pulse-glow': 'pulseGlow 2.5s infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'pop-in': 'popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
           },
           keyframes: {
             fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-            slideUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            slideUp: { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
             pulseGlow: {
-              '0%, 100%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.3)' },
-              '50%': { boxShadow: '0 0 25px rgba(16, 185, 129, 0.7)' }
+              '0%, 100%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)' },
+              '50%': { boxShadow: '0 0 28px rgba(16, 185, 129, 0.65)' }
             },
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
               '50%': { transform: 'translateY(-6px)' }
+            },
+            popIn: {
+              '0%': { opacity: '0', transform: 'scale(0.9) translateY(10px)' },
+              '100%': { opacity: '1', transform: 'scale(1) translateY(0)' }
             }
           }
         }
@@ -54,25 +59,31 @@
   </script>
 
   <style>
-    /* Custom Scrollbar & Glassmorphism Styling */
+    /* Scrollbar & Glassmorphism Styling */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-track { background: #0a0e17; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    
     .glass-card {
-      background: rgba(30, 41, 59, 0.7);
-      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-card:hover {
       border-color: rgba(16, 185, 129, 0.4);
+      transform: translateY(-2px);
+    }
+    .table-row-animate {
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
 <body class="bg-[#0a0e17] text-slate-100 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
 
   <!-- NAVBAR TOP ANIMATED -->
-  <header class="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md transition-all duration-300">
+  <header class="bg-slate-900/90 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3 animate-fade-in">
         <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30 animate-pulse-glow">
@@ -80,17 +91,17 @@
         </div>
         <div>
           <h1 class="font-extrabold text-lg text-white tracking-wide">NEXUS <span class="text-emerald-400">INVENTORY</span></h1>
-          <p class="text-[11px] text-slate-400 font-medium">Enterprise Enterprise Hardware & Security Assets</p>
+          <p class="text-[11px] text-slate-400 font-medium">Enterprise Hardware & Security Assets</p>
         </div>
       </div>
       <div class="flex items-center gap-3 animate-fade-in">
-        <button onclick="resetToRealData()" title="Reset ke Data Riil" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 active:scale-95 flex items-center gap-2">
+        <button onclick="resetToRealData()" title="Reset ke Data Default" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 active:scale-95 flex items-center gap-2">
           <i class="fa-solid fa-rotate text-emerald-400"></i> <span class="hidden sm:inline">Reset Data</span>
         </button>
-        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 hover:shadow-lg hover:border-emerald-500/50 active:scale-95 flex items-center gap-2">
+        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 hover:border-emerald-500/50 active:scale-95 flex items-center gap-2">
           <i class="fa-solid fa-file-csv text-emerald-400"></i> Export CSV
         </button>
-        <button onclick="openModal()" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-xs font-bold text-slate-950 rounded-xl flex items-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-900/30 hover:scale-105 active:scale-95">
+        <button onclick="openModal()" class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-xs font-bold text-slate-950 rounded-xl flex items-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-900/30 hover:scale-105 active:scale-95">
           <i class="fa-solid fa-plus text-slate-950"></i> Tambah Barang
         </button>
       </div>
@@ -104,7 +115,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
       
       <!-- CARD 1 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.1s;">
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.1s;">
         <div>
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Item Registered</p>
           <h3 id="statTotalItems" class="text-3xl font-extrabold text-white mt-1">0</h3>
@@ -115,7 +126,7 @@
       </div>
 
       <!-- CARD 2 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.2s;">
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.2s;">
         <div>
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Nilai Aset</p>
           <h3 id="statTotalValue" class="text-2xl font-extrabold text-emerald-400 mt-1">Rp 0</h3>
@@ -126,7 +137,7 @@
       </div>
 
       <!-- CARD 3 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.3s;">
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.3s;">
         <div>
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Stok Menipis (&lt;5 Unit)</p>
           <h3 id="statLowStock" class="text-3xl font-extrabold text-amber-400 mt-1">0</h3>
@@ -137,7 +148,7 @@
       </div>
 
       <!-- CARD 4 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between transform hover:-translate-y-1 transition-all duration-300 shadow-lg animate-slide-up" style="animation-delay: 0.4s;">
+      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.4s;">
         <div>
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Kategori</p>
           <h3 id="statCategories" class="text-3xl font-extrabold text-purple-400 mt-1">0</h3>
@@ -148,14 +159,14 @@
       </div>
     </div>
 
-    <!-- CHARTS SECTION WITH ENHANCED ANIMATION -->
+    <!-- CHARTS SECTION WITH DYNAMIC ANIMATIONS -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="lg:col-span-2 glass-card p-6 rounded-2xl shadow-xl animate-slide-up" style="animation-delay: 0.5s;">
         <div class="flex items-center justify-between mb-5">
           <h2 class="text-sm font-bold text-slate-100 flex items-center gap-2">
             <i class="fa-solid fa-chart-column text-emerald-400"></i> Distribusi Unit Stok per Kategori
           </h2>
-          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-mono">LIVE ANALYTICS</span>
+          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-mono tracking-wider">LIVE ANALYTICS</span>
         </div>
         <div class="h-64">
           <canvas id="categoryChart"></canvas>
@@ -174,8 +185,8 @@
       </div>
     </div>
 
-    <!-- TABLE SECTION WITH HOVER EFFECTS -->
-    <div class="glass-card rounded-2xl overflow-hidden shadow-2xl border border-slate-800 animate-slide-up" style="animation-delay: 0.7s;">
+    <!-- TABLE SECTION WITH HOVER & ENTRY ANIMATIONS -->
+    <div class="glass-card rounded-2xl overflow-hidden shadow-2xl border border-slate-800/80 animate-slide-up" style="animation-delay: 0.7s;">
       
       <!-- CONTROLS HEADER -->
       <div class="p-5 border-b border-slate-800/80 bg-slate-900/60 flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -216,50 +227,49 @@
 
   <!-- MODAL FORM (ADD / EDIT ITEM) -->
   <div id="itemModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 transition-all duration-300">
-    <div class="bg-slate-900 border border-slate-700/80 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative transform scale-95 transition-transform duration-300">
+    <div class="bg-slate-900 border border-slate-700/80 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative animate-pop-in">
       <div class="flex justify-between items-center pb-4 border-b border-slate-800 mb-5">
         <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
           <i class="fa-solid fa-box text-emerald-400"></i> Tambah Hardware Baru
         </h3>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <form id="inventoryForm" onsubmit="saveItem(event)" class="space-y-4">
         <input type="hidden" id="editIndex" value="-1" />
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kode SKU</label>
-            <input type="text" id="itemSku" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="SKU-DL-R750" />
+            <input type="text" id="itemSku" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="SKU-DL-R750" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kategori Hardware</label>
-            <input type="text" id="itemCategory" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="Server Hardware" />
+            <input type="text" id="itemCategory" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="Server Hardware" />
           </div>
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Perangkat & Spesifikasi</label>
-          <input type="text" id="itemName" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="Dell PowerEdge R750 (2x Intel Xeon Gold)" />
+          <input type="text" id="itemName" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="Dell PowerEdge R750 Server" />
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Jumlah Stok Unit</label>
-            <input type="number" id="itemQuantity" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="5" />
+            <input type="number" id="itemQuantity" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="5" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1.5">Harga Satuan (Rp)</label>
-            <input type="number" id="itemPrice" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition" placeholder="125000000" />
+            <input type="number" id="itemPrice" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="125000000" />
           </div>
         </div>
         <div class="flex justify-end gap-3 pt-5 border-t border-slate-800">
-          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-300 transition">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 rounded-xl text-xs font-bold text-slate-950 shadow-lg shadow-emerald-900/40 transition">Simpan Hardware</button>
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-300 transition-all">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 rounded-xl text-xs font-bold text-slate-950 shadow-lg shadow-emerald-900/40 transition-all hover:scale-105 active:scale-95">Simpan Hardware</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC WITH ANIMATION & REAL ENTERPRISE DATA -->
+  <!-- JAVASCRIPT LOGIC WITH ANIMATIONS & REAL DATA PERSISTENCE -->
   <script>
-    // DATA RIIL PERANGKAT ENTERPRISE IT & CYBER SECURITY 2026
     const realEnterpriseData = [
       { sku: "SKU-DL-R750", name: "Dell PowerEdge R750 Server (2x Intel Xeon Gold 6330, 128GB RAM)", category: "Server Hardware", qty: 6, price: 125000000 },
       { sku: "SKU-CS-C9300", name: "Cisco Catalyst C9300-48P Switch 48-Port PoE+", category: "Networking", qty: 12, price: 78500000 },
@@ -282,7 +292,7 @@
     }
 
     function resetToRealData() {
-      if (confirm('Atur ulang seluruh inventaris ke Data Riil Enterprise standar?')) {
+      if (confirm('Reset seluruh data inventaris ke awal?')) {
         inventory = [...realEnterpriseData];
         saveToLocalStorage();
         renderTable();
@@ -293,9 +303,10 @@
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
     }
 
-    // ANIMATED COUNTER FUNCTION FOR KPIS
+    // ANIMATED COUNTER FUNCTION FOR KPI CARDS
     function animateValue(id, start, end, duration, isCurrency = false) {
       const obj = document.getElementById(id);
+      if (!obj) return;
       let startTimestamp = null;
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
@@ -320,7 +331,6 @@
       animateValue('statLowStock', 0, lowStock, 800);
       animateValue('statCategories', 0, categories.length, 800);
 
-      // Dynamic Category Options Update
       const filterSelect = document.getElementById('filterCategory');
       const currentVal = filterSelect.value;
       filterSelect.innerHTML = '<option value="ALL">Semua Kategori</option>';
@@ -344,7 +354,7 @@
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-500 font-medium">Tidak ada hardware ditemukan dalam inventaris.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-500 font-medium">Tidak ada hardware ditemukan.</td></tr>`;
         return;
       }
 
@@ -360,7 +370,7 @@
         }
 
         tbody.innerHTML += `
-          <tr class="hover:bg-slate-800/50 transition-all duration-200 group border-b border-slate-800/40">
+          <tr class="hover:bg-slate-800/50 transition-all duration-200 group border-b border-slate-800/40 table-row-animate" style="animation-delay: ${index * 0.03}s">
             <td class="py-3.5 px-5 font-mono text-emerald-400 font-bold group-hover:translate-x-1 transition-transform">${item.sku}</td>
             <td class="py-3.5 px-5 font-semibold text-slate-100">${item.name}</td>
             <td class="py-3.5 px-5"><span class="bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg text-[10px] border border-slate-700">${item.category}</span></td>
@@ -370,8 +380,8 @@
             <td class="py-3.5 px-5 text-center">${statusBadge}</td>
             <td class="py-3.5 px-5 text-center">
               <div class="flex items-center justify-center gap-2">
-                <button onclick="editItem(${actualIndex})" class="p-2 bg-blue-500/10 text-blue-400 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button onclick="deleteItem(${actualIndex})" class="p-2 bg-rose-500/10 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg transition-all duration-200"><i class="fa-solid fa-trash"></i></button>
+                <button onclick="editItem(${actualIndex})" class="p-2 bg-blue-500/10 text-blue-400 hover:bg-blue-600 hover:text-white rounded-lg transition-all"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button onclick="deleteItem(${actualIndex})" class="p-2 bg-rose-500/10 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg transition-all"><i class="fa-solid fa-trash"></i></button>
               </div>
             </td>
           </tr>
@@ -382,9 +392,7 @@
       renderCharts();
     }
 
-    // ANIMATED CHART RENDERING
     function renderCharts() {
-      // Category Bar Chart
       const categoryCounts = {};
       inventory.forEach(i => categoryCounts[i.category] = (categoryCounts[i.category] || 0) + i.qty);
 
@@ -406,7 +414,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 1500, easing: 'easeOutQuart' },
+          animation: { duration: 1200, easing: 'easeOutQuart' },
           plugins: { legend: { display: false } },
           scales: {
             x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } },
@@ -415,7 +423,6 @@
         }
       });
 
-      // Status Doughnut Chart
       const safeCount = inventory.filter(i => i.qty >= 5).length;
       const lowCount = inventory.filter(i => i.qty < 5 && i.qty > 0).length;
       const emptyCount = inventory.filter(i => i.qty === 0).length;
@@ -436,7 +443,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { animateScale: true, animateRotate: true, duration: 1200 },
+          animation: { animateScale: true, animateRotate: true, duration: 1000 },
           plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', boxWidth: 12, font: { size: 11 } } } }
         }
       });
@@ -495,7 +502,7 @@
     }
 
     function deleteItem(index) {
-      if (confirm('Apakah Anda yakin ingin menghapus perangkat ini dari inventaris perusahaan?')) {
+      if (confirm('Hapus perangkat ini dari inventaris?')) {
         inventory.splice(index, 1);
         saveToLocalStorage();
         renderTable();
@@ -516,7 +523,7 @@
       a.click();
     }
 
-    // Inisialisasi Aplikasi Pertama Kali
+    // Inisialisasi Pertama Kali
     renderTable();
   </script>
 </body>
