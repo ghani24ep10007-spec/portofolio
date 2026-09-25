@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enterprise Inventory Management System</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              500: '#10b981',
+              600: '#059669',
+              900: '#064e3b',
+              dark: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
+
+  <!-- NAVBAR TOP -->
+  <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-lg">
+          <i class="fa-solid fa-boxes-stacked text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg text-white leading-none">NEXUS <span class="text-emerald-400">INVENTORY</span></h1>
+          <p class="text-xs text-slate-400">Enterprise Logistics & Stock Management</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="exportToCSV()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg flex items-center gap-2 border border-slate-600 transition">
+          <i class="fa-solid fa-file-csv text-emerald-400"></i> Export Data
+        </button>
+        <button onclick="openModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold rounded-lg flex items-center gap-2 transition shadow-lg shadow-emerald-900/40">
+          <i class="fa-solid fa-plus"></i> Tambah Barang
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- METRICS CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Item</p>
+          <h3 id="statTotalItems" class="text-2xl font-bold text-white mt-1">0</h3>
+        </div>
+        <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl">
+          <i class="fa-solid fa-box text-2xl"></i>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Nilai Aset</p>
+          <h3 id="statTotalValue" class="text-2xl font-bold text-emerald-400 mt-1">Rp 0</h3>
+        </div>
+        <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl">
+          <i class="fa-solid fa-wallet text-2xl"></i>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Stok Menipis (&lt;10)</p>
+          <h3 id="statLowStock" class="text-2xl font-bold text-amber-400 mt-1">0</h3>
+        </div>
+        <div class="p-3 bg-amber-500/10 text-amber-400 rounded-xl">
+          <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 border border-slate-700/80 p-5 rounded-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Kategori</p>
+          <h3 id="statCategories" class="text-2xl font-bold text-purple-400 mt-1">0</h3>
+        </div>
+        <div class="p-3 bg-purple-500/10 text-purple-400 rounded-xl">
+          <i class="fa-solid fa-layer-group text-2xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-slate-800 border border-slate-700 p-5 rounded-xl">
+        <h2 class="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-chart-column text-emerald-400"></i> Distribusi Stok per Kategori
+        </h2>
+        <div class="h-64">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+      <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
+        <h2 class="text-sm font-semibold text-slate-200 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-pie-chart text-emerald-400"></i> Status Ketersediaan Stok
+        </h2>
+        <div class="h-64 flex items-center justify-center">
+          <canvas id="statusChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE SECTION -->
+    <div class="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden shadow-xl">
+      <!-- TABLE CONTROLS -->
+      <div class="p-4 border-b border-slate-700 flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="relative w-full md:w-80">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari SKU atau nama barang..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition" />
+        </div>
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <select id="filterCategory" onchange="renderTable()" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+            <option value="ALL">Semua Kategori</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLE BODY -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-900/60 text-slate-400 uppercase tracking-wider text-[10px]">
+            <tr>
+              <th class="py-3.5 px-4">SKU / Kode</th>
+              <th class="py-3.5 px-4">Nama Barang</th>
+              <th class="py-3.5 px-4">Kategori</th>
+              <th class="py-3.5 px-4 text-center">Jumlah Stok</th>
+              <th class="py-3.5 px-4">Harga Satuan</th>
+              <th class="py-3.5 px-4">Total Aset</th>
+              <th class="py-3.5 px-4 text-center">Status</th>
+              <th class="py-3.5 px-4 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryTableBody" class="divide-y divide-slate-700/50 font-medium">
+            <!-- Dynamic rows inserted by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL FORM (ADD / EDIT) -->
+  <div id="itemModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-slate-800 border border-slate-700 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative">
+      <div class="flex justify-between items-center pb-4 border-b border-slate-700 mb-4">
+        <h3 id="modalTitle" class="text-base font-bold text-white">Tambah Barang Baru</h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <form id="inventoryForm" onsubmit="saveItem(event)" class="space-y-4">
+        <input type="hidden" id="editIndex" value="-1" />
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Kode SKU</label>
+            <input type="text" id="itemSku" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="SKU-1001" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Kategori</label>
+            <input type="text" id="itemCategory" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="Elektronik / Baut / Cairan" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Nama Barang</label>
+          <input type="text" id="itemName" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="Laptop Dell Latitude 5420" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Jumlah Stok</label>
+            <input type="number" id="itemQuantity" required min="0" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="0" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Harga Satuan (Rp)</label>
+            <input type="number" id="itemPrice" required min="0" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none" placeholder="500000" />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-200">Batal</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg text-xs font-semibold text-white shadow-lg shadow-emerald-900/50">Simpan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Initial Dummy Data if LocalStorage empty
+    const initialData = [
+      { sku: "SKU-8801", name: "Server Rack Dell PowerEdge R740", category: "Hardware", qty: 4, price: 45000000 },
+      { sku: "SKU-8802", name: "Cisco Switch 2960-X 24 Port", category: "Networking", qty: 15, price: 8500000 },
+      { sku: "SKU-8803", name: "Kabel UTP Cat6 Belden (305m)", category: "Kabel", qty: 28, price: 1850000 },
+      { sku: "SKU-8804", name: "UPS APC Smart-UPS 2200VA", category: "Hardware", qty: 3, price: 12000000 },
+      { sku: "SKU-8805", name: "Access Point Ubiquiti UniFi AP 6", category: "Networking", qty: 42, price: 2300000 }
+    ];
+
+    let inventory = JSON.parse(localStorage.getItem('NEXUS_INVENTORY_DATA')) || initialData;
+    let categoryChartInstance = null;
+    let statusChartInstance = null;
+
+    function saveToLocalStorage() {
+      localStorage.setItem('NEXUS_INVENTORY_DATA', JSON.stringify(inventory));
+    }
+
+    function formatRupiah(number) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+    }
+
+    function updateMetrics() {
+      const totalItems = inventory.length;
+      const totalValue = inventory.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
+      const lowStock = inventory.filter(i => i.qty < 10).length;
+      const categories = [...new Set(inventory.map(i => i.category))];
+
+      document.getElementById('statTotalItems').innerText = totalItems;
+      document.getElementById('statTotalValue').innerText = formatRupiah(totalValue);
+      document.getElementById('statLowStock').innerText = lowStock;
+      document.getElementById('statCategories').innerText = categories.length;
+
+      // Update Filter Options
+      const filterSelect = document.getElementById('filterCategory');
+      const currentVal = filterSelect.value;
+      filterSelect.innerHTML = '<option value="ALL">Semua Kategori</option>';
+      categories.forEach(cat => {
+        filterSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+      });
+      filterSelect.value = currentVal;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('inventoryTableBody');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const filterCat = document.getElementById('filterCategory').value;
+
+      tbody.innerHTML = '';
+
+      const filtered = inventory.filter(item => {
+        const matchesSearch = item.name.toLowerCase().includes(search) || item.sku.toLowerCase().includes(search);
+        const matchesCategory = filterCat === 'ALL' || item.category === filterCat;
+        return matchesSearch && matchesCategory;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-500">Tidak ada data barang ditemukan.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach((item, index) => {
+        const actualIndex = inventory.indexOf(item);
+        const totalAsset = item.qty * item.price;
+        let statusBadge = item.qty < 10 
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/30">Menipis</span>`
+          : `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Aman</span>`;
+
+        if (item.qty === 0) {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30">Habis</span>`;
+        }
+
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-700/30 transition">
+            <td class="py-3 px-4 font-mono text-emerald-400">${item.sku}</td>
+            <td class="py-3 px-4 font-semibold text-white">${item.name}</td>
+            <td class="py-3 px-4"><span class="bg-slate-700 text-slate-300 px-2 py-0.5 rounded text-[10px]">${item.category}</span></td>
+            <td class="py-3 px-4 text-center font-bold ${item.qty < 10 ? 'text-amber-400' : 'text-slate-100'}">${item.qty}</td>
+            <td class="py-3 px-4">${formatRupiah(item.price)}</td>
+            <td class="py-3 px-4 text-emerald-400 font-semibold">${formatRupiah(totalAsset)}</td>
+            <td class="py-3 px-4 text-center">${statusBadge}</td>
+            <td class="py-3 px-4 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <button onclick="editItem(${actualIndex})" class="p-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white rounded transition"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button onclick="deleteItem(${actualIndex})" class="p-1.5 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded transition"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      updateMetrics();
+      renderCharts();
+    }
+
+    function renderCharts() {
+      // Category Chart
+      const categoryCounts = {};
+      inventory.forEach(i => categoryCounts[i.category] = (categoryCounts[i.category] || 0) + i.qty);
+
+      const catCtx = document.getElementById('categoryChart').getContext('2d');
+      if (categoryChartInstance) categoryChartInstance.destroy();
+      categoryChartInstance = new Chart(catCtx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(categoryCounts),
+          datasets: [{
+            label: 'Total Unit Stok',
+            data: Object.values(categoryCounts),
+            backgroundColor: '#10b981',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+            y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+          }
+        }
+      });
+
+      // Status Chart
+      const safeCount = inventory.filter(i => i.qty >= 10).length;
+      const lowCount = inventory.filter(i => i.qty < 10 && i.qty > 0).length;
+      const emptyCount = inventory.filter(i => i.qty === 0).length;
+
+      const statusCtx = document.getElementById('statusChart').getContext('2d');
+      if (statusChartInstance) statusChartInstance.destroy();
+      statusChartInstance = new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Aman', 'Menipis', 'Habis'],
+          datasets: [{
+            data: [safeCount, lowCount, emptyCount],
+            backgroundColor: ['#10b981', '#f59e0b', '#f43f5e'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', boxWidth: 12 } } }
+        }
+      });
+    }
+
+    function openModal() {
+      document.getElementById('editIndex').value = "-1";
+      document.getElementById('inventoryForm').reset();
+      document.getElementById('modalTitle').innerText = "Tambah Barang Baru";
+      document.getElementById('itemModal').classList.remove('hidden');
+      document.getElementById('itemModal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('itemModal').classList.add('hidden');
+      document.getElementById('itemModal').classList.remove('flex');
+    }
+
+    function saveItem(e) {
+      e.preventDefault();
+      const index = parseInt(document.getElementById('editIndex').value);
+      const sku = document.getElementById('itemSku').value.trim();
+      const name = document.getElementById('itemName').value.trim();
+      const category = document.getElementById('itemCategory').value.trim();
+      const qty = parseInt(document.getElementById('itemQuantity').value);
+      const price = parseFloat(document.getElementById('itemPrice').value);
+
+      const itemData = { sku, name, category, qty, price };
+
+      if (index === -1) {
+        inventory.push(itemData);
+      } else {
+        inventory[index] = itemData;
+      }
+
+      saveToLocalStorage();
+      closeModal();
+      renderTable();
+    }
+
+    function editItem(index) {
+      const item = inventory[index];
+      document.getElementById('editIndex').value = index;
+      document.getElementById('itemSku').value = item.sku;
+      document.getElementById('itemName').value = item.name;
+      document.getElementById('itemCategory').value = item.category;
+      document.getElementById('itemQuantity').value = item.qty;
+      document.getElementById('itemPrice').value = item.price;
+
+      document.getElementById('modalTitle').innerText = "Edit Data Barang";
+      document.getElementById('itemModal').classList.remove('hidden');
+      document.getElementById('itemModal').classList.add('flex');
+    }
+
+    function deleteItem(index) {
+      if (confirm('Apakah Anda yakin ingin menghapus barang ini dari sistem?')) {
+        inventory.splice(index, 1);
+        saveToLocalStorage();
+        renderTable();
+      }
+    }
+
+    function exportToCSV() {
+      let csv = 'SKU,Nama Barang,Kategori,Stok,Harga Satuan,Total Aset\n';
+      inventory.forEach(i => {
+        csv += `"${i.sku}","${i.name}","${i.category}",${i.qty},${i.price},${i.qty * i.price}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `Inventory_Report_${new Date().toISOString().slice(0,10)}.csv`);
+      a.click();
+    }
+
+    // Init App
+    renderTable();
+  </script>
+</body>
+</html>
