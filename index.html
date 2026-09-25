@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEXUS Enterprise - Realtime Animated Inventory System</title>
+  <title>NEXUS - Cyber Security Career & Learning System 2026</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,45 +12,48 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          fontFamily: { 
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
           colors: {
-            brand: {
-              50: '#e6fcf5',
-              400: '#20c997',
-              500: '#12b886',
-              600: '#0ca678',
-              900: '#092c22',
-              dark: '#0a0e17'
+            cyber: {
+              black: '#060911',
+              dark: '#0d1322',
+              card: '#131b2e',
+              border: '#1e293b',
+              accent: '#10b981',
+              blue: '#3b82f6',
+              red: '#ef4444',
+              purple: '#a855f7'
             }
           },
           animation: {
-            'fade-in': 'fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'pulse-glow': 'pulseGlow 2.5s infinite',
-            'float': 'float 3s ease-in-out infinite',
-            'pop-in': 'popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+            'glow-pulse': 'glowPulse 2s infinite',
+            'float': 'float 4s ease-in-out infinite',
+            'radar-spin': 'radarSpin 10s linear infinite'
           },
           keyframes: {
-            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-            slideUp: { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-            pulseGlow: {
-              '0%, 100%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)' },
-              '50%': { boxShadow: '0 0 28px rgba(16, 185, 129, 0.65)' }
+            glowPulse: {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)' },
+              '50%': { boxShadow: '0 0 30px rgba(16, 185, 129, 0.6)' }
             },
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-6px)' }
+              '50%': { transform: 'translateY(-8px)' }
             },
-            popIn: {
-              '0%': { opacity: '0', transform: 'scale(0.9) translateY(10px)' },
-              '100%': { opacity: '1', transform: 'scale(1) translateY(0)' }
+            radarSpin: {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' }
             }
           }
         }
@@ -59,472 +62,544 @@
   </script>
 
   <style>
-    /* Scrollbar & Glassmorphism Styling */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0a0e17; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #060911; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #10b981; }
-    
-    .glass-card {
-      background: rgba(15, 23, 42, 0.75);
+
+    .glass-box {
+      background: rgba(19, 27, 46, 0.75);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .glass-card:hover {
+    .glass-box:hover {
       border-color: rgba(16, 185, 129, 0.4);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
-    .table-row-animate {
-      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    .gradient-text {
+      background: linear-gradient(135deg, #34d399 0%, #3b82f6 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
-<body class="bg-[#0a0e17] text-slate-100 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
+<body class="bg-cyber-black text-slate-100 font-sans min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
 
-  <!-- NAVBAR TOP ANIMATED -->
-  <header class="bg-slate-900/90 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md transition-all duration-300">
+  <!-- NAVBAR INTERAKTIF -->
+  <header class="bg-cyber-dark/90 border-b border-cyber-border sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3 animate-fade-in">
-        <div class="p-2.5 bg-emerald-500/20 text-emerald-400 rounded-xl border border-emerald-500/30 animate-pulse-glow">
-          <i class="fa-solid fa-boxes-stacked text-xl animate-float"></i>
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/30 animate-glow-pulse">
+          <i class="fa-solid fa-shield-halved text-xl animate-float"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-lg text-white tracking-wide">NEXUS <span class="text-emerald-400">INVENTORY</span></h1>
-          <p class="text-[11px] text-slate-400 font-medium">Enterprise Hardware & Security Assets</p>
+          <h1 class="font-extrabold text-lg text-white tracking-wide">NEXUS <span class="text-emerald-400">CYBER 2026</span></h1>
+          <p class="text-[10px] text-slate-400 font-mono">Peta Jalan Karier & Interactive Learning Platform</p>
         </div>
       </div>
-      <div class="flex items-center gap-3 animate-fade-in">
-        <button onclick="resetToRealData()" title="Reset ke Data Default" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 active:scale-95 flex items-center gap-2">
-          <i class="fa-solid fa-rotate text-emerald-400"></i> <span class="hidden sm:inline">Reset Data</span>
-        </button>
-        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all duration-200 hover:border-emerald-500/50 active:scale-95 flex items-center gap-2">
-          <i class="fa-solid fa-file-csv text-emerald-400"></i> Export CSV
-        </button>
-        <button onclick="openModal()" class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-xs font-bold text-slate-950 rounded-xl flex items-center gap-2 transition-all duration-300 shadow-lg shadow-emerald-900/30 hover:scale-105 active:scale-95">
-          <i class="fa-solid fa-plus text-slate-950"></i> Tambah Barang
-        </button>
+      
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold">
+        <a href="#roadmap" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-route text-emerald-400"></i> Peta Jalan
+        </a>
+        <a href="#audit-sim" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-bug text-emerald-400"></i> Audit Simulator
+        </a>
+        <a href="#certifications" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-certificate text-emerald-400"></i> Sertifikasi
+        </a>
+        <a href="#radar" class="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-chart-pie text-emerald-400"></i> Radar Keahlian
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> 2026 ROADMAP READY
+        </span>
       </div>
     </div>
   </header>
 
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden py-16 border-b border-cyber-border/60 bg-gradient-to-b from-cyber-dark to-cyber-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <span class="px-3 py-1 text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/30 inline-block mb-4">
+        PEMETAAN KARIER SIBER LENGKAP
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight max-w-4xl mx-auto">
+        Peta Jalan Karier Cyber Security 2026: <br><span class="gradient-text">Dari Nol Hingga Ahli</span>
+      </h1>
+      <p class="mt-4 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto font-normal">
+        Platform simulasi dan panduan praktis berdasarkan standar keamanan industri terkini. Menguasai fondasi infrastruktur, analisis keamanan, hingga spesifikasi peran Red, Blue, & GRC Team.
+      </p>
+
+      <!-- KPI METRICS -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-10">
+        <div class="glass-box p-4 rounded-xl text-center">
+          <p class="text-[10px] text-slate-400 uppercase font-mono">Total Tahapan</p>
+          <h4 class="text-2xl font-extrabold text-emerald-400 mt-1">4 TAHAP</h4>
+        </div>
+        <div class="glass-box p-4 rounded-xl text-center">
+          <p class="text-[10px] text-slate-400 uppercase font-mono">Fokus Spesialisasi</p>
+          <h4 class="text-2xl font-extrabold text-blue-400 mt-1">4 JALUR</h4>
+        </div>
+        <div class="glass-box p-4 rounded-xl text-center">
+          <p class="text-[10px] text-slate-400 uppercase font-mono">Tingkat Sertifikasi</p>
+          <h4 class="text-2xl font-extrabold text-purple-400 mt-1">3 LEVEL</h4>
+        </div>
+        <div class="glass-box p-4 rounded-xl text-center">
+          <p class="text-[10px] text-slate-400 uppercase font-mono">Framework Utama</p>
+          <h4 class="text-2xl font-extrabold text-amber-400 mt-1">OWASP & GRC</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
 
-    <!-- METRICS CARDS WITH ANIMATED COUNTER -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-      
-      <!-- CARD 1 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.1s;">
+    <!-- SECTION 1: INTERACTIVE TIMELINE ROADMAP -->
+    <section id="roadmap" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Item Registered</p>
-          <h3 id="statTotalItems" class="text-3xl font-extrabold text-white mt-1">0</h3>
-        </div>
-        <div class="p-3.5 bg-blue-500/10 text-blue-400 rounded-2xl border border-blue-500/20">
-          <i class="fa-solid fa-server text-2xl"></i>
-        </div>
-      </div>
-
-      <!-- CARD 2 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.2s;">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Nilai Aset</p>
-          <h3 id="statTotalValue" class="text-2xl font-extrabold text-emerald-400 mt-1">Rp 0</h3>
-        </div>
-        <div class="p-3.5 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20">
-          <i class="fa-solid fa-vault text-2xl"></i>
-        </div>
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.3s;">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Stok Menipis (&lt;5 Unit)</p>
-          <h3 id="statLowStock" class="text-3xl font-extrabold text-amber-400 mt-1">0</h3>
-        </div>
-        <div class="p-3.5 bg-amber-500/10 text-amber-400 rounded-2xl border border-amber-500/20">
-          <i class="fa-solid fa-triangle-exclamation text-2xl animate-bounce"></i>
-        </div>
-      </div>
-
-      <!-- CARD 4 -->
-      <div class="glass-card p-5 rounded-2xl flex items-center justify-between shadow-lg animate-slide-up" style="animation-delay: 0.4s;">
-        <div>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Kategori</p>
-          <h3 id="statCategories" class="text-3xl font-extrabold text-purple-400 mt-1">0</h3>
-        </div>
-        <div class="p-3.5 bg-purple-500/10 text-purple-400 rounded-2xl border border-purple-500/20">
-          <i class="fa-solid fa-layer-group text-2xl"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- CHARTS SECTION WITH DYNAMIC ANIMATIONS -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 glass-card p-6 rounded-2xl shadow-xl animate-slide-up" style="animation-delay: 0.5s;">
-        <div class="flex items-center justify-between mb-5">
-          <h2 class="text-sm font-bold text-slate-100 flex items-center gap-2">
-            <i class="fa-solid fa-chart-column text-emerald-400"></i> Distribusi Unit Stok per Kategori
+          <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+            <i class="fa-solid fa-map-location-dot text-emerald-400"></i> Tahapan Peta Jalan Karier
           </h2>
-          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-mono tracking-wider">LIVE ANALYTICS</span>
+          <p class="text-xs text-slate-400 mt-1">Klik pada tahapan untuk mengeksplorasi modul pembelajaran interaktif.</p>
         </div>
-        <div class="h-64">
-          <canvas id="categoryChart"></canvas>
-        </div>
-      </div>
-
-      <div class="glass-card p-6 rounded-2xl shadow-xl animate-slide-up" style="animation-delay: 0.6s;">
-        <div class="flex items-center justify-between mb-5">
-          <h2 class="text-sm font-bold text-slate-100 flex items-center gap-2">
-            <i class="fa-solid fa-chart-pie text-emerald-400"></i> Status Health Inventory
-          </h2>
-        </div>
-        <div class="h-64 flex items-center justify-center">
-          <canvas id="statusChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- TABLE SECTION WITH HOVER & ENTRY ANIMATIONS -->
-    <div class="glass-card rounded-2xl overflow-hidden shadow-2xl border border-slate-800/80 animate-slide-up" style="animation-delay: 0.7s;">
-      
-      <!-- CONTROLS HEADER -->
-      <div class="p-5 border-b border-slate-800/80 bg-slate-900/60 flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div class="relative w-full md:w-80">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-          <input type="text" id="searchInput" oninput="renderTable()" placeholder="Cari SKU, merk, atau spesifikasi..." class="w-full bg-slate-950/80 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all duration-200" />
-        </div>
-        <div class="flex items-center gap-3 w-full md:w-auto">
-          <label class="text-xs text-slate-400 hidden sm:inline">Filter Kategori:</label>
-          <select id="filterCategory" onchange="renderTable()" class="bg-slate-950/80 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition-all">
-            <option value="ALL">Semua Kategori</option>
-          </select>
+        <div class="flex gap-2 font-mono text-xs">
+          <button onclick="filterRoadmap('all')" class="px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-emerald-400 hover:border-emerald-500 active">Semua Tahap</button>
+          <button onclick="filterRoadmap('fondasi')" class="px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-slate-300 hover:border-emerald-500">Tahap 1 & 2</button>
+          <button onclick="filterRoadmap('spesialisasi')" class="px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-slate-300 hover:border-emerald-500">Tahap 3 & 4</button>
         </div>
       </div>
 
-      <!-- TABLE CONTENT -->
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-300">
-          <thead class="bg-slate-950/90 text-slate-400 uppercase tracking-wider text-[10px] border-b border-slate-800">
-            <tr>
-              <th class="py-4 px-5">SKU / Kode Asset</th>
-              <th class="py-4 px-5">Nama Hardware Enterprise</th>
-              <th class="py-4 px-5">Kategori</th>
-              <th class="py-4 px-5 text-center">Jumlah Stok</th>
-              <th class="py-4 px-5">Harga Satuan (IDR)</th>
-              <th class="py-4 px-5">Total Aset</th>
-              <th class="py-4 px-5 text-center">Status</th>
-              <th class="py-4 px-5 text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="inventoryTableBody" class="divide-y divide-slate-800/60 font-medium">
-            <!-- Dynamic rows inserted by JavaScript -->
-          </tbody>
-        </table>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="roadmapGrid">
+        
+        <!-- TAHAP 1 -->
+        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-emerald-500" data-cat="fondasi">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">TAHAP 1</span>
+              <h3 class="text-lg font-bold text-white mt-2">Kuasai Infrastruktur & Pondasi Dasar</h3>
+            </div>
+            <i class="fa-solid fa-network-wired text-2xl text-emerald-400/80"></i>
+          </div>
+          <ul class="text-xs text-slate-300 space-y-2.5">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Jaringan Komputer:</strong> Memahami protokol TCP/IP, OSI Model, Subnetting, dan Routing.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Administrasi Sistem:</strong> Penguasaan CLI Linux (Ubuntu/Debian/Kali) & Windows Server Administration.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Kriptografi & CIA Triad:</strong> Konsep Kerahasiaan (Confidentiality), Integritas (Integrity), Ketersediaan (Availability), Simetris & Asimetris Enkripsi.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- TAHAP 2 -->
+        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-blue-500" data-cat="fondasi">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <span class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20">TAHAP 2</span>
+              <h3 class="text-lg font-bold text-white mt-2">Keamanan Operasional & Analisis Kerentanan</h3>
+            </div>
+            <i class="fa-solid fa-shield-virus text-2xl text-blue-400/80"></i>
+          </div>
+          <ul class="text-xs text-slate-300 space-y-2.5">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-blue-400 mt-0.5"></i>
+              <span><strong>Keamanan Web (OWASP Top 10):</strong> Proteksi SQL Injection, XSS, CSRF, dan Broken Access Control.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-blue-400 mt-0.5"></i>
+              <span><strong>Audit & Reconnaissance:</strong> Pemindaian port dan jaringan menggunakan Nmap & Wireshark.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-blue-400 mt-0.5"></i>
+              <span><strong>Penilaian Celah Keamanan:</strong> Penetration testing dasar menggunakan Metasploit Framework.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- TAHAP 3 -->
+        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-purple-500" data-cat="spesialisasi">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <span class="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">TAHAP 3</span>
+              <h3 class="text-lg font-bold text-white mt-2">Pilih Jalur Spesialisasi Utama</h3>
+            </div>
+            <i class="fa-solid fa-user-ninja text-2xl text-purple-400/80"></i>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+              <h4 class="font-bold text-red-400 flex items-center gap-1.5"><i class="fa-solid fa-skull"></i> Red Team</h4>
+              <p class="text-[10px] text-slate-400 mt-1">Ofensif: Penetration Testing, Exploit Dev, Ethical Hacking.</p>
+            </div>
+            <div class="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+              <h4 class="font-bold text-blue-400 flex items-center gap-1.5"><i class="fa-solid fa-shield"></i> Blue Team</h4>
+              <p class="text-[10px] text-slate-400 mt-1">Defensif: SOC Analyst, Threat Hunting, Incident Response.</p>
+            </div>
+            <div class="p-3 bg-purple-500/10 border border-purple-500/20 rounded-xl">
+              <h4 class="font-bold text-purple-400 flex items-center gap-1.5"><i class="fa-solid fa-cloud"></i> Cloud / DevSecOps</h4>
+              <p class="text-[10px] text-slate-400 mt-1">Keamanan Pipeline CI/CD, AWS/Azure Security, Kubernetes.</p>
+            </div>
+            <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl">
+              <h4 class="font-bold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced"></i> GRC & Hukum</h4>
+              <p class="text-[10px] text-slate-400 mt-1">Governance, Risk Management, & Compliance Audit.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAHAP 4 -->
+        <div class="roadmap-card glass-box p-6 rounded-2xl relative border-l-4 border-l-amber-500" data-cat="spesialisasi">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">TAHAP 4</span>
+              <h3 class="text-lg font-bold text-white mt-2">GRC, Kepatuhan & Regulasi Siber</h3>
+            </div>
+            <i class="fa-solid fa-file-contract text-2xl text-amber-400/80"></i>
+          </div>
+          <ul class="text-xs text-slate-300 space-y-2.5">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
+              <span><strong>Standar Manajemen Risiko:</strong> Implementasi kerangka kerja keamanan ISO/IEC 27001 & NIST.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
+              <span><strong>Regulasi Data Siber:</strong> Regulasi UU Perlindungan Data Pribadi (UU PDP) & GDPR.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
+              <span><strong>Audit Keamanan:</strong> Evaluasi Kepatuhan, Manajemen Bencana (BCP/DRP), dan Audit Internal.</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
-    </div>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE SIMULATOR OWASP AUDIT -->
+    <section id="audit-sim" class="glass-box p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+      <div class="flex flex-col lg:flex-row gap-8 items-center justify-between">
+        <div class="space-y-4 max-w-xl">
+          <span class="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">INTERACTIVE TOOL</span>
+          <h2 class="text-2xl font-extrabold text-white">Simulator Penilaian Celah Keamanan (Vulnerability Audit)</h2>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Pilih parameter audit aplikasi web di bawah untuk mengalkulasi tingkat risiko keamanan berdasarkan kerangka kerja OWASP Top 10 dan Nmap Scan Risk Score.
+          </p>
+
+          <!-- SIMULATOR FORM -->
+          <div class="space-y-3 pt-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Celah Terdeteksi (OWASP)</label>
+              <select id="simVulnerability" onchange="calculateRisk()" class="w-full bg-cyber-black border border-cyber-border rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none">
+                <option value="10">SQL Injection (Critical Risk)</option>
+                <option value="8">Cross-Site Scripting / XSS (High Risk)</option>
+                <option value="7">Broken Access Control (High Risk)</option>
+                <option value="5">Security Misconfiguration (Medium Risk)</option>
+                <option value="3">Outdated Components (Low Risk)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Akses Port Terbuka (Nmap Reconnaissance)</label>
+              <select id="simPort" onchange="calculateRisk()" class="w-full bg-cyber-black border border-cyber-border rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none">
+                <option value="9">Port 21 (FTP Default) & Port 23 (Telnet Unencrypted)</option>
+                <option value="7">Port 22 (SSH Open w/ Password Auth)</option>
+                <option value="5">Port 80 (HTTP Non-SSL Open)</option>
+                <option value="2">Port 443 (HTTPS Secure w/ TLS 1.3)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- RISK METER DISPLAY -->
+        <div class="w-full lg:w-80 bg-cyber-black/80 border border-cyber-border rounded-2xl p-6 text-center space-y-4">
+          <p class="text-xs font-mono text-slate-400">SKOR RISIKO KERENTANAN</p>
+          <div class="relative flex items-center justify-center">
+            <div id="riskScoreCircle" class="w-32 h-32 rounded-full border-8 border-rose-500 flex items-center justify-center text-3xl font-black text-rose-500 shadow-lg shadow-rose-950/50">
+              9.5
+            </div>
+          </div>
+          <div>
+            <h4 id="riskStatus" class="font-bold text-rose-400 text-sm">CRITICAL VULNERABILITY</h4>
+            <p id="riskRecommendation" class="text-[11px] text-slate-400 mt-1">Lakukan Patching SQL Injection segera dan gunakan Prepared Statements!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: JALUR SERTIFIKASI & TINGKAT KEMAHIRAN -->
+    <section id="certifications" class="space-y-6">
+      <div>
+        <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+          <i class="fa-solid fa-award text-amber-400"></i> Matriks Sertifikasi Industri Keamanan Siber
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Jalur sertifikasi resmi yang diakui industri global berdasarkan tingkat kemahiran.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- ENTRY LEVEL -->
+        <div class="glass-box p-6 rounded-2xl space-y-4 border-t-4 border-t-emerald-500">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">ENTRY LEVEL</span>
+            <i class="fa-solid fa-seedling text-emerald-400"></i>
+          </div>
+          <h3 class="font-bold text-white text-base">Pemula / Basic</h3>
+          <p class="text-xs text-slate-400">Validasi pemahaman fondasi jaringan, analisis siber dasar, dan operasional awal.</p>
+          <div class="space-y-2 pt-2">
+            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-white">CompTIA Security+</h4>
+                <p class="text-[10px] text-slate-400">CompTIA Global</p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-400">Sec+</span>
+            </div>
+            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-white">Google Cybersecurity</h4>
+                <p class="text-[10px] text-slate-400">Google Professional</p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-400">GCC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERMEDIATE LEVEL -->
+        <div class="glass-box p-6 rounded-2xl space-y-4 border-t-4 border-t-blue-500">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-500/20">INTERMEDIATE</span>
+            <i class="fa-solid fa-shield-halved text-blue-400"></i>
+          </div>
+          <h3 class="font-bold text-white text-base">Menengah / Practitioner</h3>
+          <p class="text-xs text-slate-400">Sertifikasi praktis untuk pengujian penetrasi (Red Team) dan analisis defensif (Blue Team).</p>
+          <div class="space-y-2 pt-2">
+            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-white">Certified Ethical Hacker</h4>
+                <p class="text-[10px] text-slate-400">EC-Council</p>
+              </div>
+              <span class="text-[10px] font-mono text-blue-400">CEH</span>
+            </div>
+            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-white">CompTIA CySA+</h4>
+                <p class="text-[10px] text-slate-400">Cybersecurity Analyst</p>
+              </div>
+              <span class="text-[10px] font-mono text-blue-400">CySA+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADVANCED LEVEL -->
+        <div class="glass-box p-6 rounded-2xl space-y-4 border-t-4 border-t-purple-500">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-full border border-purple-500/20">ADVANCED</span>
+            <i class="fa-solid fa-crown text-purple-400"></i>
+          </div>
+          <h3 class="font-bold text-white text-base">Tingkat Lanjut / Expert</h3>
+          <p class="text-xs text-slate-400">Pengakuan tertinggi untuk kepemimpinan Arsitektur Keamanan dan Tata Kelola GRC.</p>
+          <div class="space-y-2 pt-2">
+            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-white">CISSP</h4>
+                <p class="text-[10px] text-slate-400">(ISC)² Information Security</p>
+              </div>
+              <span class="text-[10px] font-mono text-purple-400">CISSP</span>
+            </div>
+            <div class="p-3 bg-cyber-black rounded-xl border border-cyber-border flex items-center justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-white">CISM / RCCP / CTBM</h4>
+                <p class="text-[10px] text-slate-400">ISACA & Global Standard</p>
+              </div>
+              <span class="text-[10px] font-mono text-purple-400">EXPERT</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: RADAR CHART SPESIALISASI KEAHLIAN -->
+    <section id="radar" class="glass-box p-6 sm:p-8 rounded-3xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="text-[10px] font-mono font-bold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">VISUAL ANALYTICS</span>
+          <h2 class="text-2xl font-extrabold text-white mt-2">Komparasi Spektrum Keahlian (Domain Matrix)</h2>
+          <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+            Setiap jalur karier cyber security menuntut keseimbangan atribut teknis dan tata kelola yang berbeda. Gunakan grafik radar di samping untuk memetakan fokus keahlian Anda.
+          </p>
+
+          <div class="mt-6 space-y-3">
+            <button onclick="updateRadar('red')" class="w-full text-left p-3 rounded-xl bg-cyber-black border border-cyber-border hover:border-red-500 transition flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="text-xs font-bold text-white">Red Team (Penetration Tester)</span>
+              </div>
+              <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+            </button>
+
+            <button onclick="updateRadar('blue')" class="w-full text-left p-3 rounded-xl bg-cyber-black border border-cyber-border hover:border-blue-500 transition flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                <span class="text-xs font-bold text-white">Blue Team (SOC Analyst & Incident Response)</span>
+              </div>
+              <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+            </button>
+
+            <button onclick="updateRadar('grc')" class="w-full text-left p-3 rounded-xl bg-cyber-black border border-cyber-border hover:border-amber-500 transition flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                <span class="text-xs font-bold text-white">GRC & Hukum Siber (ISO 27001 & UU PDP)</span>
+              </div>
+              <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="h-80 flex items-center justify-center p-4 bg-cyber-black/60 rounded-2xl border border-cyber-border">
+          <canvas id="skillRadarChart"></canvas>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- MODAL FORM (ADD / EDIT ITEM) -->
-  <div id="itemModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 transition-all duration-300">
-    <div class="bg-slate-900 border border-slate-700/80 w-full max-w-lg rounded-2xl p-6 shadow-2xl relative animate-pop-in">
-      <div class="flex justify-between items-center pb-4 border-b border-slate-800 mb-5">
-        <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
-          <i class="fa-solid fa-box text-emerald-400"></i> Tambah Hardware Baru
-        </h3>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-      <form id="inventoryForm" onsubmit="saveItem(event)" class="space-y-4">
-        <input type="hidden" id="editIndex" value="-1" />
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kode SKU</label>
-            <input type="text" id="itemSku" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="SKU-DL-R750" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kategori Hardware</label>
-            <input type="text" id="itemCategory" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="Server Hardware" />
-          </div>
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Perangkat & Spesifikasi</label>
-          <input type="text" id="itemName" required class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="Dell PowerEdge R750 Server" />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Jumlah Stok Unit</label>
-            <input type="number" id="itemQuantity" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="5" />
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Harga Satuan (Rp)</label>
-            <input type="number" id="itemPrice" required min="0" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none transition-all" placeholder="125000000" />
-          </div>
-        </div>
-        <div class="flex justify-end gap-3 pt-5 border-t border-slate-800">
-          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-300 transition-all">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 rounded-xl text-xs font-bold text-slate-950 shadow-lg shadow-emerald-900/40 transition-all hover:scale-105 active:scale-95">Simpan Hardware</button>
-        </div>
-      </form>
+  <!-- FOOTER -->
+  <footer class="bg-cyber-dark border-t border-cyber-border py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>© 2026 NEXUS Enterprise - Cyber Security Career & Learning System.</p>
+      <p class="mt-1 text-[11px] text-slate-600">Dikembangkan berdasarkan Peta Jalan Karier Cyber Security 2026 (ISO/IEC 27001 & OWASP Standard).</p>
     </div>
-  </div>
+  </footer>
 
-  <!-- JAVASCRIPT LOGIC WITH ANIMATIONS & REAL DATA PERSISTENCE -->
+  <!-- JAVASCRIPT LOGIC & ANIMATED CHART.JS -->
   <script>
-    const realEnterpriseData = [
-      { sku: "SKU-DL-R750", name: "Dell PowerEdge R750 Server (2x Intel Xeon Gold 6330, 128GB RAM)", category: "Server Hardware", qty: 6, price: 125000000 },
-      { sku: "SKU-CS-C9300", name: "Cisco Catalyst C9300-48P Switch 48-Port PoE+", category: "Networking", qty: 12, price: 78500000 },
-      { sku: "SKU-FG-100F", name: "Fortinet FortiGate 100F Next-Gen Firewall", category: "Cyber Security", qty: 4, price: 62000000 },
-      { sku: "SKU-PA-440", name: "Palo Alto PA-440 Enterprise ML-Powered Firewall", category: "Cyber Security", qty: 3, price: 48000000 },
-      { sku: "SKU-APC-SRT3K", name: "APC Smart-UPS RT 3000VA On-Line 230V", category: "Power System", qty: 8, price: 28500000 },
-      { sku: "SKU-UB-U6PRO", name: "Ubiquiti UniFi U6 Pro Enterprise Access Point WiFi 6", category: "Networking", qty: 35, price: 3200000 },
-      { sku: "SKU-BL-CAT6A", name: "Belden Cat6A SFTP Shielded Industrial Cable 305m", category: "Cabling Infrastructure", qty: 18, price: 3850000 },
-      { sku: "SKU-SN-DS923", name: "Synology NAS DiskStation DS923+ 4-Bay Enterprise", category: "Storage System", qty: 5, price: 11200000 },
-      { sku: "SKU-SE-ST16TB", name: "Seagate Exos X18 16TB Enterprise SAS Hard Drive", category: "Storage System", qty: 24, price: 6750000 },
-      { sku: "SKU-LOG-MX3", name: "Logitech MX Master 3S Performance Wireless Mouse", category: "Peripherals", qty: 2, price: 1650000 }
-    ];
-
-    let inventory = JSON.parse(localStorage.getItem('NEXUS_ENTERPRISE_REAL_DATA')) || realEnterpriseData;
-    let categoryChartInstance = null;
-    let statusChartInstance = null;
-
-    function saveToLocalStorage() {
-      localStorage.setItem('NEXUS_ENTERPRISE_REAL_DATA', JSON.stringify(inventory));
+    // ROADMAP FILTER LOGIC
+    function filterRoadmap(cat) {
+      const cards = document.querySelectorAll('.roadmap-card');
+      cards.forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+          card.style.display = 'block';
+          card.classList.add('animate__animated', 'animate__fadeIn');
+        } else {
+          card.style.display = 'none';
+        }
+      });
     }
 
-    function resetToRealData() {
-      if (confirm('Reset seluruh data inventaris ke awal?')) {
-        inventory = [...realEnterpriseData];
-        saveToLocalStorage();
-        renderTable();
+    // AUDIT RISK SIMULATOR LOGIC
+    function calculateRisk() {
+      const vulnScore = parseFloat(document.getElementById('simVulnerability').value);
+      const portScore = parseFloat(document.getElementById('simPort').value);
+      
+      const totalRisk = ((vulnScore * 0.6) + (portScore * 0.4)).toFixed(1);
+      
+      const scoreCircle = document.getElementById('riskScoreCircle');
+      const statusText = document.getElementById('riskStatus');
+      const recText = document.getElementById('riskRecommendation');
+
+      scoreCircle.innerText = totalRisk;
+
+      if (totalRisk >= 8.0) {
+        scoreCircle.className = "w-32 h-32 rounded-full border-8 border-rose-500 flex items-center justify-center text-3xl font-black text-rose-500 shadow-lg shadow-rose-950/50 animate-pulse";
+        statusText.innerText = "CRITICAL RISK VULNERABILITY";
+        statusText.className = "font-bold text-rose-400 text-sm";
+        recText.innerText = "Segera lakukan penutupan port sensitif dan implementasikan OWASP Security Patching!";
+      } else if (totalRisk >= 5.0) {
+        scoreCircle.className = "w-32 h-32 rounded-full border-8 border-amber-500 flex items-center justify-center text-3xl font-black text-amber-500 shadow-lg shadow-amber-950/50";
+        statusText.innerText = "MEDIUM WARNING RISK";
+        statusText.className = "font-bold text-amber-400 text-sm";
+        recText.innerText = "Evaluasi konfigurasi enkripsi dan perbarui komponen pustaka yang usang.";
+      } else {
+        scoreCircle.className = "w-32 h-32 rounded-full border-8 border-emerald-500 flex items-center justify-center text-3xl font-black text-emerald-500 shadow-lg shadow-emerald-950/50";
+        statusText.innerText = "LOW RISK - SECURE POSTURE";
+        statusText.className = "font-bold text-emerald-400 text-sm";
+        recText.innerText = "Sistem dalam kondisi relatif aman. Lanjutkan pemantauan rutin Nmap & Wireshark.";
       }
     }
 
-    function formatRupiah(number) {
-      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
-    }
+    // RADAR CHART INSTANCE
+    let radarChartInstance = null;
 
-    // ANIMATED COUNTER FUNCTION FOR KPI CARDS
-    function animateValue(id, start, end, duration, isCurrency = false) {
-      const obj = document.getElementById(id);
-      if (!obj) return;
-      let startTimestamp = null;
-      const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const currentValue = Math.floor(progress * (end - start) + start);
-        obj.innerText = isCurrency ? formatRupiah(currentValue) : currentValue.toLocaleString('id-ID');
-        if (progress < 1) {
-          window.requestAnimationFrame(step);
-        }
-      };
-      window.requestAnimationFrame(step);
-    }
+    const radarDataPresets = {
+      red: [95, 85, 90, 40, 30, 80],
+      blue: [60, 95, 75, 85, 50, 90],
+      grc: [20, 30, 40, 95, 100, 40]
+    };
 
-    function updateMetrics() {
-      const totalItems = inventory.length;
-      const totalValue = inventory.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
-      const lowStock = inventory.filter(i => i.qty < 5).length;
-      const categories = [...new Set(inventory.map(i => i.category))];
-
-      animateValue('statTotalItems', 0, totalItems, 800);
-      animateValue('statTotalValue', 0, totalValue, 1000, true);
-      animateValue('statLowStock', 0, lowStock, 800);
-      animateValue('statCategories', 0, categories.length, 800);
-
-      const filterSelect = document.getElementById('filterCategory');
-      const currentVal = filterSelect.value;
-      filterSelect.innerHTML = '<option value="ALL">Semua Kategori</option>';
-      categories.forEach(cat => {
-        filterSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-      });
-      filterSelect.value = currentVal;
-    }
-
-    function renderTable() {
-      const tbody = document.getElementById('inventoryTableBody');
-      const search = document.getElementById('searchInput').value.toLowerCase();
-      const filterCat = document.getElementById('filterCategory').value;
-
-      tbody.innerHTML = '';
-
-      const filtered = inventory.filter(item => {
-        const matchesSearch = item.name.toLowerCase().includes(search) || item.sku.toLowerCase().includes(search) || item.category.toLowerCase().includes(search);
-        const matchesCategory = filterCat === 'ALL' || item.category === filterCat;
-        return matchesSearch && matchesCategory;
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-500 font-medium">Tidak ada hardware ditemukan.</td></tr>`;
-        return;
-      }
-
-      filtered.forEach((item, index) => {
-        const actualIndex = inventory.indexOf(item);
-        const totalAsset = item.qty * item.price;
-        let statusBadge = item.qty < 5 
-          ? `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 animate-pulse">Menipis</span>`
-          : `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Stok Aman</span>`;
-
-        if (item.qty === 0) {
-          statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30">Habis</span>`;
-        }
-
-        tbody.innerHTML += `
-          <tr class="hover:bg-slate-800/50 transition-all duration-200 group border-b border-slate-800/40 table-row-animate" style="animation-delay: ${index * 0.03}s">
-            <td class="py-3.5 px-5 font-mono text-emerald-400 font-bold group-hover:translate-x-1 transition-transform">${item.sku}</td>
-            <td class="py-3.5 px-5 font-semibold text-slate-100">${item.name}</td>
-            <td class="py-3.5 px-5"><span class="bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg text-[10px] border border-slate-700">${item.category}</span></td>
-            <td class="py-3.5 px-5 text-center font-bold text-base ${item.qty < 5 ? 'text-amber-400' : 'text-slate-100'}">${item.qty}</td>
-            <td class="py-3.5 px-5">${formatRupiah(item.price)}</td>
-            <td class="py-3.5 px-5 text-emerald-400 font-bold">${formatRupiah(totalAsset)}</td>
-            <td class="py-3.5 px-5 text-center">${statusBadge}</td>
-            <td class="py-3.5 px-5 text-center">
-              <div class="flex items-center justify-center gap-2">
-                <button onclick="editItem(${actualIndex})" class="p-2 bg-blue-500/10 text-blue-400 hover:bg-blue-600 hover:text-white rounded-lg transition-all"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button onclick="deleteItem(${actualIndex})" class="p-2 bg-rose-500/10 text-rose-400 hover:bg-rose-600 hover:text-white rounded-lg transition-all"><i class="fa-solid fa-trash"></i></button>
-              </div>
-            </td>
-          </tr>
-        `;
-      });
-
-      updateMetrics();
-      renderCharts();
-    }
-
-    function renderCharts() {
-      const categoryCounts = {};
-      inventory.forEach(i => categoryCounts[i.category] = (categoryCounts[i.category] || 0) + i.qty);
-
-      const catCtx = document.getElementById('categoryChart').getContext('2d');
-      if (categoryChartInstance) categoryChartInstance.destroy();
-      categoryChartInstance = new Chart(catCtx, {
-        type: 'bar',
+    function initRadarChart() {
+      const ctx = document.getElementById('skillRadarChart').getContext('2d');
+      radarChartInstance = new Chart(ctx, {
+        type: 'radar',
         data: {
-          labels: Object.keys(categoryCounts),
+          labels: ['Network Security', 'SOC / Defensif', 'Pentesting / Ofensif', 'ISO 27001 / GRC', 'Hukum & UU PDP', 'Linux / System Admin'],
           datasets: [{
-            label: 'Total Unit Stok Hardware',
-            data: Object.values(categoryCounts),
-            backgroundColor: '#10b981',
-            hoverBackgroundColor: '#34d399',
-            borderRadius: 8,
-            borderSkipped: false
+            label: 'Tingkat Kemahiran (%)',
+            data: radarDataPresets.red,
+            backgroundColor: 'rgba(239, 68, 68, 0.2)',
+            borderColor: '#ef4444',
+            pointBackgroundColor: '#ef4444',
+            borderWidth: 2
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          animation: { duration: 1200, easing: 'easeOutQuart' },
-          plugins: { legend: { display: false } },
+          animation: { duration: 1000, easing: 'easeOutQuart' },
           scales: {
-            x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } },
-            y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(51, 65, 85, 0.4)' } }
+            r: {
+              angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' },
+              pointLabels: { color: '#94a3b8', font: { size: 10, family: 'Plus Jakarta Sans' } },
+              ticks: { display: false, max: 100 }
+            }
+          },
+          plugins: {
+            legend: { labels: { color: '#f8fafc', font: { family: 'Plus Jakarta Sans', size: 11 } } }
           }
         }
       });
-
-      const safeCount = inventory.filter(i => i.qty >= 5).length;
-      const lowCount = inventory.filter(i => i.qty < 5 && i.qty > 0).length;
-      const emptyCount = inventory.filter(i => i.qty === 0).length;
-
-      const statusCtx = document.getElementById('statusChart').getContext('2d');
-      if (statusChartInstance) statusChartInstance.destroy();
-      statusChartInstance = new Chart(statusCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Stok Aman', 'Menipis (<5)', 'Stok Habis'],
-          datasets: [{
-            data: [safeCount, lowCount, emptyCount],
-            backgroundColor: ['#10b981', '#f59e0b', '#f43f5e'],
-            borderWidth: 0,
-            hoverOffset: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: { animateScale: true, animateRotate: true, duration: 1000 },
-          plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', boxWidth: 12, font: { size: 11 } } } }
-        }
-      });
     }
 
-    function openModal() {
-      document.getElementById('editIndex').value = "-1";
-      document.getElementById('inventoryForm').reset();
-      document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-box text-emerald-400"></i> Tambah Hardware Baru';
-      const modal = document.getElementById('itemModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
+    function updateRadar(type) {
+      if (!radarChartInstance) return;
+      
+      let newColor = '#ef4444';
+      let newBg = 'rgba(239, 68, 68, 0.2)';
+      let labelName = 'Red Team Spectrum';
 
-    function closeModal() {
-      const modal = document.getElementById('itemModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function saveItem(e) {
-      e.preventDefault();
-      const index = parseInt(document.getElementById('editIndex').value);
-      const sku = document.getElementById('itemSku').value.trim();
-      const name = document.getElementById('itemName').value.trim();
-      const category = document.getElementById('itemCategory').value.trim();
-      const qty = parseInt(document.getElementById('itemQuantity').value);
-      const price = parseFloat(document.getElementById('itemPrice').value);
-
-      const itemData = { sku, name, category, qty, price };
-
-      if (index === -1) {
-        inventory.push(itemData);
-      } else {
-        inventory[index] = itemData;
+      if (type === 'blue') {
+        newColor = '#3b82f6';
+        newBg = 'rgba(59, 130, 246, 0.2)';
+        labelName = 'Blue Team Spectrum';
+      } else if (type === 'grc') {
+        newColor = '#f59e0b';
+        newBg = 'rgba(245, 158, 11, 0.2)';
+        labelName = 'GRC & Hukum Spectrum';
       }
 
-      saveToLocalStorage();
-      closeModal();
-      renderTable();
+      radarChartInstance.data.datasets[0].data = radarDataPresets[type];
+      radarChartInstance.data.datasets[0].borderColor = newColor;
+      radarChartInstance.data.datasets[0].backgroundColor = newBg;
+      radarChartInstance.data.datasets[0].pointBackgroundColor = newColor;
+      radarChartInstance.data.datasets[0].label = labelName;
+      radarChartInstance.update();
     }
 
-    function editItem(index) {
-      const item = inventory[index];
-      document.getElementById('editIndex').value = index;
-      document.getElementById('itemSku').value = item.sku;
-      document.getElementById('itemName').value = item.name;
-      document.getElementById('itemCategory').value = item.category;
-      document.getElementById('itemQuantity').value = item.qty;
-      document.getElementById('itemPrice').value = item.price;
-
-      document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-emerald-400"></i> Edit Hardware Data';
-      const modal = document.getElementById('itemModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function deleteItem(index) {
-      if (confirm('Hapus perangkat ini dari inventaris?')) {
-        inventory.splice(index, 1);
-        saveToLocalStorage();
-        renderTable();
-      }
-    }
-
-    function exportToCSV() {
-      let csv = 'SKU,Nama Hardware,Kategori,Stok Unit,Harga Satuan (IDR),Total Aset (IDR)\n';
-      inventory.forEach(i => {
-        csv += `"${i.sku}","${i.name}","${i.category}",${i.qty},${i.price},${i.qty * i.price}\n`;
-      });
-
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.setAttribute('href', url);
-      a.setAttribute('download', `Enterprise_Inventory_Report_${new Date().toISOString().slice(0,10)}.csv`);
-      a.click();
-    }
-
-    // Inisialisasi Pertama Kali
-    renderTable();
+    // Inisialisasi Pertama
+    window.onload = function() {
+      calculateRisk();
+      initRadarChart();
+    };
   </script>
 </body>
 </html>
