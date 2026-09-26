@@ -1,8 +1,17 @@
-# React + Vite This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-Currently, two official plugins are available: - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-
-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh -
-[@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-## Expanding the ESLint configuration If you are developing a production application, we recommend using
-TypeScript and enable type-aware lint rules. Check out the [TS template]
-(https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and
-[`typescript-eslint`](https://typescript-eslint.io) in your project. # Porto
+﻿# 🛡️ Rizqi Ghani Adinata - Cybersecurity Portfolio
+
+**Junior Cybersecurity Enthusiast & Junior Data Scientist** 
+
+Selamat datang di terminal komando saya. Saya berfokus pada persimpangan antara keamanan jaringan, analisis kerentanan sistem, pemrograman logika (C/C++), scripting (Python), dan manajemen operasional data (Inventory).
+
+## 🚀 Target Operasional (Tech Stack)
+* **Offensive/Defensive Security:** Analisis Kerentanan, OWASP Dasar, Kriptografi.
+* **Bahasa Pemrograman:** Python, JavaScript, CSS, C++, C.
+* **Data Science & Inventory:** Pengolahan Data, Analisis Stok, Algoritma Pembersihan Data.
+* **Tools & Environment:** Git, GitHub, Linux Terminal, VS Code.
+
+## 📡 Terminal Kontak
+* **Email:** [ghani.24ep10007@students.unugha.id](mailto:ghani.24ep10007@students.unugha.id)
+* **GitHub:** [ghani24ep10007-spec](https://github.com/ghani24ep10007-spec)
+
+> "Mengubah data menjadi insight, baris kode menjadi solusi, dan mengeksploitasi kerentanan untuk membangun pertahanan yang lebih kuat."
