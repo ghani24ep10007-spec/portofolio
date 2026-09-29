@@ -1,265 +1,1049 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizqi Ghani Adinata | Cyber Portfolio</title>
-    <meta name="description" content="Portfolio Cybersecurity Rizqi Ghani Adinata">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-        
-        body { 
-            font-family: 'Share Tech Mono', monospace; 
-            background-color: #020617; /* Slate 950 */
-            color: #22d3ee; /* Cyan 400 */
-            overflow-x: hidden; 
-        }
-        
-        ::-webkit-scrollbar { width: 8px; } 
-        ::-webkit-scrollbar-track { background: #020617; } 
-        ::-webkit-scrollbar-thumb { background: #0891b2; border-radius: 4px; }
-        
-        /* Animasi Efek Radar/Scanline */
-        @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
-        .scan { 
-            width: 100%; height: 150px; 
-            background: linear-gradient(0deg, rgba(34,211,238,0) 0%, rgba(34,211,238,0.15) 50%, rgba(34,211,238,0) 100%); 
-            opacity: 0.2; position: fixed; top: 0; left: 0; pointer-events: none; 
-            animation: scanline 8s linear infinite; z-index: 50; 
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rizqi Ghani Adinata | Cybersecurity Enthusiast &amp; Data Scientist</title>
+<meta name="description" content="Portofolio Rizqi Ghani Adinata — Junior Cybersecurity Enthusiast & Junior Data Scientist. Keamanan sistem, analisis data, inventory, Python, JavaScript, C++, C.">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#050a07;
+  --bg-2:#0a120c;
+  --panel:#0c150e;
+  --panel-2:#101b12;
+  --line:#1d3122;
+  --line-2:#28452f;
+  --ink:#d9e8dc;
+  --ink-dim:#8fa896;
+  --ink-faint:#5c7563;
+  --green:#2bd57f;
+  --green-hi:#4dff9e;
+  --phos:#00ff9c;
+  --amber:#f5c84c;
+  --red:#ff5f56;
+  --cyan:#4dd8ff;
+  --mag:#c17bff;
+  --mono:ui-monospace,"Cascadia Mono","JetBrains Mono",Consolas,"Source Code Pro",monospace;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --maxw:1280px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--mono);font-size:16px;line-height:1.65;
+  overflow-x:hidden; /* only horizontal clipped; vertical scrolling stays free */
+}
+::selection{background:rgba(43,213,127,.3)}
+img,svg{max-width:100%;height:auto}
+a{color:var(--green);text-decoration:none}
+a:hover{color:var(--green-hi);text-shadow:0 0 8px rgba(43,213,127,.6)}
 
-        /* Animasi Glitch Teks */
-        @keyframes glitch-anim { 
-            0% { clip: rect(10px, 9999px, 44px, 0); transform: skew(0.3deg); } 
-            100% { clip: rect(10px, 9999px, 44px, 0); transform: skew(0.3deg); } 
-        }
-        .glitch-text { position: relative; color: #22d3ee; }
-        .glitch-text::before, .glitch-text::after { 
-            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #020617; 
-        }
-        .glitch-text::before { left: 2px; text-shadow: -2px 0 #14b8a6; animation: glitch-anim 2.5s infinite linear alternate-reverse; }
-        .glitch-text::after { left: -2px; text-shadow: -2px 0 #3b82f6; animation: glitch-anim 3s infinite linear alternate-reverse; }
+/* Visible keyboard focus everywhere */
+:focus-visible{outline:2px solid var(--green-hi);outline-offset:3px;border-radius:2px}
 
-        /* Cyber Border Neon Biru Kehijauan */
-        .cyber-border { 
-            border: 1px solid #0891b2; 
-            box-shadow: 0 0 10px rgba(8,145,178,0.3), inset 0 0 15px rgba(8,145,178,0.1); 
-            position: relative; 
-            background: rgba(2, 6, 23, 0.7);
-            backdrop-filter: blur(4px);
-        }
-        .cyber-border::before { content: ''; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px; border-top: 2px solid #22d3ee; border-left: 2px solid #22d3ee; }
-        .cyber-border::after { content: ''; position: absolute; bottom: -1px; right: -1px; width: 10px; height: 10px; border-bottom: 2px solid #22d3ee; border-right: 2px solid #22d3ee; }
-        .cyber-border:hover { box-shadow: 0 0 20px rgba(34,211,238,0.5), inset 0 0 20px rgba(34,211,238,0.2); border-color: #22d3ee; }
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:200;background:var(--green);color:#04170c;
+  padding:.6rem 1rem;font-weight:700;
+}
+.skip-link:focus{left:8px;top:8px}
 
-        /* Canvas Matrix Rain */
-        #matrixCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
-    </style>
+/* ============ BACKGROUND LAYERS ============ */
+#matrix-rain{position:fixed;inset:0;z-index:-3;opacity:.28;pointer-events:none}
+.grid-overlay{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    linear-gradient(rgba(43,213,127,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(43,213,127,.045) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+.vignette{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 0%,transparent 40%,rgba(2,6,3,.85) 100%);
+}
+/* CRT scanlines + flicker */
+.crt{
+  position:fixed;inset:0;z-index:90;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);
+  mix-blend-mode:multiply;animation:flicker 7s infinite steps(60);
+}
+@keyframes flicker{
+  0%,100%{opacity:.55} 3%{opacity:.35} 6%{opacity:.6} 9%{opacity:.42} 45%{opacity:.55} 46%{opacity:.7} 47%{opacity:.4}
+}
+
+/* ============ HEADER ============ */
+.site-header{
+  position:sticky;top:0;z-index:80;
+  background:rgba(5,10,7,.88);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:var(--maxw);margin:0 auto;padding:.8rem 1.25rem;
+  display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;
+}
+.brand{display:flex;flex-direction:column;line-height:1.25}
+.brand .name{font-size:1.05rem;font-weight:700;color:var(--ink);letter-spacing:.06em}
+.brand .name::before{content:"▚ ";color:var(--green)}
+.brand .specialty{font-size:.72rem;color:var(--ink-dim);letter-spacing:.12em;text-transform:uppercase}
+.status-led{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px var(--phos);animation:pulse 1.6s infinite;margin-right:.5rem;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.main-nav{margin-left:auto;display:flex;gap:.25rem;flex-wrap:wrap}
+.main-nav a{
+  font-size:.8rem;letter-spacing:.08em;color:var(--ink-dim);padding:.45rem .7rem;
+  border:1px solid transparent;text-transform:uppercase;
+}
+.main-nav a .num{color:var(--green);margin-right:.3rem}
+.main-nav a:hover{color:var(--green-hi);border-color:var(--line-2);text-shadow:0 0 8px rgba(43,213,127,.7)}
+.menu-btn{display:none;margin-left:auto;background:var(--panel);border:1px solid var(--line-2);color:var(--green);
+  font-family:var(--mono);padding:.45rem .8rem;cursor:pointer}
+
+/* ============ BINARY TICKER ============ */
+.ticker{
+  border-bottom:1px solid var(--line);background:var(--bg-2);overflow:hidden;white-space:nowrap;
+  font-size:.68rem;color:var(--ink-faint);
+}
+.ticker .track{display:inline-block;padding:.25rem 0;animation:ticker 30s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============ HERO ============ */
+.hero{max-width:var(--maxw);margin:0 auto;padding:4.5rem 1.25rem 3.5rem;
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:3rem;align-items:start}
+.hero-kicker{font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:var(--green);margin:0 0 1rem}
+.hero h1{
+  font-family:var(--sans);font-weight:800;font-size:clamp(2rem,4.6vw,3.6rem);line-height:1.12;
+  margin:0 0 1.4rem;color:var(--ink);letter-spacing:-.01em;
+}
+.hero h1 .hl{color:var(--green)}
+/* Glitch effect */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden;
+  clip-path:inset(0 0 100% 0);
+}
+.glitch::before{color:var(--red);text-shadow:-2px 0 var(--red);animation:glitch-a 3.2s infinite steps(2) alternate-reverse}
+.glitch::after{color:var(--cyan);text-shadow:2px 0 var(--cyan);animation:glitch-b 2.7s infinite steps(2) alternate-reverse}
+@keyframes glitch-a{
+  0%{clip-path:inset(12% 0 78% 0);transform:translate(-3px,1px)}
+  20%{clip-path:inset(64% 0 8% 0);transform:translate(3px,-2px)}
+  40%{clip-path:inset(30% 0 55% 0);transform:translate(-2px,2px)}
+  60%{clip-path:inset(80% 0 4% 0);transform:translate(2px,1px)}
+  80%{clip-path:inset(4% 0 84% 0);transform:translate(-3px,-1px)}
+  100%{clip-path:inset(48% 0 40% 0);transform:translate(1px,2px)}
+}
+@keyframes glitch-b{
+  0%{clip-path:inset(72% 0 14% 0);transform:translate(2px,-1px)}
+  25%{clip-path:inset(18% 0 70% 0);transform:translate(-2px,2px)}
+  50%{clip-path:inset(55% 0 30% 0);transform:translate(3px,1px)}
+  75%{clip-path:inset(8% 0 86% 0);transform:translate(-1px,-2px)}
+  100%{clip-path:inset(38% 0 48% 0);transform:translate(2px,2px)}
+}
+.hero-sub{color:var(--ink-dim);font-size:1rem;max-width:56ch;margin:0 0 2rem}
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{
+  display:inline-block;font-family:var(--mono);font-size:.85rem;letter-spacing:.06em;
+  padding:.7rem 1.3rem;cursor:pointer;border:1px solid var(--green);color:var(--green);
+  background:transparent;text-transform:uppercase;position:relative;transition:.18s;
+}
+.btn:hover{background:rgba(43,213,127,.12);box-shadow:0 0 18px rgba(43,213,127,.35);text-shadow:0 0 6px rgba(43,213,127,.8)}
+.btn.solid{background:var(--green);color:#04170c;font-weight:700}
+.btn.solid:hover{background:var(--green-hi)}
+.btn.warn{border-color:var(--amber);color:var(--amber)}
+.btn.warn:hover{background:rgba(245,200,76,.12);box-shadow:0 0 18px rgba(245,200,76,.3)}
+
+/* Terminal card (hero right) */
+.terminal{
+  border:1px solid var(--line-2);background:var(--panel);box-shadow:0 0 40px rgba(0,0,0,.5),inset 0 0 60px rgba(43,213,127,.03);
+}
+.term-bar{display:flex;align-items:center;gap:.5rem;padding:.5rem .8rem;border-bottom:1px solid var(--line);
+  font-size:.72rem;color:var(--ink-dim);background:var(--panel-2)}
+.term-bar .dots{display:flex;gap:.35rem}
+.term-bar .dots i{width:10px;height:10px;border-radius:50%;display:block}
+.term-bar .dots i:nth-child(1){background:var(--red)}
+.term-bar .dots i:nth-child(2){background:var(--amber)}
+.term-bar .dots i:nth-child(3){background:var(--green)}
+.term-body{padding:1rem;font-size:.8rem;line-height:1.75;min-height:260px}
+.term-body .l-cmd{color:var(--green-hi)}
+.term-body .l-cmd::before{content:"$ ";color:var(--ink-faint)}
+.term-body .l-out{color:var(--ink-dim)}
+.term-body .l-ok{color:var(--green)}
+.term-body .l-warn{color:var(--amber)}
+.cursor{display:inline-block;width:.6em;height:1em;background:var(--green);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.bio{border:1px solid var(--line);border-top:none;padding:1rem;background:var(--bg-2);font-size:.85rem;color:var(--ink-dim)}
+.bio h2{margin:0 0 .5rem;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+.bio p{margin:0 0 .7rem}
+.status-line{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-top:1px dashed var(--line-2);font-size:.78rem}
+.status-line b{color:var(--ink)}
+
+/* ============ SECTION SHELL ============ */
+.section{max-width:var(--maxw);margin:0 auto;padding:3.5rem 1.25rem}
+.section-head{display:flex;align-items:baseline;gap:1rem;margin:0 0 .5rem;border-bottom:1px solid var(--line);padding-bottom:1rem}
+.section-num{font-size:.8rem;color:var(--green);letter-spacing:.2em}
+.section-head h2{font-family:var(--sans);font-weight:800;font-size:clamp(1.5rem,3vw,2.2rem);margin:0;color:var(--ink)}
+.section-note{font-size:.78rem;color:var(--ink-faint);margin:.8rem 0 0}
+
+/* ============ WORK GRID: projects left, aside right ============ */
+.work-grid{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);gap:2.5rem;align-items:start}
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+
+.p-card{
+  border:1px solid var(--line);background:var(--panel);cursor:pointer;text-align:left;
+  color:var(--ink);font-family:var(--mono);padding:0;display:flex;flex-direction:column;
+  transition:border-color .2s, transform .2s, box-shadow .2s;position:relative;overflow:hidden;
+}
+.p-card::after{ /* scan sweep on hover */
+  content:"";position:absolute;left:0;right:0;top:-100%;height:100%;
+  background:linear-gradient(180deg,transparent,rgba(43,213,127,.14),transparent);
+  pointer-events:none;
+}
+.p-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 22px rgba(43,213,127,.15)}
+.p-card:hover::after{animation:sweep 1.1s linear infinite}
+@keyframes sweep{from{top:-100%}to{top:100%}}
+.p-preview{border-bottom:1px solid var(--line);background:var(--bg-2);padding:.9rem;min-height:132px;display:flex;align-items:center}
+.p-preview svg{width:100%;height:auto;display:block}
+.p-meta{padding: .9rem 1rem 1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.p-top{display:flex;justify-content:space-between;align-items:baseline;gap:.75rem}
+.p-cat{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+.p-year{font-size:.72rem;color:var(--ink-faint)}
+.p-name{margin:.1rem 0 0;font-size:1rem;color:var(--ink)}
+.p-desc{margin:0;font-size:.78rem;color:var(--ink-dim)}
+.p-open{margin-top:auto;padding-top:.6rem;font-size:.72rem;color:var(--green)}
+.p-open::before{content:"▸ "}
+.demo-tag{position:absolute;top:8px;right:8px;font-size:.6rem;letter-spacing:.14em;color:var(--amber);
+  border:1px solid var(--amber);padding:.15rem .45rem;background:rgba(245,200,76,.08);z-index:2}
+
+/* mini-preview animations */
+.kbd-line{stroke:var(--green);stroke-width:1;opacity:.85;animation:kdbmove 2.2s linear infinite}
+@keyframes kdbmove{0%{transform:translateX(-24px);opacity:0}20%{opacity:.9}100%{transform:translateX(240px);opacity:0}}
+.bar{fill:var(--green);opacity:.75;transform-origin:bottom;animation:bargrow 2.4s ease-in-out infinite alternate}
+@keyframes bargrow{from{transform:scaleY(.45)}to{transform:scaleY(1)}}
+.node{fill:var(--bg-2);stroke:var(--green);stroke-width:1.5;animation:nodepulse 2.6s ease-in-out infinite}
+.node:nth-child(2n){animation-delay:.7s}.node:nth-child(3n){animation-delay:1.3s}
+@keyframes nodepulse{0%,100%{opacity:.5}50%{opacity:1}}
+.edge{stroke:var(--line-2);stroke-width:1;stroke-dasharray:4 4;animation:dash 1.6s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-16}}
+.hexchar{fill:var(--green);opacity:.45;font-family:var(--mono);font-size:9px;animation:hexblink 1.8s steps(1) infinite}
+@keyframes hexblink{50%{opacity:.95;fill:var(--phos)}}
+.gauge-needle{transform-origin:60px 62px;animation:swing 3s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-62deg)}to{transform:rotate(58deg)}}
+.shield-pulse{animation:shield 2s ease-in-out infinite;transform-origin:center}
+@keyframes shield{0%,100%{opacity:.55}50%{opacity:1}}
+
+/* ============ ASIDE ============ */
+.aside{display:flex;flex-direction:column;gap:2rem;position:sticky;top:96px}
+.aside-block h3{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green);
+  margin:0 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
+/* Timeline */
+.timeline{list-style:none;margin:0;padding:0;border-left:1px solid var(--line-2)}
+.timeline li{position:relative;padding:0 0 1.2rem 1.1rem}
+.timeline li::before{content:"";position:absolute;left:-5px;top:.45rem;width:9px;height:9px;
+  background:var(--bg);border:2px solid var(--green);border-radius:50%}
+.timeline li:first-child::before{background:var(--green);box-shadow:0 0 10px var(--phos)}
+.tl-when{font-size:.68rem;color:var(--cyan);letter-spacing:.12em;text-transform:uppercase}
+.tl-what{font-size:.85rem;color:var(--ink);margin:.1rem 0}
+.tl-detail{font-size:.74rem;color:var(--ink-dim);margin:0}
+/* Skill tags */
+.tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag{font-size:.74rem;border:1px solid var(--line-2);padding:.3rem .7rem;color:var(--ink-dim);background:var(--panel)}
+.tag:hover{border-color:var(--green);color:var(--green-hi);box-shadow:0 0 12px rgba(43,213,127,.25);cursor:default}
+.tag.hot{border-color:var(--green);color:var(--green)}
+/* Contact */
+.contact-list{list-style:none;margin:0 0 1rem;padding:0;font-size:.82rem}
+.contact-list li{display:flex;justify-content:space-between;gap:.75rem;padding:.45rem 0;border-bottom:1px dashed var(--line)}
+.contact-list .k{color:var(--ink-faint)}
+.pending{color:var(--amber);font-size:.7rem;border:1px dashed var(--amber);padding:0 .4rem}
+
+/* Contact form */
+.c-form label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 .3rem}
+.c-form input,.c-form textarea{
+  width:100%;background:var(--bg-2);border:1px solid var(--line-2);color:var(--ink);
+  font-family:var(--mono);font-size:.85rem;padding:.55rem .7rem;margin-bottom:.9rem;
+}
+.c-form input:focus,.c-form textarea:focus{border-color:var(--green);box-shadow:0 0 12px rgba(43,213,127,.25);outline:none}
+.c-form .hint{font-size:.7rem;color:var(--ink-faint);margin:-.5rem 0 1rem}
+.form-status{font-size:.78rem;color:var(--green);margin-top:.6rem;min-height:1.2em}
+
+/* ============ ATTACK SIM CONSOLE ============ */
+.sim-console{border:1px solid var(--line-2);background:var(--panel);box-shadow:inset 0 0 80px rgba(0,0,0,.6)}
+.sim-head{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;padding:.8rem 1rem;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.sim-title{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+.sim-title::before{content:"⚠ "}
+.sim-controls{margin-left:auto;display:flex;gap:.5rem;flex-wrap:wrap}
+.sim-controls .btn{padding:.4rem .9rem;font-size:.75rem}
+.sim-body{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:0}
+.sim-log{padding:1rem;font-size:.78rem;line-height:1.7;min-height:340px;max-height:420px;overflow-y:auto;
+  border-right:1px solid var(--line);background:#040805}
+.sim-log .t{color:var(--ink-faint)}
+.sim-log .ok{color:var(--green)}
+.sim-log .info{color:var(--cyan)}
+.sim-log .warn{color:var(--amber)}
+.sim-log .atk{color:var(--red)}
+.sim-log .phase{color:var(--mag);letter-spacing:.14em;text-transform:uppercase}
+.sim-radar{padding:1rem;display:flex;flex-direction:column;gap:1rem;align-items:center;justify-content:center;background:var(--bg-2)}
+.radar-wrap{position:relative;width:min(220px,100%);aspect-ratio:1}
+.radar{width:100%;height:100%;display:block}
+.radar-sweep{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0deg,rgba(43,213,127,.55),transparent 70deg);
+  animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.blip{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 10px var(--red);animation:blip 2.4s infinite;opacity:0}
+.blip.b1{left:28%;top:34%}.blip.b2{left:62%;top:22%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation-delay:.9s}
+.blip.b3{left:50%;top:64%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation-delay:1.6s}
+@keyframes blip{0%,55%{opacity:0}70%{opacity:1}100%{opacity:0}}
+.meter{width:100%}
+.meter label{display:flex;justify-content:space-between;font-size:.68rem;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.meter .rail{height:8px;border:1px solid var(--line-2);background:var(--bg)}
+.meter .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--green),var(--phos));transition:width .4s ease;box-shadow:0 0 10px rgba(0,255,156,.5)}
+.meter.threat .fill{background:linear-gradient(90deg,var(--amber),var(--red));box-shadow:0 0 10px rgba(255,95,86,.5)}
+.sim-banner{grid-column:1/-1;border-top:1px solid var(--line);padding:.7rem 1rem;font-size:.76rem;color:var(--ink-dim);background:var(--panel-2)}
+.sim-banner b.ok{color:var(--green)}
+
+/* ============ MODAL ============ */
+dialog{
+  border:1px solid var(--green);background:var(--panel);color:var(--ink);
+  max-width:640px;width:calc(100% - 2rem);padding:0;font-family:var(--mono);
+  box-shadow:0 0 60px rgba(0,0,0,.7),0 0 30px rgba(43,213,127,.2);
+}
+dialog::backdrop{background:rgba(2,6,3,.82);backdrop-filter:blur(3px)}
+.dlg-head{display:flex;align-items:center;gap:1rem;padding:.9rem 1.1rem;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.dlg-head h3{margin:0;font-size:1.05rem;color:var(--green-hi)}
+.dlg-head .p-cat{margin-right:auto}
+.dlg-close{
+  margin-left:auto;background:transparent;border:1px solid var(--red);color:var(--red);
+  font-family:var(--mono);font-size:.75rem;padding:.35rem .8rem;cursor:pointer;letter-spacing:.1em;
+}
+.dlg-close:hover{background:rgba(255,95,86,.14);box-shadow:0 0 14px rgba(255,95,86,.35)}
+.dlg-body{padding:1.1rem;max-height:min(60vh,520px);overflow-y:auto}
+.decrypt-line{font-size:.75rem;color:var(--ink-faint);letter-spacing:.08em;margin:0 0 .4rem;min-height:1.2em}
+.dlg-body h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin:1.2rem 0 .5rem;
+  border-bottom:1px dashed var(--line);padding-bottom:.3rem}
+.dlg-body h4:first-of-type{margin-top:.4rem}
+.dlg-body p,.dlg-body li{font-size:.85rem;color:var(--ink-dim)}
+.dlg-body ul{margin:.2rem 0;padding-left:1.2rem}
+.dlg-body li::marker{color:var(--green)}
+.outcome{color:var(--green)!important}
+.dlg-foot{padding:.8rem 1.1rem;border-top:1px solid var(--line);font-size:.72rem;color:var(--ink-faint);background:var(--bg-2)}
+
+/* ============ FOOTER ============ */
+.site-footer{border-top:1px solid var(--line);margin-top:2rem}
+.footer-inner{max-width:var(--maxw);margin:0 auto;padding:1.5rem 1.25rem;display:flex;flex-wrap:wrap;gap:1rem;
+  justify-content:space-between;font-size:.75rem;color:var(--ink-faint)}
+.footer-inner a{color:var(--ink-dim)}
+.footer-inner a:hover{color:var(--green)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1024px){
+  .work-grid{grid-template-columns:1fr}
+  .aside{position:static;flex-direction:grid;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
+  .sim-body{grid-template-columns:1fr}
+  .sim-log{border-right:none;border-bottom:1px solid var(--line)}
+}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding-top:3rem;gap:2rem}
+  .projects{grid-template-columns:1fr}
+  .aside{grid-template-columns:1fr}
+  .menu-btn{display:block}
+  .main-nav{display:none;width:100%;flex-direction:column;margin:0}
+  .main-nav.open{display:flex}
+  .main-nav a{border-bottom:1px solid var(--line)}
+}
+/* Reduced motion: keep static, readable page */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  #matrix-rain,.crt{display:none}
+}
+body.motion-off .anim,body.motion-off #matrix-rain,body.motion-off .crt{animation:none!important}
+body.motion-off #matrix-rain,body.motion-off .crt,body.motion-off .ticker .track,
+body.motion-off .radar-sweep,body.motion-off .status-led,body.motion-off .glitch::before,
+body.motion-off .glitch::after{display:none}
+</style>
 </head>
-<body class="antialiased selection:bg-cyan-500 selection:text-black">
-    
-    <!-- Latar Belakang Matrix & Radar -->
-    <canvas id="matrixCanvas"></canvas>
-    <div class="scan"></div>
+<body>
+<a class="skip-link" href="#konten">Lewati ke konten utama</a>
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-40 bg-slate-950/80 backdrop-blur-md border-b border-cyan-900">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <span class="text-xl font-bold tracking-widest text-cyan-500">RGA_SYS</span>
-            <div class="hidden md:flex gap-6 text-sm">
-                <a href="#home" class="hover:text-white transition-colors hover:underline decoration-cyan-500 underline-offset-4">~/Home</a>
-                <a href="#about" class="hover:text-white transition-colors hover:underline decoration-cyan-500 underline-offset-4">~/About</a>
-                <a href="#skills" class="hover:text-white transition-colors hover:underline decoration-cyan-500 underline-offset-4">~/Skills</a>
-                <a href="#projects" class="hover:text-white transition-colors hover:underline decoration-cyan-500 underline-offset-4">~/Projects</a>
-                <a href="#experience" class="hover:text-white transition-colors hover:underline decoration-cyan-500 underline-offset-4">~/Experience</a>
-                <a href="#contact" class="hover:text-white transition-colors hover:underline decoration-cyan-500 underline-offset-4">~/Contact</a>
-            </div>
-        </div>
+<canvas id="matrix-rain" aria-hidden="true"></canvas>
+<div class="grid-overlay" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="crt" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="name"><span class="status-led" aria-hidden="true"></span>RIZQI GHANI ADINATA</span>
+      <span class="specialty">Junior Cybersecurity Enthusiast · Junior Data Scientist</span>
+    </div>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="main-nav">≡ MENU</button>
+    <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
+      <a href="#beranda"><span class="num">01</span>Beranda</a>
+      <a href="#proyek"><span class="num">02</span>Proyek</a>
+      <a href="#karier"><span class="num">03</span>Karier &amp; Skill</a>
+      <a href="#kontak"><span class="num">04</span>Kontak</a>
+      <a href="#simulasi"><span class="num">05</span>Simulasi</a>
     </nav>
+  </div>
+</header>
 
-    <!-- 1. Home Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative px-4">
-        <div class="text-center z-10 w-full max-w-4xl cyber-border p-10 mt-20 rounded-sm">
-            <div class="flex items-center gap-2 mb-6 text-cyan-700 justify-center">
-                <span class="text-sm">> root@rga-sys: ./initialize_profile.sh</span>
-            </div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 glitch-text uppercase tracking-wider" data-text="Rizqi Ghani Adinata">Rizqi Ghani Adinata</h1>
-            <p class="text-xl md:text-2xl text-teal-400 font-bold mb-4">> Junior Cybersecurity Enthusiast & Data Scientist_</p>
-            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Mengubah data menjadi insight, baris kode menjadi solusi, dan mengeksploitasi kerentanan untuk membangun pertahanan yang lebih kuat.</p>
-            <div class="flex justify-center gap-4">
-                <a href="#contact" class="px-6 py-3 bg-cyan-600 text-black font-bold hover:bg-cyan-400 transition-all hover:scale-105 shadow-[0_0_15px_#0891b2]">EXECUTE_COLLABORATION</a>
-                <a href="https://github.com/ghani24ep10007-spec" target="_blank" class="px-6 py-3 border border-cyan-600 text-cyan-500 hover:bg-cyan-900/30 transition-all hover:scale-105">VIEW_SOURCE</a>
-            </div>
+<!-- Binary ticker -->
+<div class="ticker" aria-hidden="true"><span class="track" id="ticker-track"></span></div>
+
+<main id="konten">
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="beranda" aria-labelledby="hero-title">
+    <div>
+      <p class="hero-kicker">// root@rizqi:~ whoami</p>
+      <h1 id="hero-title">
+        Membongkar <span class="glitch hl" data-text="Keamanan">Keamanan</span> Sistem,
+        Meretas <span class="glitch hl" data-text="Pola">Pola</span> Data,
+        Membangun <span class="hl">Solusi</span> yang Aman &amp; Cerdas
+      </h1>
+      <p class="hero-sub">
+        Fokus saya: keamanan siber, analisis data, dan pencatatan inventory.
+        Setiap sistem punya cerita — saya menulis skripnya, menemukan kerentanannya,
+        dan mengubah data mentah menjadi keputusan.
+      </p>
+      <div class="hero-cta">
+        <a class="btn solid" href="#proyek">Lihat Proyek</a>
+        <a class="btn" href="#kontak">Hubungi Saya</a>
+        <a class="btn warn" href="#simulasi">▶ Jalankan Simulasi Serangan</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="terminal" aria-label="Terminal perkenalan">
+        <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> bios --boot-sequence</div>
+        <div class="term-body" id="boot-term" aria-hidden="true"></div>
+        <noscript><div class="term-body"><p class="l-out">Boot sequence perlu JavaScript untuk animasi mengetik. Konten lengkap ada di panel Bio di bawah terminal.</p></div></noscript>
+      </div>
+      <div class="bio">
+        <h2>Bio</h2>
+        <p>Saya Rizqi Ghani Adinata — pembelajar teknologi yang tumbuh sebagai <strong>Junior Cybersecurity Enthusiast</strong> dan <strong>Junior Data Scientist</strong>. Saya belajar dengan membangun: memahami masalah, merancang pendekatan, menulis kode, menguji hasil, memperbaiki.</p>
+        <div class="status-line"><span>STATUS</span><b><span class="status-led" aria-hidden="true"></span>Terbuka untuk kolaborasi &amp; magang</b></div>
+        <div class="status-line"><span>LOKASI</span><b>Indonesia</b></div>
+        <div class="status-line"><span>STACK</span><b>Python · JS · CSS · C++ · C · Git</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORK GRID ============ -->
+  <section class="section" id="proyek" aria-labelledby="proyek-title">
+    <div class="section-head">
+      <span class="section-num">[02]</span>
+      <h2 id="proyek-title">Proyek Pilihan</h2>
+    </div>
+    <p class="section-note">Semua proyek di bawah adalah proyek riil — sumber kode tersedia di <a href="https://github.com/ghani24ep10007-spec" target="_blank" rel="noopener">GitHub ghani24ep10007-spec</a>. Tidak ada angka performa, klien, atau testimoni yang diada-adakan.</p>
+
+    <div class="work-grid" style="margin-top:1.6rem">
+      <!-- LEFT: project cards (2-col grid on desktop) -->
+      <div>
+        <div class="projects" id="projects" role="list"></div>
+        <p class="section-note" id="projects-empty" hidden>Filter tidak menemukan proyek. Klik “Reset” untuk melihat semua.</p>
+        <div style="display:flex;gap:.5rem;margin-top:1.2rem;flex-wrap:wrap" role="group" aria-label="Filter kategori proyek">
+          <button class="btn p-filter" data-filter="all" aria-pressed="true" style="padding:.4rem .9rem;font-size:.72rem">Semua</button>
+          <button class="btn p-filter" data-filter="Data Science" aria-pressed="false" style="padding:.4rem .9rem;font-size:.72rem">Data Science</button>
+          <button class="btn p-filter" data-filter="DevOps" aria-pressed="false" style="padding:.4rem .9rem;font-size:.72rem">DevOps</button>
+          <button class="btn p-filter" data-filter="AI &amp; Tools" aria-pressed="false" style="padding:.4rem .9rem;font-size:.72rem">AI &amp; Tools</button>
+          <button class="btn p-filter" data-filter="Web Development" aria-pressed="false" style="padding:.4rem .9rem;font-size:.72rem">Web Dev</button>
         </div>
-    </section>
+      </div>
 
-    <!-- 2. About Section -->
-    <section id="about" class="py-20 px-4 max-w-6xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-cyan-500 pl-4">> cat about_me.txt</h2>
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-            <div class="space-y-4 text-gray-400 leading-relaxed">
-                <p>Saya adalah pembelajar teknologi yang berfokus pada <span class="text-cyan-400 font-bold">Cybersecurity dan Data Science</span>. Saya percaya bahwa keamanan sistem tidak hanya tentang pertahanan, melainkan memahami pola serangan.</p>
-                <p>Melalui eksperimen operasional data, saya membangun logika pemrograman secara sistematis. Saya aktif mengeksplorasi manajemen inventory, automasi analisis data menggunakan Python, dan eksploitasi sistem dasar (C/C++) guna memperkuat insting analitis di dunia digital.</p>
-            </div>
-            <div class="cyber-border p-6">
-                <h3 class="text-cyan-500 mb-4 font-bold">// SYSTEM_STATUS</h3>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex justify-between border-b border-cyan-900 pb-2"><span class="text-gray-500">USER_ID:</span> <span class="text-white">Rizqi Ghani Adinata</span></li>
-                    <li class="flex justify-between border-b border-cyan-900 pb-2"><span class="text-gray-500">BASE_LOCATION:</span> <span class="text-white">Indonesia</span></li>
-                    <li class="flex justify-between border-b border-cyan-900 pb-2"><span class="text-gray-500">EMAIL:</span> <span class="text-cyan-400">ghani.24ep10007@students.unugha.id</span></li>
-                    <li class="flex justify-between pb-2"><span class="text-gray-500">OBJECTIVE:</span> <span class="text-teal-400">Mastering InfoSec & Data Logic</span></li>
-                </ul>
-            </div>
+      <!-- RIGHT: career timeline, skills, contact -->
+      <aside class="aside" id="karier">
+        <div class="aside-block">
+          <h3>Timeline Karier</h3>
+          <ul class="timeline">
+            <li>
+              <p class="tl-when">Sep 2026 — sekarang</p>
+              <p class="tl-what">Data Science &amp; Web Apps — portal ISP Gonet Jaya Abadi (React + Vite + churn prediction) &amp; portofolio tema hacker ini</p>
+              <p class="tl-detail">Plus otomasi CI/CD: auto-portfolio-generator dengan deploy GitHub Pages.</p>
+            </li>
+            <li>
+              <p class="tl-when">Mei 2026</p>
+              <p class="tl-what">DevOps &amp; Observability — Containerized BI &amp; Telemetry System (Grafana) &amp; proyek akhir DevOps</p>
+              <p class="tl-detail">Container, dashboard telemetri server real-time.</p>
+            </li>
+            <li>
+              <p class="tl-when">Jan–Mar 2026</p>
+              <p class="tl-what">Fondasi Python &amp; Web — UAS DataScience Toolkit, AI Chatbot (Gemini), seri SIAKAD / HMPS / TokoBaju</p>
+              <p class="tl-detail">Pandas, SQLite, K-Means, Flask, HTML/CSS/JS — belajar dengan membangun.</p>
+            </li>
+          </ul>
         </div>
-    </section>
 
-    <!-- 3. Skills Section -->
-    <section id="skills" class="py-20 px-4 max-w-6xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-cyan-500 pl-4">> nmap -sV target_skills</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="cyber-border p-6 hover:-translate-y-2 transition-transform duration-300">
-                <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-shield-alt text-cyan-500 mr-2"></i>Cybersecurity</h3>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li>> Analisis Kerentanan Web & Jaringan</li>
-                    <li>> Investigasi Log & Manajemen Risiko</li>
-                    <li>> Kriptografi Dasar & Data Integrity</li>
-                </ul>
-            </div>
-            <div class="cyber-border p-6 hover:-translate-y-2 transition-transform duration-300">
-                <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-database text-cyan-500 mr-2"></i>Data & Inventory</h3>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li>> Pembersihan & Pengolahan Data</li>
-                    <li>> Analisis Pergerakan Inventory</li>
-                    <li>> Visualisasi & Statistik Dasar</li>
-                </ul>
-            </div>
-            <div class="cyber-border p-6 hover:-translate-y-2 transition-transform duration-300">
-                <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-code text-cyan-500 mr-2"></i>Core Programming</h3>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li>> Python (Scripting & Automation)</li>
-                    <li>> JavaScript & Tailwind CSS</li>
-                    <li>> C++ & C (System Logic)</li>
-                </ul>
-            </div>
+        <div class="aside-block">
+          <h3>Skill Tags</h3>
+          <div class="tags">
+            <span class="tag hot">Python</span><span class="tag hot">JavaScript</span><span class="tag">CSS</span>
+            <span class="tag">C++</span><span class="tag">C</span><span class="tag hot">React</span><span class="tag">Vite</span>
+            <span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">SQLite</span>
+            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag hot">GitHub Actions / CI-CD</span>
+            <span class="tag hot">Docker / Container</span><span class="tag hot">Grafana</span>
+            <span class="tag">Analisis Data</span><span class="tag">K-Means</span><span class="tag">Churn Prediction</span>
+            <span class="tag">Visualisasi</span><span class="tag">Gemini API</span><span class="tag hot">Cybersecurity Dasar</span>
+            <span class="tag">Problem Solving</span><span class="tag">Dokumentasi Teknis</span>
+          </div>
         </div>
-    </section>
 
-    <!-- 4. Projects Section -->
-    <section id="projects" class="py-20 px-4 max-w-6xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-cyan-500 pl-4">> ls -la ./projects</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="cyber-border p-6 group">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Portofolio Security Upgrade</h3>
-                    <span class="text-xs border border-cyan-600 px-2 py-1 text-cyan-500 rounded">HTML/Tailwind</span>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Perombakan UI/UX antarmuka portofolio web dengan tema keamanan siber, animasi matriks, dan sistem integrasi identitas.</p>
-                <a href="https://github.com/ghani24ep10007-spec/portofolio" target="_blank" class="text-cyan-500 text-sm hover:underline">> Access_Repository</a>
-            </div>
-            <div class="cyber-border p-6 group">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Data Crypto & Analyzer (Sim)</h3>
-                    <span class="text-xs border border-cyan-600 px-2 py-1 text-cyan-500 rounded">Python / Crypto</span>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Pengembangan alat analisis dan pemrosesan kriptografi dasar untuk menjaga integritas data dan mendeteksi kerentanan file.</p>
-                <a href="https://github.com/ghani24ep10007-spec" target="_blank" class="text-cyan-500 text-sm hover:underline">> Access_Repository</a>
-            </div>
+        <div class="aside-block" id="kontak">
+          <h3>Access Point / Kontak</h3>
+          <ul class="contact-list">
+            <li><span class="k">WhatsApp</span><a href="https://wa.me/62895622668417">0895-6226-68417</a></li>
+            <li><span class="k">GitHub</span><a href="https://github.com/ghani24ep10007-spec" target="_blank" rel="noopener">ghani24ep10007-spec</a></li>
+            <li><span class="k">Email</span><span class="pending">PENDING</span></li>
+          </ul>
+          <form class="c-form" id="wa-form">
+            <label for="wa-name">Nama</label>
+            <input id="wa-name" name="name" type="text" autocomplete="name" placeholder="nama Anda" required>
+            <label for="wa-msg">Pesan</label>
+            <textarea id="wa-msg" name="message" rows="3" required placeholder="ide, tantangan, atau proyek…"></textarea>
+            <p class="hint">Form ini menyusun pesan lalu membuka WhatsApp — tidak ada server atau penyimpanan data.</p>
+            <button class="btn solid" type="submit">Kirim via WhatsApp</button>
+            <p class="form-status" id="wa-status" role="status" aria-live="polite"></p>
+          </form>
         </div>
-    </section>
+      </aside>
+    </div>
+  </section>
 
-    <!-- 5. Experience Section -->
-    <section id="experience" class="py-20 px-4 max-w-6xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-cyan-500 pl-4">> tail -f /var/log/experience.log</h2>
-        <div class="border-l border-cyan-800 ml-4 space-y-8 pb-4">
-            <div class="relative pl-8">
-                <div class="absolute w-3 h-3 bg-cyan-500 rounded-full -left-[6.5px] top-2 shadow-[0_0_10px_#22d3ee] animate-ping"></div>
-                <div class="absolute w-3 h-3 bg-cyan-500 rounded-full -left-[6.5px] top-2"></div>
-                <span class="text-xs text-cyan-600 font-bold tracking-widest">ACTIVE_PROCESS</span>
-                <h3 class="text-xl font-bold text-white mt-1">Junior Cybersecurity Enthusiast</h3>
-                <p class="text-teal-400 text-sm">Self-Taught / Open Source</p>
-                <p class="text-gray-400 text-sm mt-2">Mengeksplorasi infrastruktur jaringan, analisis kerentanan sistem, keamanan alur operasional data, dan membedah logika C/C++ & Python untuk mendeteksi celah keamanan.</p>
-            </div>
-            <div class="relative pl-8 opacity-70 hover:opacity-100 transition-opacity">
-                <div class="absolute w-3 h-3 bg-gray-600 rounded-full -left-[6.5px] top-2"></div>
-                <span class="text-xs text-gray-500 font-bold tracking-widest">BACKGROUND_PROCESS</span>
-                <h3 class="text-xl font-bold text-white mt-1">Junior Data Scientist & Inventory Ops</h3>
-                <p class="text-teal-400 text-sm">Academic / Personal Sandbox</p>
-                <p class="text-gray-400 text-sm mt-2">Membangun logika pengolahan data inventaris, memvisualisasikan insight pergerakan stok barang, dan menjaga validitas rekaman data berbasis antarmuka JavaScript.</p>
-            </div>
+  <!-- ============ ATTACK SIM CONSOLE ============ -->
+  <section class="section" id="simulasi" aria-labelledby="sim-title">
+    <div class="section-head">
+      <span class="section-num">[05]</span>
+      <h2 id="sim-title">Simulasi Serangan Siber — SOC Dashboard</h2>
+    </div>
+    <p class="section-note">
+      Animasi <strong>latihan defensive cyber (simulasi, data fiktif, sandbox lokal)</strong> — bukan serangan sungguhan,
+      tidak menyentuh sistem apa pun. Dipakai untuk memvisualisasi alur kill-chain yang saya pelajari:
+      reconnaissance → scanning → exploitation → exfiltration attempt → mitigation.
+    </p>
+
+    <div class="sim-console" style="margin-top:1.4rem">
+      <div class="sim-head">
+        <span class="sim-title">Live Threat Feed — target: <b style="color:var(--ink)">sandbox://lab.local</b> (fiktif)</span>
+        <div class="sim-controls">
+          <button class="btn warn" id="sim-start" type="button">▶ Mulai Serangan</button>
+          <button class="btn" id="sim-pause" type="button" disabled>❚❚ Jeda</button>
+          <button class="btn" id="sim-reset" type="button">⟲ Reset</button>
         </div>
-    </section>
-
-    <!-- 6. Contact Section -->
-    <section id="contact" class="py-20 px-4 max-w-3xl mx-auto text-center">
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">> ./establish_connection.sh</h2>
-        <p class="text-gray-400 mb-8">Sistem terbuka untuk menerima koneksi masuk. Mari berdiskusi untuk proyek keamanan siber, analisis data, atau kolaborasi open source.</p>
-        
-        <div class="cyber-border p-8 text-left">
-            <div class="space-y-4 mb-8">
-                <div class="flex items-center border-b border-cyan-900 pb-2">
-                    <span class="w-1/3 text-gray-500 text-sm">ID</span>
-                    <span class="text-white">Rizqi Ghani Adinata</span>
-                </div>
-                <div class="flex items-center border-b border-cyan-900 pb-2">
-                    <span class="w-1/3 text-gray-500 text-sm">PROTOCOL_EMAIL</span>
-                    <a href="mailto:ghani.24ep10007@students.unugha.id" class="text-cyan-400 hover:underline break-all">ghani.24ep10007@students.unugha.id</a>
-                </div>
-                <div class="flex items-center border-b border-cyan-900 pb-2">
-                    <span class="w-1/3 text-gray-500 text-sm">NETWORK_GITHUB</span>
-                    <a href="https://github.com/ghani24ep10007-spec" target="_blank" class="text-cyan-400 hover:underline break-all">github.com/ghani24ep10007-spec</a>
-                </div>
-            </div>
-            <a href="mailto:ghani.24ep10007@students.unugha.id" class="block w-full text-center bg-cyan-600 text-black font-bold py-3 hover:bg-cyan-400 transition-colors tracking-widest shadow-[0_0_10px_#0891b2]">
-                [ PING SERVER NOW ]
-            </a>
+      </div>
+      <div class="sim-body">
+        <div class="sim-log" id="sim-log" aria-live="polite" aria-label="Log simulasi serangan" tabindex="0">
+          <p class="l-out" style="color:var(--ink-faint)">// sistem siap — tekan “▶ Mulai Serangan” untuk menjalankan skenario.</p>
         </div>
-    </section>
+        <div class="sim-radar">
+          <div class="radar-wrap" aria-hidden="true">
+            <svg class="radar" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="56" fill="none" stroke="var(--line-2)"/>
+              <circle cx="60" cy="60" r="40" fill="none" stroke="var(--line-2)"/>
+              <circle cx="60" cy="60" r="22" fill="none" stroke="var(--line-2)"/>
+              <line x1="4" y1="60" x2="116" y2="60" stroke="var(--line-2)"/>
+              <line x1="60" y1="4" x2="60" y2="116" stroke="var(--line-2)"/>
+              <circle cx="60" cy="60" r="2.5" fill="var(--green)"/>
+            </svg>
+            <div class="radar-sweep"></div>
+            <span class="blip b1" ></span><span class="blip b2"></span><span class="blip b3"></span>
+          </div>
+          <div class="meter"><label>Progres Kill-chain <span id="m1-txt">0%</span></label><div class="rail"><div class="fill" id="m1"></div></div></div>
+          <div class="meter threat"><label>Threat Level <span id="m2-txt">0%</span></label><div class="rail"><div class="fill" id="m2"></div></div></div>
+          <div class="meter"><label>Integritas Defens <span id="m3-txt">100%</span></label><div class="rail"><div class="fill" id="m3" style="width:100%"></div></div></div>
+        </div>
+        <div class="sim-banner" id="sim-banner">
+          Mode: <b class="ok">DEFENSIVE DRILL</b> · Semua IP, host, dan CVE di log adalah fiktif · Durasi siklus ±40 detik
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 7. Footer -->
-    <footer class="border-t border-cyan-900 bg-slate-950 py-8 text-center text-xs text-gray-600">
-        <p>System Architecture by Rizqi Ghani Adinata &copy; 2026.</p>
-        <p class="mt-2 text-cyan-800 animate-pulse">Vulnerabilities Patched. Connection Secured.</p>
-    </footer>
+  <!-- ============ CLOSING STRIP ============ -->
+  <section class="section" aria-labelledby="mindset-title" style="padding-top:1rem">
+    <div class="section-head">
+      <span class="section-num">[06]</span>
+      <h2 id="mindset-title">Cara Kerja: Recon → Analisis → Hardening</h2>
+    </div>
+    <div class="projects" id="workflow" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div>
+  </section>
+</main>
 
-    <!-- Script Matrix Rain Biru Kehijauan -->
-    <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%""\'#&_(),.;:?!\\|{}<>[]^~'.split('');
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-        
-        for(let x = 0; x < columns; x++) drops[x] = 1;
-        
-        function draw() {
-            ctx.fillStyle = 'rgba(2, 6, 23, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#22d3ee'; // Cyan Color Matrix
-            ctx.font = fontSize + 'px monospace';
-            
-            for(let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        
-        setInterval(draw, 33);
-        
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
+<!-- ============ PROJECT MODAL ============ -->
+<dialog id="p-modal" aria-labelledby="modal-title">
+  <div class="dlg-head">
+    <span class="p-cat" id="modal-cat"></span>
+    <h3 id="modal-title"></h3>
+    <button class="dlg-close" id="modal-close" type="button">✕ TUTUP</button>
+  </div>
+  <div class="dlg-body">
+    <p class="decrypt-line" id="modal-decrypt" aria-hidden="true"></p>
+    <h4>Latar Belakang</h4>
+    <p id="modal-bg"></p>
+    <h4>Peran &amp; Tanggung Jawab</h4>
+    <ul id="modal-resp"></ul>
+    <h4>Hasil</h4>
+    <ul id="modal-out"></ul>
+    <h4>Teknologi</h4>
+    <div class="tags" id="modal-tech"></div>
+  </div>
+  <div class="dlg-foot" id="modal-foot"></div>
+</dialog>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>© <span id="year"></span> Rizqi Ghani Adinata — <span style="color:var(--green)">[ EOF ]</span></span>
+    <span>
+      <button class="btn" id="motion-toggle" type="button" style="padding:.3rem .8rem;font-size:.7rem" aria-pressed="false">⏻ Animasi: ON</button>
+      · <a href="https://github.com/ghani24ep10007-spec" target="_blank" rel="noopener">GitHub</a>
+      · <a href="https://wa.me/62895622668417">WhatsApp</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+/* ================================================================
+   DATA — konten demo diberi label; info riil dari user:
+   nama, spesialisasi, skill, WhatsApp, GitHub.
+================================================================ */
+const PROJECTS = [
+  {
+    id:"gonet", name:"Gonet Jaya Abadi — Portal ISP + Analytics", cat:"Data Science", year:"2026", demo:false,
+    url:"https://github.com/ghani24ep10007-spec/gonet-jaya-abadi",
+    desc:"Situs layanan ISP + dashboard analitik (React + Vite) untuk tugas Data Science.",
+    preview:"chart",
+    bg:"Tugas Mata Kuliah Data Science: portal layanan ISP fiktif (sintetis/akademik) yang menggabungkan halaman customer-facing dengan dashboard analitik internal — analisis CSV, visualisasi eksploratori, hingga pipeline prediksi churn langsung di aplikasi static.",
+    resp:["Membangun situs layanan React 19 + Vite + React Router","Simulasi tagihan, cek coverage geografis, speedtest fiktif, FAQ","Dashboard analitik: processing dataset CSV & visualisasi","Pipeline prediksi churn (machine learning)"],
+    out:["Aplikasi frontend statis lengkap: marketing + analytics dalam satu produk","Alur analisis data akademik berjalan langsung di browser"],
+    tech:["React 19","Vite","JavaScript","Node.js LTS 24"]
+  },
+  {
+    id:"bi-telemetry", name:"Containerized BI & Telemetry System", cat:"DevOps", year:"2026", demo:false,
+    url:"https://github.com/ghani24ep10007-spec/Containerized-BI-Telemetry-System",
+    desc:"Sistem BI & telemetri terkontainerisasi dengan dashboard Grafana.",
+    preview:"gauge",
+    bg:"Proyek akhir akademik: agregasi data bisnis dan telemetri server dalam container. Workflow BI live + pemantauan performa server berkelanjutan melalui dashboard Grafana yang di-host.",
+    resp:["Merancang arsitektur container untuk pipeline BI & telemetri","Membangun dashboard Grafana untuk monitoring real-time","Mengimplementasikan alur pengambilan data berkelanjutan"],
+    out:["Infrastruktur monitoring & BI terkontainerisasi","Dashboard performa server live"],
+    tech:["Docker/Container","Grafana","HTML"]
+  },
+  {
+    id:"ds-toolkit", name:"UAS DataScience Toolkit", cat:"Data Science", year:"2026", demo:false,
+    url:"https://github.com/ghani24ep10007-spec/UAS-DataScience-Toolkit",
+    desc:"Toolkit CLI terintegrasi: cleaning, K-Means, klasifikasi, sentimen.",
+    preview:"terminal",
+    bg:"Toolkit \"Integrated Data Science & Mathematics\" untuk tugas kuliah — platform CLI terpadu di Python 3.13: sanitasi dataset otomatis, clustering K-Means, tracking performa model klasifikasi, analisis polaritas teks, hingga peta frekuensi keyword.",
+    resp:["Otomatisasi pembersihan & pengisian gap data (Pandas)","Implementasi grouping algoritmik K-Means","Evaluasi performa model klasifikasi","Analisis sentimen & keyword frequency mapping","Autentikasi jejak & utilitas ekspor dokumen (SQLite)"],
+    out:["Satu CLI platform untuk seluruh alur kerja data science akademik"],
+    tech:["Python 3.13","Pandas","SQLite"]
+  },
+  {
+    id:"ai-chatbot", name:"AI Chatbot & Mini-Apps Lab", cat:"AI & Tools", year:"2026", demo:false,
+    url:"https://github.com/ghani24ep10007-spec/Ai-chatbot",
+    desc:"Chatbot berbasis Gemini + koleksi aplikasi Python interaktif.",
+    preview:"hex",
+    bg:"Laboratorium mini-app Python: chatbot web dengan integrasi Google Gemini (bot_gemini, chatbot_web, app.py) plus koleksi aplikasi interaktif — ATM simulator, hangman, kuis pintar, tebak angka, dan todo list (v1 & v2).",
+    resp:["Membangun chatbot berbasis API Gemini","Mengembangkan web chat interface (Flask/app.py)","Menulis mini-app latihan: ATM simulator, game, to-do"],
+    out:["Kumpulan eksperimen AI & Python yang berjalan end-to-end"],
+    tech:["Python","Gemini API","Flask"]
+  },
+  {
+    id:"auto-portfolio", name:"Auto Portfolio Generator", cat:"DevOps", year:"2026", demo:false,
+    url:"https://github.com/ghani24ep10007-spec/auto-portfolio-generator",
+    desc:"Generator website portofolio dengan pipeline CI/CD ke GitHub Pages.",
+    preview:"network",
+    bg:"Tool otomasi: menghasilkan website portofolio dan mendeploynya instan lewat pipeline CI/CD penuh ke GitHub Pages — tanpa langkah build manual dan tanpa konfigurasi server.",
+    resp:["Merancang pipeline CI/CD otomatis untuk generate + deploy","Menghilangkan langkah build manual"],
+    out:["Deploy portofolio statis otomatis ke GitHub Pages"],
+    tech:["GitHub Actions","CI/CD","GitHub Pages"]
+  },
+  {
+    id:"web-systems", name:"SIAKAD & Web Systems Series", cat:"Web Development", year:"2026", demo:false,
+    url:"https://github.com/ghani24ep10007-spec/siakad-online",
+    desc:"Rangkaian sistem web: SIAKAD clone, web HMPS, toko baju.",
+    preview:"shield",
+    bg:"Seri proyek web development sepanjang awal 2026: siakad-online, siakad-pro-lengkap, clone SIAKAD UNUGHA, website HMPS, dan TokoBaju-Ghani — halaman akademik, organisasi, dan e-commerce sederhana berbasis HTML.",
+    resp:["Membangun antarmuka sistem akademik (SIAKAD) & organisasi","Mengembangkan halaman toko (TokoBaju-Ghani)"],
+    out:["Lima repo web aktif sebagai latihan front-end bertahap"],
+    tech:["HTML","CSS","JavaScript"]
+  }
+];
+
+const WORKFLOW = [
+  {n:"01",t:"Recon — pahami masalah",d:"Konteks, kebutuhan, dan tujuan dipetakan sebelum satu baris kode ditulis."},
+  {n:"02",t:"Scan — pecah masalah",d:"Masalah besar diurai menjadi task kecil yang bisa diuji satu per satu."},
+  {n:"03",t:"Exploit — bangun & uji",d:"Kode ditulis, diuji, bug ditemukan — justru di situ belajar terjadi."},
+  {n:"04",t:"Harden — dokumentasikan",d:"Hasil didokumentasikan supaya proyek bisa dibaca, diaudit, dikembangkan."}
+];
+
+/* ================================================================
+   MATRIX RAIN
+================================================================ */
+(function(){
+  const c=document.getElementById("matrix-rain"),x=c.getContext("2d");
+  const chars="アカサタナﾊﾏﾔﾗ01ｱｲｳ<>/{}[]#*=$%&ᓂᚱ⌬".split("");
+  let cols,drops,W,H;
+  function size(){
+    W=c.width=innerWidth;H=c.height=innerHeight;
+    cols=Math.floor(W/16);drops=Array.from({length:cols},()=>Math.random()*-H/16);
+  }
+  size();addEventListener("resize",size);
+  let last=0;
+  function draw(t){
+    if(!document.body.classList.contains("motion-off") && t-last>50){
+      last=t;
+      x.fillStyle="rgba(5,10,7,0.12)";x.fillRect(0,0,W,H);
+      x.font="14px monospace";
+      for(let i=0;i<cols;i++){
+        const ch=chars[Math.floor(Math.random()*chars.length)];
+        const y=drops[i]*16;
+        x.fillStyle=Math.random()>.975?"#4dff9e":"rgba(43,213,127,"+(0.25+Math.random()*.5)+")";
+        x.fillText(ch,i*16,y);
+        if(y>H&&Math.random()>.975)drops[i]=0;
+        drops[i]++;
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ================================================================
+   BINARY TICKER
+================================================================ */
+(function(){
+  const bit=()=>Math.random()>.5?"1":"0";
+  const word=()=>Array.from({length:8},bit).join(" ")+"  ";
+  const s=word().repeat(24);
+  document.getElementById("ticker-track").textContent=(s+s);
+})();
+
+/* ================================================================
+   BOOT TERMINAL TYPEWRITER
+================================================================ */
+(function(){
+  const box=document.getElementById("boot-term");
+  const lines=[
+    ["l-cmd","whoami"],
+    ["l-out","rizqi_ghani_adinata"],
+    ["l-cmd","cat /etc/role"],
+    ["l-out","junior_cybersecurity_enthusiast"],
+    ["l-out","junior_data_scientist"],
+    ["l-cmd","ls ~/stack"],
+    ["l-out","python  javascript  css  c++  c  git"],
+    ["l-cmd","systemctl status curiosity"],
+    ["l-ok","active (running) — since 2024"],
+    ["l-cmd","open portfolio --mode hacker"],
+    ["l-ok","ACCESS GRANTED — selamat datang di terminal saya."],
+  ];
+  let li=0,ci=0,cur=null;
+  function tick(){
+    if(document.body.classList.contains("motion-off")){
+      lines.forEach(([cls,txt])=>{const p=document.createElement("p");p.className=cls;p.textContent=txt;box.appendChild(p);});
+      return;
+    }
+    if(li>=lines.length){const s=document.createElement("span");s.className="cursor";box.appendChild(s);return;}
+    if(ci===0){cur=document.createElement("p");cur.className=lines[li][0];box.appendChild(cur);}
+    cur.textContent=lines[li][1].slice(0,++ci);
+    if(ci>=lines[li][1].length){li++;ci=0;setTimeout(tick,340);}
+    else setTimeout(tick,24);
+  }
+  tick();
+})();
+
+/* ================================================================
+   SCRAMBLE / DECRYPT TEXT (hover + on-scroll reveal)
+================================================================ */
+const GLYPHS="!<>-_\\/[]{}=+*^?#01ABCDEF%$&";
+function scramble(el,finalText,dur){
+  dur=dur||520;
+  if(document.body.classList.contains("motion-off")){el.textContent=finalText;return;}
+  const start=performance.now();
+  (function step(now){
+    const p=Math.min(1,(now-start)/dur);
+    const keep=Math.floor(p*finalText.length);
+    let out=finalText.slice(0,keep);
+    for(let i=keep;i<finalText.length;i++){
+      out+=finalText[i]===" "?" ":GLYPHS[Math.floor(Math.random()*GLYPHS.length)];
+    }
+    el.textContent=out;
+    if(p<1)requestAnimationFrame(step);else el.textContent=finalText;
+  })(start);
+}
+
+/* ================================================================
+   PROJECT CARDS + FILTER + MODAL
+================================================================ */
+function previewSVG(kind){
+  if(kind==="chart")return `<svg viewBox="0 0 220 100" role="img" aria-label="Pratinjau grafik batang">
+    ${[18,52,30,74,44,88,60].map((h,i)=>`<rect class="bar" x="${14+i*30}" y="${88-h}" width="18" height="${h}" style="animation-delay:${i*0.18}s"/>`).join("")}
+    <line x1="6" y1="88" x2="214" y2="88" stroke="var(--line-2)"/></svg>`;
+  if(kind==="terminal")return `<svg viewBox="0 0 220 100" role="img" aria-label="Pratinjau terminal log">
+    <rect x="4" y="4" width="212" height="92" fill="none" stroke="var(--line-2)"/>
+    <text x="12" y="22" fill="var(--green)" font-size="9">grep 'failed' auth.log</text>
+    <text x="12" y="38" fill="var(--red)" font-size="9">FAILED 10.0.0.x (attempt 42)</text>
+    <text x="12" y="54" fill="var(--amber)" font-size="9">WARN rate-limit trigger</text>
+    <text x="12" y="70" fill="var(--green)" font-size="9">ANOMALI: pola brute detected</text>
+    <line class="kbd-line" x1="12" y1="80" x2="120" y2="80"/></svg>`;
+  if(kind==="shield")return `<svg viewBox="0 0 220 100" role="img" aria-label="Pratinjau perisai">
+    <g transform="translate(85,5)"><path class="shield-pulse" d="M25 2 L46 10 V34 C46 54 36 66 25 72 C14 66 4 54 4 34 V10 Z" fill="none" stroke="var(--green)" stroke-width="2"/>
+    <path d="M17 36 l6 6 l12 -14" stroke="var(--phos)" fill="none" stroke-width="2.5"/></g>
+    <text x="20" y="92" fill="var(--ink-faint)" font-size="8">EDU-SAFE · sandbox only</text></svg>`;
+  if(kind==="hex")return `<svg viewBox="0 0 220 100" role="img" aria-label="Pratinjau hex dump">
+    ${Array.from({length:6},(_,r)=>Array.from({length:14},(_,c)=>{
+      const chk="0123456789ABCDEF"[Math.floor(Math.random()*16)];
+      return `<text class="hexchar" x="${10+c*15}" y="${20+r*13}" style="animation-delay:${(r*14+c)*0.06}s">${chk}</text>`;}).join("")).join("")}</svg>`;
+  if(kind==="network")return `<svg viewBox="0 0 220 100" role="img" aria-label="Pratinjau graf jaringan">
+    <line class="edge" x1="40" y1="70" x2="100" y2="30"/><line class="edge" x1="100" y1="30" x2="170" y2="60"/>
+    <line class="edge" x1="40" y1="70" x2="120" y2="82"/><line class="edge" x1="120" y1="82" x2="170" y2="60"/>
+    <circle class="node" cx="40" cy="70" r="7"/><circle class="node" cx="100" cy="30" r="9"/>
+    <circle class="node" cx="170" cy="60" r="7"/><circle class="node" cx="120" cy="82" r="6"/></svg>`;
+  return `<svg viewBox="0 0 220 100" role="img" aria-label="Pratinjau gauge">
+    <path d="M30 70 A40 40 0 0 1 110 70" fill="none" stroke="var(--line-2)" stroke-width="6"/>
+    <path d="M30 70 A40 40 0 0 1 70 30" fill="none" stroke="var(--green)" stroke-width="6"/>
+    <g class="gauge-needle" style="transform-origin:70px 70px"><line x1="70" y1="70" x2="70" y2="36" stroke="var(--phos)" stroke-width="2"/></g>
+    <circle cx="70" cy="70" r="4" fill="var(--green)"/>
+    <text x="130" y="55" fill="var(--ink-dim)" font-size="9">score: sesi lokal</text>
+    <text x="130" y="72" fill="var(--green)" font-size="9">port: 22 80 443 …</text></svg>`;
+}
+
+const grid=document.getElementById("projects");
+PROJECTS.forEach((p,idx)=>{
+  const card=document.createElement("article");
+  card.setAttribute("role","listitem");
+  card.className="p-card";
+  card.dataset.cat=p.cat;
+  card.tabIndex=0;
+  card.setAttribute("aria-haspopup","dialog");
+  card.innerHTML=`
+    ${p.demo?'<span class="demo-tag" title="Konten demo">DEMO</span>':''}
+    <div class="p-preview">${previewSVG(p.preview)}</div>
+    <div class="p-meta">
+      <div class="p-top"><span class="p-cat">${p.cat}</span><span class="p-year">${p.year}</span></div>
+      <h3 class="p-name" data-text="${p.name}">${p.name}</h3>
+      <p class="p-desc">${p.desc}</p>
+      <span class="p-open">Buka detail misi</span>
+    </div>`;
+  const nameEl=card.querySelector(".p-name");
+  card.addEventListener("mouseenter",()=>scramble(nameEl,p.name,420));
+  card.addEventListener("focus",()=>scramble(nameEl,p.name,420));
+  card.addEventListener("click",()=>openModal(idx));
+  card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openModal(idx);}});
+  grid.appendChild(card);
+});
+
+/* Filters */
+const notes=document.getElementById("projects-empty");
+document.querySelectorAll(".p-filter").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".p-filter").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    const f=b.dataset.filter;let shown=0;
+    grid.querySelectorAll(".p-card").forEach(c=>{
+      const ok=f==="all"||c.dataset.cat===f;
+      c.style.display=ok?"":"none";if(ok)shown++;
+    });
+    notes.hidden=shown>0;
+    const names={all:"Semua kategori ditampilkan","Data Science":"Filter: Data Science",
+      DevOps:"Filter: DevOps","AI & Tools":"Filter: AI & Tools","Web Development":"Filter: Web Development"};
+    announce(b,names[f]+" ✓");
+  });
+});
+function announce(btn,text){
+  let s=document.getElementById("filter-status");
+  if(!s){s=document.createElement("p");s.id="filter-status";s.setAttribute("role","status");
+    s.style.cssText="font-size:.72rem;color:var(--ink-faint);margin:.6rem 0 0";
+    btn.parentElement.after(s);}
+  s.textContent=text;
+}
+
+/* Modal */
+const modal=document.getElementById("p-modal");
+let lastFocus=null;
+function openModal(idx){
+  const p=PROJECTS[idx];lastFocus=document.activeElement;
+  document.getElementById("modal-cat").textContent=`${p.cat} · ${p.year}${p.demo?" · KONTEM DEMO":""}`;
+  const t=document.getElementById("modal-title");t.textContent=p.name;
+  scramble(t,p.name,650);
+  document.getElementById("modal-decrypt").textContent="▚▚ decrypting dossier…";
+  setTimeout(()=>{document.getElementById("modal-decrypt").textContent="ACCESS GRANTED — dossier terdekripsi ▚",
+  document.getElementById("modal-decrypt").style.color="var(--green)";},700);
+  document.getElementById("modal-bg").textContent=p.bg;
+  document.getElementById("modal-resp").innerHTML=p.resp.map(r=>`<li>${r}</li>`).join("");
+  document.getElementById("modal-out").innerHTML=p.out.map(o=>`<li class="outcome">${o}</li>`).join("");
+  document.getElementById("modal-tech").innerHTML=p.tech.map(x=>`<span class="tag">${x}</span>`).join("");
+  document.getElementById("modal-foot").innerHTML=p.demo
+    ? "⚠ Konten demo: nama proyek, latar, dan hasil di atas adalah contoh untuk mendemonstrasikan struktur — belum merupakan klaim proyek riil."
+    : `✓ Proyek riil — sumber kode: <a href="${p.url}" target="_blank" rel="noopener">lihat di GitHub ↗</a>`;
+  modal.showModal();
+}
+document.getElementById("modal-close").addEventListener("click",()=>{modal.close();});
+modal.addEventListener("close",()=>{ if(lastFocus)lastFocus.focus();
+  document.getElementById("modal-decrypt").textContent="";document.getElementById("modal-decrypt").style.color="";});
+
+/* ================================================================
+   WORKFLOW STRIP
+================================================================ */
+(function(){
+  const w=document.getElementById("workflow");
+  WORKFLOW.forEach(s=>{
+    const d=document.createElement("div");
+    d.className="p-card";d.style.cursor="default";
+    d.innerHTML=`<div class="p-meta"><div class="p-top"><span class="p-cat">STEP ${s.n}</span></div>
+      <h3 class="p-name">${s.t}</h3><p class="p-desc">${s.d}</p></div>`;
+    w.appendChild(d);
+  });
+})();
+
+/* ================================================================
+   ATTACK SIMULATION — full kill-chain (sandbox, fiktif)
+================================================================ */
+(function(){
+  const log=document.getElementById("sim-log");
+  const B=(id)=>document.getElementById(id);
+  const m1=B("m1"),m2=B("m2"),m3=B("m3");
+  const banner=B("sim-banner");
+  const btnStart=B("sim-start"),btnPause=B("sim-pause"),btnReset=B("sim-reset");
+  const rnd=(a)=>a[Math.floor(Math.random()*a.length)];
+  const fakeIP=()=>`10.${rnd([0,1,24])}.${rnd([2,7,13,42,99])}.${rnd([4,17,33,88,201])}`;
+  const fakePort=()=>rnd(["22","80","443","445","3389","8080"]);
+  const hex=()=>Array.from({length:6},()=>"0123456789ABCDEF"[Math.floor(Math.random()*16)]).join("");
+
+  const SCRIPT=[
+    ["phase","FASE 1/5 — RECONNAISSANCE (pasif)"],
+    ["info",()=>`nmap -sn 10.24.${hex().slice(0,2)}.0/24  // lab sandbox`],
+    ["ok",()=>`host hidup ditemukan: ${fakeIP()} , ${fakeIP()} (fiktif)`],
+    ["info",()=>`passive sniff: ${rnd([1,2,3,5,8])} paket DNS beacon dicatat`],
+    ["phase","FASE 2/5 — SCANNING & ENUMERASI"],
+    ["info",()=>`port scan ${fakeIP()}: SYN stealth…`],
+    ["warn",()=>` Terbuka: ${fakePort()}/tcp, ${fakePort()}/tcp, ${fakePort()}/tcp (data fiktif)`],
+    ["info",()=>`banner grab → service versions diindeks`],
+    ["phase","FASE 3/5 — EXPLOITATION (simulasi CVE fiktif)"],
+    ["atk",()=>`payload dirakit: shellcode[${hex()}${hex()}] (tidak berbahaya, dummy)`],
+    ["atk",()=>`try exploit CVE-20XX-XXXX ( placeholder fiktif ) pada ${fakeIP()}`],
+    ["warn",()=>`percobaan 1/3 ditahan oleh WAF sandbox ✓`],
+    ["atk",()=>`percobaan 2/3: ${rnd(["buffer overflow","SQLi","path traversal"])} — rate-limiter memicu blokir ✓`],
+    ["phase","FASE 4/5 — POST-EXPLOIT / EXFIL ATTEMPT"],
+    ["atk",()=>`coba beacon outbound ${fakeIP()} → ${fakePort()} (fiktif)`],
+    ["ok",()=>`egress filter menangkap beacon — CONNECTION BLOCKED ✓`],
+    ["atk",()=>`percobaan akses kredensial: /etc/passwd (lab copy) — denied ✓`],
+    ["phase","FASE 5/5 — DETECTION & MITIGATION"],
+    ["ok",()=>`alert SIEM: anomali ${(Math.floor(Math.random()*40)+60)}% → auto-quarantine host terduga`],
+    ["info",()=>`hardening diterapkan: patch ${rnd(["042","118","256"])} · least-privilege · MFA`],
+    ["ok",()=>`kill-chain diputus. Defenses: ACTIVE. Tidak ada sistem nyata yang terpengaruh.`],
+  ];
+
+  let li=0,timer=null,running=false,done=false;
+  function setMeters(){
+    const p=Math.round(li/SCRIPT.length*100);
+    m1.style.width=p+"%";B("m1-txt").textContent=p+"%";
+    const threat=Math.min(100,Math.round(p*1.25));
+    m2.style.width=(done?0:threat)+"%";B("m2-txt").textContent=(done?0:threat)+"%";
+    const def=done?100:Math.max(35,100-Math.round(p*.55));
+    m3.style.width=def+"%";B("m3-txt").textContent=def+"%";
+  }
+  function step(){
+    if(li>=SCRIPT.length){
+      done=true;running=false;setMeters();btnStart.disabled=false;btnPause.disabled=true;
+      btnStart.textContent="▶ Ulangi Serangan";
+      banner.innerHTML='Status: <b class="ok">THREAT NEUTRALIZED ✓</b> · simulasi selesai dalam ±40 detik · <a href="#kontak">Diskusi mitigasi? Hubungi saya</a>';
+      const p=document.createElement("p");p.className="ok";p.textContent="[✓] SIMULATION COMPLETE — sandbox integrity 100%. Learn: attack flow → build defense.";
+      log.appendChild(p);log.scrollTop=log.scrollHeight;return;
+    }
+    const [cls,text]=SCRIPT[li];
+    const p=document.createElement("p");
+    const stamp=new Date().toISOString().slice(11,19);
+    p.innerHTML=`<span class="t">[${stamp}]</span> <span class="${cls}">${typeof text==="function"?text():text}</span>`;
+    if(cls==="phase"){p.className="";p.innerHTML=`<span class="phase">═══ ${typeof text==="function"?text():text} ═══</span>`;}
+    log.appendChild(p);
+    while(log.children.length>120)log.removeChild(log.firstChild);
+    log.scrollTop=log.scrollHeight;
+    li++;setMeters();
+    timer=setTimeout(step,320+Math.random()*380);
+  }
+  btnStart.addEventListener("click",()=>{
+    if(done){reset();}
+    running=true;btnStart.disabled=true;btnPause.disabled=false;btnStart.textContent="▶ Mulai Serangan";
+    clearTimeout(timer);step();
+  });
+  btnPause.addEventListener("click",()=>{
+    running=false;clearTimeout(timer);btnPause.disabled=true;btnStart.disabled=false;
+    const p=document.createElement("p");p.className="warn";p.textContent="❚❚ simulasi dijeda — lanjutkan dengan tombol ▶";
+    log.appendChild(p);log.scrollTop=log.scrollHeight;
+  });
+  function reset(){
+    clearTimeout(timer);li=0;done=false;running=false;
+    log.innerHTML='<p style="color:var(--ink-faint)">// sandbox direset — sistem siap.</p>';
+    btnStart.disabled=false;btnPause.disabled=true;btnStart.textContent="▶ Mulai Serangan";
+    banner.innerHTML='Mode: <b class="ok">DEFENSIVE DRILL</b> · Semua IP, host, dan CVE di log adalah fiktif · Durasi siklus ±40 detik';
+    setMeters();
+  }
+  btnReset.addEventListener("click",reset);
+
+  /* Auto-play sekali saat masuk viewport — "animasi full, jangan terlewat" */
+  const autoStart=()=>{ if(!running&&!done){btnStart.click();} };
+  const io=new IntersectionObserver((es)=>{
+    if(es.some(e=>e.isIntersecting)){io.disconnect();removeEventListener("scroll",onScroll);autoStart();}
+  },{threshold:0});
+  io.observe(document.getElementById("simulasi"));
+  function onScroll(){
+    const r=document.getElementById("simulasi").getBoundingClientRect();
+    if(r.top<innerHeight&&r.bottom>0){removeEventListener("scroll",onScroll);io.disconnect();autoStart();}
+  }
+  addEventListener("scroll",onScroll,{passive:true});
+  setTimeout(()=>{const r=document.getElementById("simulasi").getBoundingClientRect();
+    if(r.top<innerHeight&&r.bottom>0){io.disconnect();removeEventListener("scroll",onScroll);autoStart();}},1200);
+})();
+
+/* ================================================================
+   WA FORM (no backend — compose message, open WhatsApp)
+================================================================ */
+document.getElementById("wa-form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=document.getElementById("wa-name").value.trim();
+  const msg=document.getElementById("wa-msg").value.trim();
+  const st=document.getElementById("wa-status");
+  if(!name||!msg){st.textContent="✕ Nama dan pesan wajib diisi.";return;}
+  const text=encodeURIComponent(`Halo Rizqi, saya ${name}. ${msg}`);
+  st.textContent="✓ Membuka WhatsApp dengan pesan yang sudah tersusun…";
+  window.open(`https://wa.me/62895622668417?text=${text}`,"_blank","noopener");
+});
+
+/* ================================================================
+   SCROLL REVEAL — scramble on section headings
+================================================================ */
+(function(){
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(en=>{
+      if(en.isIntersecting&&!en.target.dataset.done){
+        en.target.dataset.done="1";
+        scramble(en.target,en.target.textContent,700);
+      }
+    });
+  },{threshold:.6});
+  document.querySelectorAll(".section-head h2").forEach(h=>io.observe(h));
+})();
+
+/* ================================================================
+   MENU (mobile) + MOTION TOGGLE + YEAR
+================================================================ */
+const nav=document.getElementById("main-nav"),mb=document.getElementById("menu-btn");
+mb.addEventListener("click",()=>{
+  const open=nav.classList.toggle("open");
+  mb.setAttribute("aria-expanded",String(open));
+});
+nav.addEventListener("click",e=>{if(e.target.closest("a")){nav.classList.remove("open");mb.setAttribute("aria-expanded","false");}});
+
+document.getElementById("motion-toggle").addEventListener("click",function(){
+  const off=document.body.classList.toggle("motion-off");
+  this.setAttribute("aria-pressed",String(off));
+  this.textContent=off?"⏻ Animasi: OFF":"⏻ Animasi: ON";
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+
+/* Respect OS reduced-motion automatically */
+if(matchMedia("(prefers-reduced-motion: reduce)").matches){
+  document.body.classList.add("motion-off");
+  const t=document.getElementById("motion-toggle");t.textContent="⏻ Animasi: OFF";t.setAttribute("aria-pressed","true");
+}
+</script>
 </body>
 </html>
